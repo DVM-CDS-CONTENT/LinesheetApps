@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
-  "productName": "my-app",
-  "version": "1.0.0",
+  "name": "LinesheetApps",
+  "productName": "LinesheetApps",
+  "version": "2.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -14,11 +14,12 @@
   "keywords": [],
   "author": {
     "name": "jaroonwit poolnai",
-    "email": "jaroonwit.pool@gmail.com"
+    "email": "poojaroonwit@central.co.th"
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "python-shell": "^5.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
