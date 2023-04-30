@@ -1,0 +1,320 @@
+<style>
+    @font-face {
+        font-family: 'CPNRegular';
+        src: url('./font/CPN-Regular.ttf');
+    }
+
+    @font-face {
+        font-family: 'CPNBold';
+        src: url('./font/CPN-Bold.ttf');
+    }
+
+    @font-face {
+        font-family: 'CPNBoldCondensed';
+        src: url('./font/CPN-BoldCondensed.ttf');
+    }
+
+    /* .SizeGuideFrameDiv body{
+        font-family: 'CPNBold';
+        text-align: -webkit-center;
+        margin-top: 10%;
+    } */
+    .SizeGuideFrameDiv {
+        background: white;
+
+    }
+
+    .SizeGuideFrameDiv .chart_name {
+        font-family: 'CPNBoldCondensed';
+        font-weight: 500;
+        font-size: 17.5pt;
+        text-align: center;
+    }
+
+    .SizeGuideFrameDiv table {
+        border-collapse: collapse;
+        margin-top: 20px;
+        width: 500px;
+        margin: 16px;
+        min-height: min-content;
+    }
+
+    /* thead{
+        border-bottom:5px solid #343434;
+        border-top:5px solid #343434;
+    } */
+    .SizeGuideFrameDiv thead {
+        font-family: 'CPNBoldCondensed';
+    }
+
+    .SizeGuideFrameDiv .line_header_bottom {
+        height: 15px;
+        border-bottom: #343434 solid 3.5px;
+    }
+
+    .SizeGuideFrameDiv .line_header_top {
+        height: 15px;
+        border-top: #343434 solid 3.5px;
+    }
+
+    .SizeGuideFrameDiv .line_bottom {
+        height: 14.2px;
+        border-top: #343434 solid 14.2px;
+    }
+
+    .SizeGuideFrameDiv .border_header {
+        height: 90%;
+        border-left: 0.5pt #343434 solid;
+        /* padding:10px 25px; */
+        line-height: 15px;
+        overflow-wrap: anywhere;
+    }
+
+    .SizeGuideFrameDiv .border_header_start {
+        height: 90%;
+        /* padding:0px 30px; */
+        /* overflow-wrap: anywhere; */
+        line-height: 15px;
+        /* min-width: 120px */
+    }
+
+    .SizeGuideFrameDiv tr td {
+        padding: 10px;
+        border-bottom: 1px solid #343434;
+        text-align-last: center;
+        font-size: 13pt;
+        font-family: 'CPNRegular';
+        height: 36.5px;
+    }
+
+    .SizeGuideFrameDiv tr th {
+        padding: 10px;
+        text-align-last: center;
+        height: 20px;
+        font-size: 9pt;
+    }
+
+    .SizeGuideFrameDiv .col {
+        font-family: 'CPNBold';
+        font-size: 12pt;
+    }
+
+    .SizeGuideFrameDiv .input_size {
+        width: 100%;
+        height: 100%;
+        border: 0px;
+        font-family: 'CPNRegular';
+        font-size: 13pt;
+        background: transparent;
+        min-height: 60px;
+    }
+
+    .SizeGuideFrameDiv .input_size_bold {
+        width: 100%;
+        height: 100%;
+        border: 0px;
+        font-family: 'CPNBold';
+        font-size: 13pt;
+        background: transparent;
+        min-height: 60px;
+    }
+
+
+    .SizeGuideFrameDiv .unit {
+        position: absolute;
+        font-size: 5pt;
+        align-self: center;
+        font-family: 'CPNBold';
+        z-index: 1;
+        margin-top: -15px;
+        margin-left: 8px;
+        width: fit-content;
+    }
+
+    .SizeGuideFrameDiv .unit_bt {
+        position: absolute;
+
+    }
+
+    .SizeGuideFrameDiv .container {
+
+        text-align: -webkit-center;
+        width: 443px;
+
+        background: white;
+    }
+
+    .SizeGuideFrameDiv .small,
+    small {
+        font-size: .575em;
+        color: #adb5bd;
+    }
+
+    .SizeGuideFrameDiv .input_first_column {
+        width: 100%;
+        border: 0px;
+
+    }
+
+    #product-con {
+        position: relative;
+        padding: 10px;
+        text-align: -webkit-center;
+        width: 700px;
+        height: 600px;
+
+
+
+    }
+
+    #show_height {
+        position: absolute;
+        margin-top: 3px;
+        right: 50%;
+
+    }
+
+    #show_width {
+        position: absolute;
+        margin-top: -170px;
+        right: 160px;
+    }
+
+    #show_depth {
+        position: absolute;
+        margin-top: -150px;
+        right: 260px;
+    }
+
+    #show_waistlength {
+        position: absolute;
+        margin-top: -270px;
+        right: 410px;
+    }
+
+    #show_beltlength {
+        position: absolute;
+        margin-top: -120px;
+        right: 380px;
+    }
+
+
+    #show_length {
+        position: absolute;
+        margin-top: -170px;
+        right: 300px;
+    }
+
+    #show_handleheight {
+        position: absolute;
+        margin-top: 250px;
+        right: 270px;
+    }
+
+    #show_shoulderstrap {
+        position: absolute;
+        margin-top: 250px;
+        right: 280px;
+    }
+
+    #show_frameheight {
+        position: absolute;
+        margin-top: 250px;
+        right: 290px;
+    }
+
+    #show_framewidth {
+        position: absolute;
+        margin-top: 250px;
+        right: 300px;
+    }
+
+    #show_lensheight {
+        position: absolute;
+        margin-top: 250px;
+        right: 310px;
+    }
+
+    #show_lenswidth {
+        position: absolute;
+        margin-top: 250px;
+        right: 320px;
+    }
+
+    #show_bridgesize {
+        position: absolute;
+        margin-top: 250px;
+        right: 330px;
+    }
+
+    #show_templearms {
+        position: absolute;
+        margin-top: 250px;
+        right: 600px;
+    }
+
+    #show_diameter {
+        position: absolute;
+        margin-top: 250px;
+        right: 350px;
+
+    }
+
+    .SizeGuideFrameDiv .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(255, 255, 255);
+        height: 100%;
+        /* Set a height for the container */
+    }
+
+    .SizeGuideFrameDiv #dimension_image {
+        max-width: 80%;
+        /* Make sure the image doesn't exceed its container */
+    }
+</style>
+
+<div class="SizeGuideFrameDiv">
+    <span class='chart_name' id="sg_chart_name">Belt</span>
+        <tr class="line_header_top"></tr>
+                <div id="product-con">
+                    <span id="first_column"></span>
+                    <img id="dimension_image" src="./dimension/belt_en/belt_en-2.png">
+                    <span id="show_width" onchange="change_dimension()">width</span>
+                    <span id="show_height" onchange="change_dimension()">height</span>
+                    <span id="show_depth" onchange="change_dimension()">depth</span>
+                    <span id="show_waistlength" onchange="change_dimension()">waistlength</span>
+                    <span id="show_beltlength" onchange="change_dimension()">beltlength</span>
+                    <span id="show_length" onchange="change_dimension()">length</span>
+                    <span id="show_handleheight" onchange="change_dimension()">handleheight</span>
+                    <span id="show_shoulderstrap" onchange="change_dimension()">shoulderstrap</span>
+                    <span id="show_diameter" onchange="change_dimension()">diameter</span>
+                    <span id="show_frameheight" onchange="change_dimension()">frameheight</span>
+                    <span id="show_framewidth" onchange="change_dimension()">framewidth</span>
+                    <span id="show_lensheight" onchange="change_dimension()">lensheight</span>
+                    <span id="show_lenswidth" onchange="change_dimension()">lenswidth</span>
+                    <span id="show_bridgesize" onchange="change_dimension()">bridgesize</span>
+                    <span id="show_templearms" onchange="change_dimension()">templearms</span>
+                </div>
+
+
+</div>
+<script>
+    document.getElementById("show_width").style.display = "block";
+    document.getElementById("show_height").style.display = "none";
+    document.getElementById("show_depth").style.display = "none";
+    document.getElementById("show_waistlength").style.display = "block";
+    document.getElementById("show_beltlength").style.display = "block";
+    document.getElementById("show_length").style.display = "none";
+    document.getElementById("show_handleheight").style.display = "none";
+    document.getElementById("show_shoulderstrap").style.display = "none";
+    document.getElementById("show_diameter").style.display = "none";
+    document.getElementById("show_frameheight").style.display = "none";
+    document.getElementById("show_framewidth").style.display = "none";
+    document.getElementById("show_lensheight").style.display = "none";
+    document.getElementById("show_lenswidth").style.display = "none";
+    document.getElementById("show_bridgesize").style.display = "none";
+    document.getElementById("show_templearms").style.display = "none";
+
+</script>
