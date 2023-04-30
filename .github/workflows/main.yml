@@ -1,10 +1,7 @@
 
 name: Make and Publish to Github
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 permissions:
   contents: write
