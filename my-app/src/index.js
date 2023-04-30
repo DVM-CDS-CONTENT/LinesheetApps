@@ -47,6 +47,7 @@ app.on('ready', () => {
       notifyUser: true
   });
 
+
   ipcMain.on('load-file', (event, filePath) => {
     const fileFullPath = path.join(__dirname, filePath);
     fs.readFile(fileFullPath, 'utf8', (err, data) => {
