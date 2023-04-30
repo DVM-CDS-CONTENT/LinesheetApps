@@ -19,4 +19,18 @@ module.exports = {
       config: {},
     },
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: '24ep',
+          name: 'linesheetAppsPublic',
+        },
+        prerelease: true,
+        draft: false,
+      },
+    },
+  ],
 };
+

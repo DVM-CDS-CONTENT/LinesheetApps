@@ -47,16 +47,33 @@
 <!-- python-sheell -->
 <script src="https://cdn.jsdelivr.net/npm/python-shell@5.0.0/index.min.js"></script>
 
+<!-- python-pyscript -->
+<!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
+
+
+<!-- <embed type="text/html" src="page/nav.html"></embed>
+<embed type="text/html" src="page/welcome.html"></embed>
+<embed type="text/html" src="page/footers.html"></embed> -->
+
+<!-- <embed src="path/to/file.html" type="text/html"> -->
  <script>
-    $(function(){
-      $("#nav").load("page/nav.html");
-       $("#page").load("page/welcome.html");
+
+     $(function(){
+      $("#nav").load("page/nav/welcome_nav.html");
+      $("#page").load("page/prompt_role.html");
+      //  $("#page").load("page/welcome.html");
+      //  $("#page").load("page/new_linesheet.html");
       $("#footers").load("page/footers.html");
-    });
+     });
+
+  //  $("#nav").load("page/nav.html");
+  //  $("#page").load("page/welcome.html");
+  //  $("#footers").load("page/footers.html");
+
     function load_page(page){
       $("#page").load(page);
-      // Store data in the user's session
-      sessionStorage.setItem('page_loaded', page);
+
 
     }
   </script>
@@ -74,7 +91,7 @@
   </div>
 
   <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
-  <script type="text/javascript" src="../eel.js"></script>
+  <!-- <script type="text/javascript" src="../eel.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

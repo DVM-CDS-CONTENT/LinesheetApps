@@ -18,8 +18,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "-": "^0.0.1",
+    "@6c65726f79/custom-titlebar": "^0.9.1",
+    "electron-prebuilt": "^1.4.13",
     "electron-squirrel-startup": "^1.0.0",
-    "python-shell": "^5.0.0"
+    "pj-custom-electron-titlebar": "^3.2.0",
+    "python-shell": "^5.0.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "update-electron-app": "^2.0.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
@@ -27,6 +34,7 @@
     "@electron-forge/maker-rpm": "^6.1.1",
     "@electron-forge/maker-squirrel": "^6.1.1",
     "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "24.1.2"
+    "@electron-forge/publisher-github": "^6.1.1",
+    "electron": "^24.1.3"
   }
 }
