@@ -1,0 +1,22 @@
+name: Make and Publish to Github
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build_on_win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: yarn install
+      - name: Publish
+        run: yarn run publish
