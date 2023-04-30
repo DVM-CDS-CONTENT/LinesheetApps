@@ -21,16 +21,14 @@ module.exports = {
   ],
   publishers: [
     {
-      name: '@electron-forge/publisher-github',
-      config: {
-        repository: {
-          owner: '24ep',
-          name: 'linesheetAppsPublic',
-        },
-        prerelease: true,
-        draft: false,
-      },
-    },
+      "name": "@electron-forge/publisher-github",
+      "config": {
+        "repository": {
+          "owner": "poojaroonwit",
+          "name": "LinesheetApps"
+        }
+      }
+    }
   ],
 };
 

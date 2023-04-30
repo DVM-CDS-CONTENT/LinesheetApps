@@ -12,5 +12,22 @@
   "dependencies": {},
   "devDependencies": {
     "electron": "24.1.2"
+  },
+  "repository": "https://github.com/DVM-CDS-CONTENT/LinesheetApps",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
+  "build": {
+    "appId": "com.coderjeet.autoupdater",
+    "productName": "LinesheetApps",
+    "win": {
+      "target": "nsis"
+    },
+    "directories": {
+      "output": "dist"
+    }
   }
 }
+
+
