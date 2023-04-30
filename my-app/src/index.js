@@ -44,7 +44,6 @@ app.on('ready', () => {
   //update apps
   updateApp = require('update-electron-app');
   updateApp({
-      // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
       updateInterval: '1 hour',
       notifyUser: true
   });
