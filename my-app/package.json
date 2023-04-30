@@ -20,8 +20,10 @@
   "dependencies": {
     "-": "^0.0.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
+    "dom-to-image": "^2.6.0",
     "electron-prebuilt": "^1.4.13",
     "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.6.4",
     "pj-custom-electron-titlebar": "^3.2.0",
     "python-shell": "^5.0.0",
     "request": "^2.88.2",

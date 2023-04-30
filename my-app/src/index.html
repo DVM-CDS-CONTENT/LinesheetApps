@@ -33,7 +33,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_HktHBtDzoEip7332d19zrf"></script>
 <!-- Plugin name: spellChecker -->
-<script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/third_party/spell_checker.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/third_party/spell_checker.min.js"></script> -->
 
 <!-- font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <!-- python-sheell -->
-<script src="https://cdn.jsdelivr.net/npm/python-shell@5.0.0/index.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/python-shell@5.0.0/index.min.js"></script> -->
 
 <!-- python-pyscript -->
 <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
@@ -57,19 +57,40 @@
 <embed type="text/html" src="page/footers.html"></embed> -->
 
 <!-- <embed src="path/to/file.html" type="text/html"> -->
+
+ <!-- Include jQuery -->
+ <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
  <script>
 
-     $(function(){
-      $("#nav").load("page/nav/welcome_nav.html");
-      $("#page").load("page/prompt_role.html");
-      //  $("#page").load("page/welcome.html");
-      //  $("#page").load("page/new_linesheet.html");
-      $("#footers").load("page/footers.html");
-     });
+    //  $(function(){
+    //   $("#nav").load("page/nav/welcome_nav.html");
+    //   $("#page").load("page/prompt_role.html");
+    //   //  $("#page").load("page/welcome.html");
+    //   //  $("#page").load("page/new_linesheet.html");
+    //   $("#footers").load("page/footers.html");
+    //  });
 
-  //  $("#nav").load("page/nav.html");
-  //  $("#page").load("page/welcome.html");
-  //  $("#footers").load("page/footers.html");
+    const { ipcRenderer } = require('electron');
+    const $ = require('jquery');
+
+    $(function(){
+      ipcRenderer.send('load-file', 'page/nav/welcome_nav.html');
+      ipcRenderer.on('nav-loaded', (event, data) => {
+        $('#nav').html(data);
+      });
+
+      ipcRenderer.send('load-file', 'page/prompt_role.html');
+      ipcRenderer.on('page-loaded', (event, data) => {
+        $('#page').html(data);
+      });
+
+      ipcRenderer.send('load-file', 'page/footers.html');
+      ipcRenderer.on('footers-loaded', (event, data) => {
+        $('#footers').html(data);
+      });
+    });
+
 
     function load_page(page){
       $("#page").load(page);
@@ -86,7 +107,7 @@
 </head>
 <body>
   <div id="nav"></div>
-  <div id="page"></div>
+  <div id="page" style="margin-top:28px"></div>
   <div id="footers">
   </div>
 
