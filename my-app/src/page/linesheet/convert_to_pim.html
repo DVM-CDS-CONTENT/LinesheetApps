@@ -1,0 +1,236 @@
+<style>
+
+.item-list{
+    padding: 5px 25px;
+    list-style: none;
+    border-bottom: solid 1px #d2d2d2;
+}
+.left-border{
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+.col-item-list{
+    border-left: #aeaeae 1px solid;
+}
+.ul-list{
+    /* border-left: 1px solid gray; */
+    padding: 0px;
+}
+</style>
+
+<div class="row">
+    <div class="col-2 bg-dark" style="border-right: 1px solid #121212;padding: 10px;border-bottom: 1px solid #121212;border-top: 1px solid #121212;text-align-last: center;">
+        <input type="file" id="input-file" class="text-white" />
+    </div>
+
+    <div class="col-10 border-bottom bg-dark" style="border-top: 1px solid #121212;border-bottom: 1px solid #121212!important;">
+    </div>
+</div>
+<div class="row">
+    <div class="col-2" style="border-right: 1px solid lightgrey;padding: 0px;">
+        <div class="row bg-light m-0 p-1 border-bottom">
+            <strong>GROUP LIST</strong>
+        </div>
+        <ul id="group-list" class="ul-list"></ul>
+    </div>
+    <div class="col-2" style="border-right: 1px solid lightgrey;padding: 0px;">
+        <div class="row bg-light m-0 p-1 border-bottom">
+            <strong>SKU LIST</strong>
+        </div>
+        <ul id="item-list" class="ul-list"></ul>
+    </div>
+    <div class="col-8 p-0">
+        <div class="row bg-light m-0 p-1 border-bottom">
+            <div class="col">
+                <strong>GROUP : <span id="group">-<span></strong>
+                <strong>| IBC : <span id="ibc">-<span></strong>
+            </div>
+            <div class="col-2" style="border-left: 1px solid #d5d5d5;text-align: -webkit-center;">
+                <div class="dropdown">
+                    <button type="button" class="bg-transparent border-0 dropdown-toggle p-0 m-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cleansing function
+                    </button>
+                    <ul class="dropdown-menu item-list bg-light text-black shadow border-1" aria-labelledby="dropdownMenuButton1" data-popper-placement="bottom-start"
+                    style="position: absolute;
+                    inset: 0px 0px auto auto;
+                    margin: 0px;
+                    transform: translate3d(-72.8px, 23.2px, 0px);
+                    font-size: 13px;
+                    padding: 0px;">
+                        <li>
+                            <a class="dropdown-item border-bottom p-3 ps-4 pe-4 text-dark" href="#">
+                                <strong>Product name to proper</strong><br>
+                                <small class="">Force converts any text in product name TH and EN to either proper case </small>
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item border-bottom p-3 ps-4 pe-4 pe-4 text-dark" href="#">
+                            <strong>Auto translate TH</strong><br>
+                            <small>Translate description in column TH using description EN</small></a></li>
+                        <li><a class="dropdown-item border-bottom p-3 ps-4 pe-4 pe-4 text-dark" href="#">
+                            <strong>Auto translate EN</strong><br>
+                            <small>Translate description in column TH using description EN</small></a></li>
+                        <li><a class="dropdown-item p-3 ps-4 pe-4 text-white bg-primary rounded-bottom " href="#">
+                            <ion-icon name="checkmark-done-circle-outline" role="img" class="md hydrated"></ion-icon>
+                            <strong>Apply to other SKU in same group</strong></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="p-2">
+        <div class="row">
+                <div class="col">
+                    <strong>Product name TH</strong>
+                    <grammarly-editor-plugin>
+                    <input class="form-control form-control-sm" contenteditable="true" id="product_name_th">
+                    </grammarly-editor-plugin>
+                </div>
+                <div class="col">
+                    <strong>Product name EN</strong>
+                    <grammarly-editor-plugin>
+                    <input class="form-control form-control-sm" contenteditable="true" id="product_name_en">
+                </grammarly-editor-plugin>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Description TH</strong>
+                <grammarly-editor-plugin>
+                    <textarea id="editor_th" class="form-control" rows="5" contenteditable="true"></textarea>
+                </grammarly-editor-plugin>
+            </div>
+            <div class="col">
+                <strong>Description EN</strong>
+                <grammarly-editor-plugin>
+                    <textarea id="editor_en" class="form-control" rows="5" contenteditable="true"></textarea>
+                </grammarly-editor-plugin>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('#input-file').on('change', function(e) {
+            var list_ibc=[]
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, {type: 'array'});
+                var sheet = workbook.Sheets[workbook.SheetNames[0]];
+                var columnGroup = getColumnValues(sheet, 'catalogue_number_for_group');
+                var columnIBC = getColumnValues(sheet, 'ibc');
+                var columnProduct = getColumnValues(sheet, 'product_name_en');
+                var columnSize = getColumnValues(sheet, 'size');
+                var columnShade = getColumnValues(sheet, 'color');
+                // Get reference to ul element
+                var ul = document.getElementById("item-list");
+                var list = $('#group-list');
+                list.empty();
+                for (var i = 0; i < columnGroup.length; i++) {
+                    if(columnGroup[i]!=columnGroup[i-1]){
+                        var li = $('<li class="item-list"><strong>' + columnGroup[i] + '</strong><br> ' + columnProduct[i] + '</li>');
+                        li.data('row', getRowValues(sheet, i + 12));
+                        li.click(function() {
+                            var row = $(this).data('row');
+                            document.getElementById("editor_th").innerHTML=row['product_detail_th'];
+                            document.getElementById("editor_en").innerHTML=row['product_detail_en'];
+                            document.getElementById("product_name_th").value=row['product_name_th'];
+                            document.getElementById("product_name_en").value=row['product_name_en'];
+                            document.getElementById("group").innerHTML=row['catalogue_number_for_group'];
+                            document.getElementById("ibc").innerHTML=row['ibc'];
+                            document.getElementById("item-list").innerHTML = ""
+                            for (var j = 0; j < columnIBC.length; j++) {
+                                if(row['catalogue_number_for_group']==columnGroup[j]){
+                                    // var li_ibc = '<li class="item-list">' + columnIBC[j] + '</li>';
+                                    var li_ibc_element = document.createElement("li");
+                                    li_ibc_element.appendChild(document.createTextNode(columnIBC[j] + " " +columnSize[j]+" "+columnShade[j]));
+                                    li_ibc_element.classList.add("item-list");
+                                    ul.appendChild(li_ibc_element);
+                                }
+                            }
+
+
+
+
+
+                        });
+                        list.append(li);
+                        }
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+
+
+        function getColumnValues(sheet, column) {
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            var values = [];
+            for (var row = 12; row <= range.e.r; row++) {
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: getColumnIndex(sheet, column)});
+                var cell = sheet[cellAddress];
+                if (cell) {
+                    values.push(cell.v);
+                }
+            }
+            return values;
+        }
+        function getRowValues(sheet, row) {
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            var values = {};
+            for (var col = range.s.c; col <= range.e.c; col++) {
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+                var cell = sheet[cellAddress];
+                if (cell) {
+                    values[getColumnName(sheet, col)] = cell.v;
+                }
+            }
+            return values;
+        }
+        function getColumnIndex(sheet, column) {
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            for (var col = range.s.c; col <= range.e.c; col++) {
+                var cellAddress = XLSX.utils.encode_cell({r: range.s.r, c: col});
+                var cell = sheet[cellAddress];
+                if (cell && cell.v === column) {
+                    return col;
+                }
+            }
+            return -1;
+        }
+        function getColumnName(sheet, column) {
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            var cellAddress = XLSX.utils.encode_cell({r: range.s.r, c: column});
+            var cell = sheet[cellAddress];
+            return cell ? cell.v : '';
+        }
+        function updateCellValue(file, sheetName, row, column, newValue) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, {type: 'array', cellDates: true, bookVBA: true, sheetStubs: true});
+                var sheet = workbook.Sheets[sheetName];
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: column});
+                sheet[cellAddress].v = newValue;
+                var buf = XLSX.write(workbook, {bookType:'xlsm', type:'binary'});
+                var blob = new Blob([s2ab(buf)], {type: 'application/vnd.ms-excel.sheet.macroEnabled.12'});
+                saveAs(blob, file.name);
+            };
+            reader.readAsArrayBuffer(file);
+            }
+
+            // helper function to convert a string to an ArrayBuffer
+            function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+            }
+
+    });
+</script>
