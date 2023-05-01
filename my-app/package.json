@@ -1,8 +1,8 @@
 {
-  "name": "LinesheetApps",
-  "productName": "LinesheetApps",
-  "version": "2.0.0",
-  "description": "My Electron application description",
+  "name": "conpad",
+  "productName": "conpad",
+  "version": "2.0.9",
+  "description": "conpad",
   "repository": "https://github.com/DVM-CDS-CONTENT/LinesheetApps",
   "main": "src/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "jaroonwit poolnai",
+    "name": "Central Online operated by Central Department Store Limited Head Office",
     "email": "poojaroonwit@central.co.th"
   },
   "license": "MIT",
