@@ -313,7 +313,7 @@
     function change_image_dimension() {
         var dimension = document.getElementById("dimension").value;
         var lang = document.getElementById("lang").value;
-        document.getElementById("dimension_image").src = "./dimension/" + dimension + "_" + lang + "/" + dimension + "_" + lang + "-2.png";
+        document.getElementById("dimension_image").src = "./image/dimension/" + dimension + "_" + lang + "/" + dimension + "_" + lang + "-2.png";
 
         document.getElementById("first_column").value = first_column;
         suggestion_chart_name();
@@ -516,7 +516,7 @@
         suggestion_chart_name();
     }
     // end change size guide table ----
-    $.get("./page/template/product_dimension_template.html", function (data) {
+    $.get("./page/tools/template/product_dimension_template.html", function (data) {
         // Find the element you want to insert the HTML into
         let container = $("#SizeGuideFrameDiv");
         // Insert the HTML into the element

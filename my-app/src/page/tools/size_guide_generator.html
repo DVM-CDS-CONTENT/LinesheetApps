@@ -258,7 +258,7 @@
         function change_image_measurement(){
             var measurement = document.getElementById("measurement").value;
             var lang = document.getElementById("lang").value;
-            document.getElementById("measurement_image").src = "./measurement/"+measurement+"_"+lang+"/"+measurement+"_"+lang+"-2.jpg";
+            document.getElementById("measurement_image").src = "./image/measurement/"+measurement+"_"+lang+"/"+measurement+"_"+lang+"-2.jpg";
 
 
             var standard = document.getElementById("standard").value;
@@ -400,7 +400,7 @@
             suggestion_chart_name();
         }
         // end change size guide table ----
-        $.get('./page/template/sizeguide_template.html', function(data) {
+        $.get('./page/tools/template/sizeguide_template.html', function(data) {
             // Find the element you want to insert the HTML into
             let container = $("#SizeGuideFrameDiv");
             // Insert the HTML into the element

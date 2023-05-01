@@ -3,6 +3,9 @@ const path = require('path');
 const fs = require('fs');
 const { autoUpdater, AppUpdater } = require("electron-updater");
 
+process.env.GITHUB_TOKEN = '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';
+
+
 //Basic flags
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
@@ -21,7 +24,7 @@ const createWindow = () => {
     minWidth:960,
     minHeight:600,
     frame:false,
-    icon :'/my-app/src/icon/app/app_window_bra.png',
+    icon :'/my-app/src/image/icon/app/app_window_bra.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -47,7 +50,7 @@ app.on('ready', () => {
       notifyUser: true
   });
 
-  
+  //load div element
   ipcMain.on('load-file', (event, filePath) => {
     const fileFullPath = path.join(__dirname, filePath);
     fs.readFile(fileFullPath, 'utf8', (err, data) => {

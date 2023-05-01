@@ -24,7 +24,7 @@ module.exports = {
       "name": "@electron-forge/publisher-github",
       "config": {
         "repository": {
-          "owner": "poojaroonwit",
+          "owner": "24ep",
           "name": "LinesheetApps"
         }
       }
