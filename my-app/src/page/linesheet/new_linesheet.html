@@ -1,42 +1,42 @@
 
 <style>
 
-.ss-main .ss-values .ss-value {
-    display: flex;
-    user-select: none;
-    align-items: center;
-    width: fit-content;
-    background-color: #dfdfdf;
-    border-radius: var(--ss-border-radius);
-    animation-name: ss-valueIn;
-    animation-duration: var(--ss-animation-timing);
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-    margin: 3px;
-    padding:3px;
-}
-.ss-main .ss-values .ss-max {
-    display: flex;
-    user-select: none;
-    align-items: center;
-    width: fit-content;
-    font-size: 12px;
-    color: var(--ss-bg-color);
-    line-height: 1;
-    padding: var(--ss-spacing-s) var(--ss-spacing-m);
-    background-color: #dfdfdf;
-    border-radius: var(--ss-border-radius);
-}
-.ss-main .ss-values .ss-value .ss-value-text {
-    font-size: 12px;
-    color: #495057;
-    line-height: 1;
-    padding: var(--ss-spacing-s) var(--ss-spacing-m);
-    font-weight: 500;
-}
-.ss-main .ss-values .ss-value .ss-value-delete {
-    display: table;
-}
+    .ss-main .ss-values .ss-value {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        background-color: #dfdfdf;
+        border-radius: var(--ss-border-radius);
+        animation-name: ss-valueIn;
+        animation-duration: var(--ss-animation-timing);
+        animation-timing-function: ease-out;
+        animation-fill-mode: both;
+        margin: 3px;
+        padding:3px;
+    }
+    .ss-main .ss-values .ss-max {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        font-size: 12px;
+        color: var(--ss-bg-color);
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        background-color: #dfdfdf;
+        border-radius: var(--ss-border-radius);
+    }
+    .ss-main .ss-values .ss-value .ss-value-text {
+        font-size: 12px;
+        color: #495057;
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        font-weight: 500;
+    }
+    .ss-main .ss-values .ss-value .ss-value-delete {
+        display: table;
+    }
 </style>
 <div class="container px-4 mt-5">
     <div class="row gx-5" >
@@ -49,13 +49,13 @@
                 <input class="form-control" list="brand_list" id="brand" placeholder="Type to search...">
                 <datalist id="brand_list">
                     <option value="San Francisco">
-                        <option value="New York">
-                            <option value="Seattle">
-                                <option value="Los Angeles">
-                                    <option value="Chicago">
-                                    </datalist>
-                                    <label for="brand">Brand</label>
-                                </div>
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Chicago">
+                </datalist>
+                <label for="brand">Brand</label>
+                </div>
                                 <!-- number of sku -->
                                 <div class="form-floating m-3">
                                     <input type="number" min="1" max="5000" class="form-control" id="sku" placeholder="">
@@ -68,15 +68,31 @@
                                 </div>
                                 <!-- production tpe -->
                                 <div id='production_type_options'>
+                                    <p class="placeholder-glow ms-3">
+                                    <span class="placeholder w-25 opacity-50"></span>
+                                    <span class="placeholder w-75 opacity-50"></span>
+                                    </p>
                                 </div>
                                 <!-- store stock -->
                                 <div id='stock_source_options'>
+                                    <p class="placeholder-glow ms-3">
+                                        <span class="placeholder w-25 opacity-50"></span>
+                                        <span class="placeholder w-75 opacity-50"></span>
+                                        </p>
                                 </div>
                                 <!-- template -->
                                 <div id='template_options'>
+                                    <p class="placeholder-glow ms-3">
+                                        <span class="placeholder w-25 opacity-50"></span>
+                                        <span class="placeholder w-75 opacity-50"></span>
+                                        </p>
                                 </div>
                                 <!-- chanel -->
                                 <div id='sale_channel_options'>
+                                    <p class="placeholder-glow ms-3">
+                                        <span class="placeholder w-25 opacity-50"></span>
+                                        <span class="placeholder w-75 opacity-50"></span>
+                                        </p>
                                 </div>
                                 <div class="m-3">
                                     <button type="button" onclick="generate_linesheet()" id="generate_linesheet" class="btn btn-dark btn-sm" style="width: 100%;">Generate linesheet</button>
@@ -86,37 +102,111 @@
                             </div>
                         </div>
                     </div>
-<!-- <script src="/my-app/src/appFunction.js"></script> -->
 
 <script>
 
-// if (typeof PythonShell === 'undefined') {
+
+// const { PythonShell } = require('python-shell');
 const { PythonShell } = require('python-shell');
-// }
+global.SlimSelect = require('slim-select');
 
-// PythonShell.run('src/page/linesheet/config/get_option_family.py', {args: ['get_family']}, (err, [data]) => {
-//     console.log(data);
-//     if (err) throw err;
-//     data.textContent = data[0];
-//     document.getElementById("template_options").innerHTML = data;
-// });
+const configOptions = [
+  { id: 'template_options', args: ['get_family'], variableName: 'familyList' , slim_id:'#template_show' },
+  { id: 'sale_channel_options', args: ['get_input', 'sale_channel', 'multiple'], variableName: 'saleChannelList'  , slim_id:'#sale_channel_show' },
+  { id: 'production_type_options', args: ['get_input', 'production_type', 'single'], variableName: 'productionTypeList' , slim_id:'#production_type_show'  },
+  { id: 'stock_source_options', args: ['get_input', 'stock_source', 'multiple'], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  }
+];
 
+configOptions.forEach(option => {
+  let optionList = '';
+  new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
+  .on('error', err => {
+    console.error('An error occurred while running the Python script:', err);
+    // handle the error here
+    })
+    .on('message', message => {
+      optionList += message;
+      if (optionList) {
+        document.getElementById(option.id).innerHTML = optionList;
+        runSlimSelect(option.slim_id);
+      }
+    });
 
-
-let get_family = new PythonShell('src/page/linesheet/config/get_option_family.py');
-
-get_family.on('message', function(message) {
-//   console.log(message);
-  document.getElementById("template_options").innerHTML = 'test'+message;
-})
-
-get_family.end(function (err) {
-  if (err){
-    throw err;
-  };
-  console.log('finished');
 });
 
+function runSlimSelect(select_id) {
+    new SlimSelect({
+        select: select_id,
+        settings: {
+        closeOnSelect: false,
+        allowDeselectOption: true,
+        },
+        events: {
+        afterChange: (newVal) => {
+            input = select_id.replace('_show', '');
+            document.querySelector(input).value = newVal.map(val => val.value).join(',');
+        }
+        }
+    });
+
+}
+
+function generate_linesheet(){
+  Notiflix.Loading.standard('Generating ...');
+  brand = document.getElementById("brand").value
+  template = document.getElementById("template").value
+  sku = document.getElementById("sku").value
+  launch_date = document.getElementById("launch_date").value
+  stock_source = document.getElementById("stock_source").value
+  sale_channel = document.getElementById("sale_channel").value
+  production_type = document.getElementById("production_type").value
+
+//callpython
+let generate_form_ms = '';
+console.log('reading_python');
+  new PythonShell(`src/page/linesheet/config/new_linesheet_create.py`, {
+    args: ['generate_form', brand, template,sku,launch_date,stock_source,sale_channel,production_type]
+})
+.on('error', err => {
+    console.log('error');
+        console.error('An error occurred while running the Python script:', err);
+        Notiflix.Loading.remove();
+        Notiflix.Report.failure(
+            'Notiflix Failure',
+            err,
+            'Okay',
+        );
+    })
+    .on('stderr', message => {
+    console.error('Received error message:', message);
+    Notiflix.Loading.remove();
+    })
+    .on('message', message => {
+        generate_form_ms += message;
+      if (generate_form_ms) {
+        document.getElementById("generate_status").innerHTML = generate_form_ms;
+        Notiflix.Loading.remove();
+        Notiflix.Report.success(
+            'Generate complete',
+            'you can xxx',
+            'Okay',
+        );
+      }
+    });
+
+
+
+}
+
+// get_family.end(function (err) {
+    //   if (err){
+        //     throw err;
+        //   };
+        //   console.log('finished');
+        // });
+        // console.log('2');
+        // console.log(family_list);
+        // document.getElementById("template_options").innerHTML = family_list;
 
 </script>
 

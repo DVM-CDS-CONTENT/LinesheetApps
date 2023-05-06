@@ -8,26 +8,25 @@
   <link href="./style/style.css"></link>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="./js/script.js"></script>
+  <!-- <script src="./js/script.js"></script> -->
   <script src="./js/canvas2image.js"></script>
 
   <!-- multi-select -->
-  <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js" crossorigin="anonymous"></script>
   <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" crossorigin="anonymous"></link>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script> -->
+
   <!-- // save iframe to image -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js" crossorigin="anonymous"></script>
   <!-- notifix -->
-  <link rel="stylesheet" href="./lib/notifix/dist/notiflix-3.2.6.min.css" crossorigin="anonymous" />
-  <script src="./lib/notifix/dist/notiflix-3.2.6.min.js" crossorigin="anonymous" ></script>
+  <!-- <link rel="stylesheet" href="./lib/notifix/dist/notiflix-3.2.6.min.css" crossorigin="anonymous" /> -->
+  <!-- <script src="./lib/notifix/dist/notiflix-3.2.6.min.js" crossorigin="anonymous" ></script> -->
   <!-- meta-data image -->
   <script src="https://cdn.jsdelivr.net/npm/exif-js" crossorigin="anonymous"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js" integrity="sha512-bE9sOOprru4D2nRKDQSNvhdxw47Jd0r2s7QThKB/KkU5HEPuxsk9DbK+fYIMCYlCsXkwp6M87vj84sAtYWqxvw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_HktHBtDzoEip7332d19zrf"></script>
   <!-- grammarly -->
 
@@ -44,32 +43,10 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-<!-- python-sheell -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/python-shell@5.0.0/index.min.js"></script> -->
-
-<!-- python-pyscript -->
-<!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-<script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
-
-
-<!-- <embed type="text/html" src="page/nav.html"></embed>
-<embed type="text/html" src="page/welcome.html"></embed>
-<embed type="text/html" src="page/footers.html"></embed> -->
-
-<!-- <embed src="path/to/file.html" type="text/html"> -->
-
  <!-- Include jQuery -->
  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
  <script>
-
-    //  $(function(){
-    //   $("#nav").load("page/nav/welcome_nav.html");
-    //   $("#page").load("page/prompt_role.html");
-    //   //  $("#page").load("page/welcome.html");
-    //   //  $("#page").load("page/new_linesheet.html");
-    //   $("#footers").load("page/footers.html");
-    //  });
 
     const { ipcRenderer } = require('electron');
     const $ = require('jquery');
@@ -91,11 +68,12 @@
       });
     });
 
+    const Notiflix = require('notiflix');
 
     function load_page(page){
+      Notiflix.Loading.hourglass();
       $("#page").load(page);
-
-
+      Notiflix.Loading.remove();
     }
   </script>
 <style>
@@ -107,7 +85,7 @@
 </head>
 <body>
   <div id="nav"></div>
-  <div id="page" style="margin-top:28px"></div>
+  <div id="page" style="margin-top:28px;margin-bottom:50px"></div>
   <div id="footers">
   </div>
 
