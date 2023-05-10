@@ -139,18 +139,25 @@ def description(linesheet,linesheet_code,my_dict):
 # Replace with template
 
     if th_identity_linesheet in linesheet_code:
-        description = get_html_value('./app/convertor/description_layout/block_general.html', 'div', {'id': 'my-div'})
+        description = get_html_value('my-app/src/page/linesheet/convertor/description_layout/block_general.html', 'div', {'id': 'my-div'})
         description = description.replace("#bullet_point", bullet)
         description = description.replace("#short_description", linesheet['description_th'])
         description = description.replace("#caution", caution_th)
     elif en_identity_linesheet in linesheet_code:
-        description = get_html_value('./app/convertor/description_layout/block_general.html', 'div', {'id': 'my-div'})
+        description = get_html_value('my-app/src/page/linesheet/convertor/description_layout/block_general.html', 'div', {'id': 'my-div'})
         description = description.replace("#bullet_point", bullet)
         description = description.replace("#short_description", linesheet['description_en'])
         description = description.replace("#caution", caution_en)
 
 
     return description
+
+
+
+
+
+
+
 
 
 

@@ -161,7 +161,7 @@ function generate_linesheet(){
   sale_channel = document.getElementById("sale_channel").value
   production_type = document.getElementById("production_type").value
 
-//callpython
+// call python
 let generate_form_ms = '';
 console.log('reading_python');
   new PythonShell(`src/page/linesheet/config/new_linesheet_create.py`, {

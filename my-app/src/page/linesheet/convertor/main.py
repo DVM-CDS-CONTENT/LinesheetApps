@@ -45,6 +45,7 @@ mapping_option_value = pd.read_sql(query, cnx)
 global workbook
 global worksheet
 global ws_template
+global ws_model
 
 global pim_code
 global linesheet_code
@@ -73,6 +74,9 @@ data = {code: [] for code in template_code}
 # Create an empty DataFrame with the column headers from the list
 ws_template = pd.DataFrame(columns=template_code)
 ws_template.columns
+
+ws_model = pd.DataFrame(columns=template_code)
+ws_model.columns
 # insert function
 info = []
 error = []
@@ -81,7 +85,8 @@ warning = []
 ## read linesheet
 import xlrd
 import openpyxl
-linesheet = pd.read_excel('./app/convertor/CDS2301-0341 NS-18608 ANGEL BABY 31 SKUs Buyerfile.xlsm',index_col=False,dtype='string')
+
+linesheet = pd.read_excel('my-app/src/page/linesheet/convertor/CDS2301-0341 NS-18608 ANGEL BABY 31 SKUs Buyerfile.xlsm',index_col=False,dtype='string')
 original_linesheet=linesheet
 linesheet_columns= linesheet.columns.tolist()
 
@@ -114,6 +119,7 @@ for var_name, var_value in list(globals().items()):
 # create a dictionary mapping column names to functions
 function_dict = dict(zip(configurable['linesheet_code_with_local'], configurable['convertor_function']))
 template_dict = dict(zip(configurable['linesheet_code_with_local'], configurable['pim_code']))
+common_dict = dict(zip(configurable['linesheet_code_with_local'], configurable['grouping_common']))
 
 
 # apply the functions to the columns
@@ -122,8 +128,10 @@ for linesheet_code in linesheet.columns:
         linesheet = linesheet.drop(linesheet_code, axis=1)
     else:
         func = function_dict[linesheet_code]
+        var_type = common_dict[linesheet_code]
 
-        if  func != 'categories' :
+
+        if  func != 'categories' and func != 'categories full path' :
             func_call =  globals()[func]
 
             linesheet[linesheet_code] = linesheet.apply(func_call,axis=1, args=(linesheet_code,my_dict))
@@ -131,15 +139,47 @@ for linesheet_code in linesheet.columns:
         pim_code = template_dict[linesheet_code]
 
         try:
-            ws_template[pim_code]=linesheet[linesheet_code]
+            if 'variant' in var_type:
+                ws_template[pim_code]=linesheet[linesheet_code]
+            if 'common' in var_type:
+                ws_model[pim_code]=linesheet[linesheet_code]
+            if 'variant' not in var_type and 'common' not in var_type:
+                 print('missing variant in setting for '+pim_code)
         except:
             print('linesheet have no attribute '+pim_code)
 
-# ws_template.to_csv('template.csv' , index=False , encoding='utf-8')
-# linesheet.to_csv('linesheet.csv',index=False , encoding='utf-8')
 
-ws_template.to_excel("template.xlsx")
-linesheet.to_excel("linesheet.xlsx")
+# == grouping a product
+parent_info = {
+    'parent_prefix': 'GR',
+    'parent_bu': 'CDS',
+    'parent_pa_id': '01',
+    'parent_year': '05',
+    'parent_month': '10',
+    'running': 1
+}
+
+ws_template = add_parent_column(ws_template, **parent_info)
+ws_model = add_parent_column(ws_model, **parent_info)
+
+# remove duplicates for model file
+ws_model = ws_model.drop_duplicates()
+
+
+# remove empty columns using the updated drop_empty_columns function
+ws_template = remove_empty_columns(ws_template)
+ws_model = remove_empty_columns(ws_model)
+
+
+# rename and positioning for parent column in model template
+ws_model = rename_parent_column_and_move_positioning(ws_model)
+
+ws_template.to_excel("template.xlsx" ,index=False)
+ws_model.to_excel("model.xlsx",index=False)
+linesheet.to_excel("linesheet.xlsx",index=False)
+
+# print the DataFrame
+# print(ws_model.head(10).to_string(index=False))
 
 print(info)
 
