@@ -423,5 +423,6 @@ if __name__ == '__main__':
     try:
         func = globals()[function_name]
         func(*args)
+
     except KeyError:
         print('Unknown function name:', function_name)

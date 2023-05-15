@@ -86,7 +86,21 @@ warning = []
 import xlrd
 import openpyxl
 
-linesheet = pd.read_excel('my-app/src/page/linesheet/convertor/CDS2301-0341 NS-18608 ANGEL BABY 31 SKUs Buyerfile.xlsm',index_col=False,dtype='string')
+import sys
+import pandas as pd
+
+# Read JSON file path from command line argument
+file_path = sys.argv[1]
+
+# Read the JSON file into a DataFrame
+linesheet = pd.read_json(file_path)
+# Reset the index
+linesheet = linesheet.reset_index(drop=True)
+linesheet = linesheet.astype(str)
+
+print('Read file successfully')
+
+# linesheet = pd.read_excel('./app/convertor/CDS2301-0341 NS-18608 ANGEL BABY 31 SKUs Buyerfile.xlsm',index_col=False,dtype='string')
 original_linesheet=linesheet
 linesheet_columns= linesheet.columns.tolist()
 
@@ -145,8 +159,10 @@ for linesheet_code in linesheet.columns:
                 ws_model[pim_code]=linesheet[linesheet_code]
             if 'variant' not in var_type and 'common' not in var_type:
                  print('missing variant in setting for '+pim_code)
+
+            print('Processing ..' + pim_code)
         except:
-            print('linesheet have no attribute '+pim_code)
+            print('warning : linesheet have no attribute '+pim_code)
 
 
 # == grouping a product
@@ -159,6 +175,7 @@ parent_info = {
     'running': 1
 }
 
+print('grouping ..')
 ws_template = add_parent_column(ws_template, **parent_info)
 ws_model = add_parent_column(ws_model, **parent_info)
 
@@ -174,12 +191,20 @@ ws_model = remove_empty_columns(ws_model)
 # rename and positioning for parent column in model template
 ws_model = rename_parent_column_and_move_positioning(ws_model)
 
+print('packing ..')
 ws_template.to_excel("template.xlsx" ,index=False)
 ws_model.to_excel("model.xlsx",index=False)
 linesheet.to_excel("linesheet.xlsx",index=False)
+print('packed ..')
 
 # print the DataFrame
 # print(ws_model.head(10).to_string(index=False))
+# ws_template.to_csv('template.csv' , index=False , encoding='utf-8')
+# linesheet.to_csv('linesheet.csv',index=False , encoding='utf-8')
+
+# ws_template.to_excel("template.xlsx")
+# linesheet.to_excel("linesheet.xlsx")
+
 
 print(info)
 
