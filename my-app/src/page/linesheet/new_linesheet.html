@@ -38,63 +38,87 @@
         display: table;
     }
 </style>
-<div class="container px-4 mt-5">
-    <div class="row gx-5" >
-        <h6 class=" ms-3"><strong>Create new central linesheet </strong></h6>
-        <small class=" ms-3">Please fill product information a bit to generate a linesheet break by categories of product</small>
-        <div class="col">
 
-            <!-- brand name -->
-            <div class="form-floating m-3" >
-                <input class="form-control" list="brand_list" id="brand" placeholder="Type to search...">
-                <datalist id="brand_list">
-                    <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago">
-                </datalist>
-                <label for="brand">Brand</label>
+
+
+<div class="ps-3">
+    <div class="row gx-5" >
+        <div class="border-bottom pb-3 pt-4 shadow-sm text-white bg-dark">
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1"><h6 class=" ps-3"><strong><ion-icon name="bag-add-outline"></ion-icon>Create new central linesheet </strong></h6>
+                    <small class=" ps-3">Please fill product information a bit to generate a linesheet break by categories of product</small></div>
+                    <!-- <div class="p-2">Search</div> -->
+                    <div class="p-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_new_model">
+                            <ion-icon name="bag-add-outline"></ion-icon> Create new linesheet
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Button trigger modal -->
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="create_new_model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-black" id="staticBackdropLabel" >Create new linesheet</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body ps-5 pe-5">
+                                <span class="fw-bold text-black mt-2 mb-2">
+                                    <ion-icon name="cube-outline"></ion-icon>
+                                    Product information</span><br>
+                                <!-- brand name -->
+                                <label class="text-black mb-2 mt-2" for="brand">Brand</label>
+
+                                    <input class="form-control form-control-sm" list="brand_list" id="brand" placeholder="Type to search...">
+                                    <datalist id="brand_list">
+                                    </datalist>
+
                                 <!-- number of sku -->
-                                <div class="form-floating m-3">
-                                    <input type="number" min="1" max="5000" class="form-control" id="sku" placeholder="">
-                                    <label for="brand">Total SKUs</label>
-                                </div>
-                                <!-- launch date -->
-                                <div class="form-floating m-3">
-                                    <input type="date" class="form-control" id="launch_date" placeholder="">
-                                    <label for="launch_date">launch date</label>
-                                </div>
-                                <!-- production tpe -->
-                                <div id='production_type_options'>
-                                    <p class="placeholder-glow ms-3">
-                                    <span class="placeholder w-25 opacity-50"></span>
-                                    <span class="placeholder w-75 opacity-50"></span>
-                                    </p>
-                                </div>
+                                <label class="text-black mb-2 mt-2" for="brand">Total SKUs</label>
+
+                                <input type="number" min="1" max="5000" class="form-control form-control-sm" id="sku" placeholder="">
+
                                 <!-- store stock -->
                                 <div id='stock_source_options'>
-                                    <p class="placeholder-glow ms-3">
-                                        <span class="placeholder w-25 opacity-50"></span>
-                                        <span class="placeholder w-75 opacity-50"></span>
-                                        </p>
+                                    <p class="placeholder-glow">
+                                        <span class="placeholder w-25 opacity-25 bg-secondary"></span>
+                                        <span class="placeholder w-75 opacity-25 bg-secondary"></span>
+                                    </p>
                                 </div>
                                 <!-- template -->
                                 <div id='template_options'>
-                                    <p class="placeholder-glow ms-3">
-                                        <span class="placeholder w-25 opacity-50"></span>
-                                        <span class="placeholder w-75 opacity-50"></span>
-                                        </p>
+                                    <p class="placeholder-glow">
+                                        <span class="placeholder w-25 opacity-25 bg-secondary"></span>
+                                        <span class="placeholder w-75 opacity-25 bg-secondary"></span>
+                                    </p>
+                                </div>
+                                <hr class="text-secondary">
+                                <span class="fw-bold text-black mt-2 mb-2" class="text-black">
+                                    <ion-icon name="ticket-outline"></ion-icon>
+                                    Job information</span><br>
+                                <!-- launch date -->
+                                <label for="launch_date" class="text-black mt-2 mb-2">launch date</label>
+                                <input type="date" class="form-control from-control-sm" id="launch_date" placeholder="">
+
+                                <!-- production tpe -->
+                                <div id='production_type_options'>
+                                    <p class="placeholder-glow">
+                                        <span class="placeholder w-25 opacity-25 bg-secondary"></span>
+                                        <span class="placeholder w-75 opacity-25 bg-secondary"></span>
+                                    </p>
                                 </div>
                                 <!-- chanel -->
                                 <div id='sale_channel_options'>
-                                    <p class="placeholder-glow ms-3">
-                                        <span class="placeholder w-25 opacity-50"></span>
-                                        <span class="placeholder w-75 opacity-50"></span>
-                                        </p>
+                                    <p class="placeholder-glow">
+                                        <span class="placeholder w-25 opacity-25 bg-secondary"></span>
+                                        <span class="placeholder w-75 opacity-25 bg-secondary"></span>
+                                    </p>
                                 </div>
-                                <div class="m-3">
+                                <div class="mt-3 mb-3">
                                     <button type="button" onclick="generate_linesheet()" id="generate_linesheet" class="btn btn-dark btn-sm" style="width: 100%;">Generate linesheet</button>
                                     <div id='generate_status'>
                                     </div>
@@ -102,113 +126,172 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-<script>
+            </div>
+            <div class="col-3 pt-4 border-end">
+                <div id="folder_list">
+                    Linesheet
+                </div>
+
+            </div>
+            <div class="col-9 ps-0 pe-0">
+                <div id="linesheet_folder">
+                </div>
+            </div>
 
 
-// const { PythonShell } = require('python-shell');
-const { PythonShell } = require('python-shell');
-global.SlimSelect = require('slim-select');
 
-const configOptions = [
-  { id: 'template_options', args: ['get_family'], variableName: 'familyList' , slim_id:'#template_show' },
-  { id: 'sale_channel_options', args: ['get_input', 'sale_channel', 'multiple'], variableName: 'saleChannelList'  , slim_id:'#sale_channel_show' },
-  { id: 'production_type_options', args: ['get_input', 'production_type', 'single'], variableName: 'productionTypeList' , slim_id:'#production_type_show'  },
-  { id: 'stock_source_options', args: ['get_input', 'stock_source', 'multiple'], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  }
-];
+        </div>
+    </div>
 
-configOptions.forEach(option => {
-  let optionList = '';
-  new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
-  .on('error', err => {
-    console.error('An error occurred while running the Python script:', err);
-    // handle the error here
-    })
-    .on('message', message => {
-      optionList += message;
-      if (optionList) {
-        document.getElementById(option.id).innerHTML = optionList;
-        runSlimSelect(option.slim_id);
-      }
-    });
+    <script>
 
-});
+        var PythonShell = ''
+        var DataTable = ''
+        var { PythonShell } = require('python-shell');
+        var {DataTable}= require('datatables.net-dt');
 
-function runSlimSelect(select_id) {
-    new SlimSelect({
-        select: select_id,
-        settings: {
-        closeOnSelect: false,
-        allowDeselectOption: true,
-        },
-        events: {
-        afterChange: (newVal) => {
-            input = select_id.replace('_show', '');
-            document.querySelector(input).value = newVal.map(val => val.value).join(',');
+
+
+
+
+        var configOptions = [
+        { id: 'template_options', args: ['get_family'], variableName: 'familyList' , slim_id:'#template_show' },
+        { id: 'sale_channel_options', args: ['get_input', 'sale_channel', 'multiple'], variableName: 'saleChannelList'  , slim_id:'#sale_channel_show' },
+        { id: 'production_type_options', args: ['get_input', 'production_type', 'single'], variableName: 'productionTypeList' , slim_id:'#production_type_show'  },
+        { id: 'stock_source_options', args: ['get_input', 'stock_source', 'multiple'], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  }
+        ];
+
+
+        global.SlimSelect = require('slim-select');
+
+
+
+        configOptions.forEach(option => {
+            let optionList = '';
+            new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
+            .on('error', err => {
+                console.error('An error occurred while running the Python script:', err);
+                // handle the error here
+            })
+            .on('message', message => {
+                optionList += message;
+                if (optionList) {
+                    document.getElementById(option.id).innerHTML = optionList;
+                    runSlimSelect(option.slim_id);
+                }
+            });
+
+        });
+
+        function runSlimSelect(select_id) {
+            new SlimSelect({
+                select: select_id,
+                settings: {
+                    closeOnSelect: false,
+                    allowDeselectOption: true,
+                },
+                events: {
+                    afterChange: (newVal) => {
+                        input = select_id.replace('_show', '');
+                        document.querySelector(input).value = newVal.map(val => val.value).join(',');
+                    }
+                }
+            });
+
         }
+
+        function generate_linesheet(){
+            Notiflix.Loading.standard('Generating ...');
+            brand = document.getElementById("brand").value
+            template = document.getElementById("template").value
+            sku = document.getElementById("sku").value
+            launch_date = document.getElementById("launch_date").value
+            stock_source = document.getElementById("stock_source").value
+            sale_channel = document.getElementById("sale_channel").value
+            production_type = document.getElementById("production_type").value
+
+            // call python
+            let generate_form_ms = '';
+            console.log('reading_python');
+            new PythonShell(`src/page/linesheet/config/new_linesheet_create.py`, {
+                args: ['generate_form', brand, template,sku,launch_date,stock_source,sale_channel,production_type]
+            })
+            .on('error', err => {
+                console.log('error');
+                console.error('An error occurred while running the Python script:', err);
+                Notiflix.Loading.remove();
+                Notiflix.Report.failure(
+                'Notiflix Failure',
+                err,
+                'Okay',
+                );
+            })
+            .on('stderr', message => {
+                console.error('Received error message:', message);
+                Notiflix.Loading.remove();
+            })
+            .on('message', message => {
+                Notiflix.Loading.remove();
+                generate_form_ms += message;
+                if (generate_form_ms) {
+
+                    Notiflix.Report.success(
+                    'Generate complete',
+                    'you file name is '+ generate_form_ms,
+                    'Open the file',
+                    function cb() {
+                        new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
+                            args: [generate_form_ms]
+                        })
+                    },
+                    );
+                }
+            });
+
+
+
         }
-    });
+        var linesheetList=''
+        new PythonShell(`src/page/linesheet/config/new_linesheet_get_list.py`, {args: ['nothing']})
+        .on('error', err => {
+            console.error('An error occurred while running the Python script:', err);
+            // handle the error here
+        })
+        .on('message', message => {
+            linesheetList += message;
+            if (linesheetList) {
+                document.getElementById('linesheet_folder').innerHTML = linesheetList;
 
-}
-
-function generate_linesheet(){
-  Notiflix.Loading.standard('Generating ...');
-  brand = document.getElementById("brand").value
-  template = document.getElementById("template").value
-  sku = document.getElementById("sku").value
-  launch_date = document.getElementById("launch_date").value
-  stock_source = document.getElementById("stock_source").value
-  sale_channel = document.getElementById("sale_channel").value
-  production_type = document.getElementById("production_type").value
-
-// call python
-let generate_form_ms = '';
-console.log('reading_python');
-  new PythonShell(`src/page/linesheet/config/new_linesheet_create.py`, {
-    args: ['generate_form', brand, template,sku,launch_date,stock_source,sale_channel,production_type]
-})
-.on('error', err => {
-    console.log('error');
-        console.error('An error occurred while running the Python script:', err);
-        Notiflix.Loading.remove();
-        Notiflix.Report.failure(
-            'Notiflix Failure',
-            err,
-            'Okay',
-        );
-    })
-    .on('stderr', message => {
-    console.error('Received error message:', message);
-    Notiflix.Loading.remove();
-    })
-    .on('message', message => {
-        generate_form_ms += message;
-      if (generate_form_ms) {
-        document.getElementById("generate_status").innerHTML = generate_form_ms;
-        Notiflix.Loading.remove();
-        Notiflix.Report.success(
-            'Generate complete',
-            'you can xxx',
-            'Okay',
-        );
-      }
-    });
+            }
 
 
 
-}
+        });
 
-// get_family.end(function (err) {
-    //   if (err){
-        //     throw err;
-        //   };
-        //   console.log('finished');
-        // });
-        // console.log('2');
-        // console.log(family_list);
-        // document.getElementById("template_options").innerHTML = family_list;
+        function open_xlsm(file_location){
+            new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
+                args: [file_location]
+            })
+            .on('error', err => {
+                console.error('An error occurred while running the Python script:', err);
 
-</script>
+            })
+        }
+        new DataTable('#new_linesheet_list');
+
+        // get_family.end(function (err) {
+            //   if (err){
+                //     throw err;
+                //   };
+                //   console.log('finished');
+                // });
+                // console.log('2');
+                // console.log(family_list);
+                // document.getElementById("template_options").innerHTML = family_list;
+
+            </script>
 
 
 

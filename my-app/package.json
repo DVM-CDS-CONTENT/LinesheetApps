@@ -22,6 +22,7 @@
     "-": "^0.0.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
     "@electron-forge/publisher-github": "^6.1.1",
+    "datatables.net-dt": "^1.13.4",
     "dom-to-image": "^2.6.0",
     "electron-prebuilt": "^1.4.13",
     "electron-squirrel-startup": "^1.0.0",

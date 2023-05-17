@@ -7,17 +7,18 @@ def get_family():
     query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
     attribute = pd.read_sql(query, cnx)
     columns = attribute.columns.tolist()
-    columns_to_exclude = ['id', 'information_type', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'session', 'sub_session', 'merge_group', 'sale_channel', 'example_option', 'description', 'formula', 'status', 'specific_brand']
+    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common']
     columns_to_include = [value for value in columns if value not in columns_to_exclude]
     options = ''.join([f'<option value="{value}">{value}</option>' for value in columns_to_include])
     html = f'''
-        <label for="stock_source" class="ms-3">Template</label>
-        <div class="form-floating m-3">
+            <label for="stock_source" class="text-black mb-2 mt-2">Template</label>
+
             <input type="hidden" id="template" name="template" value="">
-            <select multiple id="template_show" name="template_show" aria-label="stock_source">
+            <select multiple id="template_show" name="template_show" aria-label="stock_source" class="">
                 {options}
             </select>
-        </div>
+
+
     '''
     return html
 
@@ -37,13 +38,13 @@ def get_input(attribute, type):
         default_option_str= ",".join(default_option_list)
         optgroup += f'<optgroup label="{group}" data-selectall="true">{options}</optgroup>'
     html = f'''
-        <label for="stock_source" class="ms-3">{attribute}</label>
-        <div class="form-floating m-3">
+            <label for="stock_source" class="text-black mb-2 mt-2">{attribute}</label>
+
             <input type="hidden" id="{attribute}" name="{attribute}" value="{default_option_str}">
-            <select {type} id="{attribute}_show" name="{attribute}_show" aria-label="{attribute}">
+            <select {type} id="{attribute}_show" name="{attribute}_show" class="" aria-label="{attribute}">
                 {optgroup}
             </select>
-        </div>
+
     '''
     return html
 
