@@ -129,13 +129,13 @@
                 </div>
 
             </div>
-            <div class="col-3 pt-4 border-end">
+            <div class="col-2 pt-4 border-end">
                 <div id="folder_list">
                     Linesheet
                 </div>
 
             </div>
-            <div class="col-9 ps-0 pe-0">
+            <div class="col-10 ps-0 pe-0">
                 <div id="linesheet_folder">
                 </div>
             </div>
@@ -253,22 +253,46 @@
 
 
         }
-        var linesheetList=''
-        new PythonShell(`src/page/linesheet/config/new_linesheet_get_list.py`, {args: ['nothing']})
-        .on('error', err => {
-            console.error('An error occurred while running the Python script:', err);
-            // handle the error here
-        })
-        .on('message', message => {
-            linesheetList += message;
-            if (linesheetList) {
-                document.getElementById('linesheet_folder').innerHTML = linesheetList;
 
-            }
+        function get_folder_linesheetlist(){
+            var folder_list_linesheetList=''
+            new PythonShell(`src/page/linesheet/config/get_folder_list.py`, {args: ['nothing']})
+            .on('error', err => {
+                console.error('An error occurred while running the Python script:', err);
+                // handle the error here
+            })
+            .on('message', message => {
+                folder_list_linesheetList += message;
+                if (folder_list_linesheetList) {
+                    document.getElementById('folder_list').innerHTML = folder_list_linesheetList;
 
+                }
 
+            });
 
-        });
+        }
+
+        get_folder_linesheetlist();
+
+        function get_linesheetlist(folder){
+            var linesheetList=''
+            new PythonShell(`src/page/linesheet/config/new_linesheet_get_list.py`, {args: [folder]})
+            .on('error', err => {
+                console.error('An error occurred while running the Python script:', err);
+                // handle the error here
+            })
+            .on('message', message => {
+                linesheetList += message;
+                if (linesheetList) {
+                    document.getElementById('linesheet_folder').innerHTML = linesheetList;
+
+                }
+
+            });
+
+        }
+
+        get_linesheetlist('linesheet');
 
         function open_xlsm(file_location){
             new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
