@@ -1,6 +1,4 @@
-
 <style>
-
     .ss-main .ss-values .ss-value {
         display: flex;
         user-select: none;
@@ -38,9 +36,6 @@
         display: table;
     }
 </style>
-
-
-
 <div class="ps-3">
     <div class="row gx-5" >
         <div class="border-bottom pb-3 pt-4 shadow-sm text-white bg-dark">
@@ -54,10 +49,7 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Button trigger modal -->
-
-
                 <!-- Modal -->
                 <div class="modal fade" id="create_new_model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -72,16 +64,12 @@
                                     Product information</span><br>
                                 <!-- brand name -->
                                 <label class="text-black mb-2 mt-2" for="brand">Brand</label>
-
                                     <input class="form-control form-control-sm" list="brand_list" id="brand" placeholder="Type to search...">
                                     <datalist id="brand_list">
                                     </datalist>
-
                                 <!-- number of sku -->
                                 <label class="text-black mb-2 mt-2" for="brand">Total SKUs</label>
-
                                 <input type="number" min="1" max="5000" class="form-control form-control-sm" id="sku" placeholder="">
-
                                 <!-- store stock -->
                                 <div id='stock_source_options'>
                                     <p class="placeholder-glow">
@@ -103,7 +91,6 @@
                                 <!-- launch date -->
                                 <label for="launch_date" class="text-black mt-2 mb-2">launch date</label>
                                 <input type="date" class="form-control from-control-sm" id="launch_date" placeholder="">
-
                                 <!-- production tpe -->
                                 <div id='production_type_options'>
                                     <p class="placeholder-glow">
@@ -127,34 +114,24 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-2 pt-4 border-end">
                 <div id="folder_list">
                     Linesheet
                 </div>
-
             </div>
             <div class="col-10 ps-0 pe-0">
                 <div id="linesheet_folder">
                 </div>
             </div>
-
-
-
         </div>
     </div>
-
     <script>
-
         var PythonShell = ''
         var DataTable = ''
         var { PythonShell } = require('python-shell');
         var {DataTable}= require('datatables.net-dt');
-
-
-
-
+        var XLSX = require('xlsx');
 
         var configOptions = [
         { id: 'template_options', args: ['get_family'], variableName: 'familyList' , slim_id:'#template_show' },
@@ -163,11 +140,7 @@
         { id: 'stock_source_options', args: ['get_input', 'stock_source', 'multiple'], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  }
         ];
 
-
         global.SlimSelect = require('slim-select');
-
-
-
         configOptions.forEach(option => {
             let optionList = '';
             new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
@@ -182,9 +155,7 @@
                     runSlimSelect(option.slim_id);
                 }
             });
-
         });
-
         function runSlimSelect(select_id) {
             new SlimSelect({
                 select: select_id,
@@ -199,9 +170,7 @@
                     }
                 }
             });
-
         }
-
         function generate_linesheet(){
             Notiflix.Loading.standard('Generating ...');
             brand = document.getElementById("brand").value
@@ -210,8 +179,7 @@
             launch_date = document.getElementById("launch_date").value
             stock_source = document.getElementById("stock_source").value
             sale_channel = document.getElementById("sale_channel").value
-            production_type = document.getElementById("production_type").value
-
+            production_type = document.getElementById("production_type_show").value
             // call python
             let generate_form_ms = '';
             console.log('reading_python');
@@ -236,7 +204,6 @@
                 Notiflix.Loading.remove();
                 generate_form_ms += message;
                 if (generate_form_ms) {
-
                     Notiflix.Report.success(
                     'Generate complete',
                     'you file name is '+ generate_form_ms,
@@ -249,11 +216,7 @@
                     );
                 }
             });
-
-
-
         }
-
         function get_folder_linesheetlist(){
             var folder_list_linesheetList=''
             new PythonShell(`src/page/linesheet/config/get_folder_list.py`, {args: ['nothing']})
@@ -265,15 +228,10 @@
                 folder_list_linesheetList += message;
                 if (folder_list_linesheetList) {
                     document.getElementById('folder_list').innerHTML = folder_list_linesheetList;
-
                 }
-
             });
-
         }
-
         get_folder_linesheetlist();
-
         function get_linesheetlist(folder){
             var linesheetList=''
             new PythonShell(`src/page/linesheet/config/new_linesheet_get_list.py`, {args: [folder]})
@@ -285,38 +243,51 @@
                 linesheetList += message;
                 if (linesheetList) {
                     document.getElementById('linesheet_folder').innerHTML = linesheetList;
-
                 }
-
             });
-
         }
-
         get_linesheetlist('linesheet');
-
         function open_xlsm(file_location){
             new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
                 args: [file_location]
             })
             .on('error', err => {
                 console.error('An error occurred while running the Python script:', err);
-
             })
         }
-        new DataTable('#new_linesheet_list');
+        // new DataTable('#new_linesheet_list');
+        function convertExcelToJsonTransposed(filePath,sheet_name) {
+            var workbook = XLSX.readFile(filePath);
+            var worksheet = workbook.Sheets[sheet_name];
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+            var headers = jsonData[0];
+            var rows = jsonData.slice(1);
+            var transposedData = rows.map(row => {
+                var rowData = {};
+                row.forEach((cellValue, index) => {
+                    rowData[headers[index]] = cellValue;
+                });
+                return rowData;
+            });
+            return transposedData;
+        }
+        function convertExcelToJson(filePath,sheet_name) {
+            var workbook = XLSX.readFile(filePath);
+            var worksheet = workbook.Sheets[sheet_name];
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 0, defval: '' });
 
-        // get_family.end(function (err) {
-            //   if (err){
-                //     throw err;
-                //   };
-                //   console.log('finished');
-                // });
-                // console.log('2');
-                // console.log(family_list);
-                // document.getElementById("template_options").innerHTML = family_list;
+            // Remove rows 2 to 11
+            jsonData.splice(0, 12);
 
-            </script>
+            jsonData.filter(row => row['ibc'] !== '');
+            // Find the columns to delete
+            var columnsToDelete = Object.keys(jsonData[0]).filter(key => key.startsWith('__EMPTY'));
 
-
-
-
+            return jsonData;
+        }
+         function read_json_xlsm(filePath) {
+            // Storing a variable in session storage
+            sessionStorage.setItem('linesheet_file_path', filePath);
+            load_page('page/linesheet/edit_linesheet.html');
+        }
+    </script>

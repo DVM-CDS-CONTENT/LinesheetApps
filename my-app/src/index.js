@@ -1,7 +1,9 @@
 const { app, BrowserWindow, ipcMain, contextBridge  } = require('electron');
+
 const path = require('path');
 const fs = require('fs');
 const { autoUpdater, AppUpdater } = require("electron-updater");
+
 
 process.env.GITHUB_TOKEN = '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';
 
@@ -43,6 +45,7 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 app.on('ready', () => {
+
   //update apps
   updateApp = require('update-electron-app');
   updateApp({
