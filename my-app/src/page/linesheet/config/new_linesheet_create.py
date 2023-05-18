@@ -39,6 +39,7 @@ def add_column(row,color,background,lists,wrapText,border,comment,author,allow_c
 # Add the columns to the worksheet, starting at cell A1
 # ===========
 def add_header(row,color,background,lists,bold,prefix = '',merge_cell = False,border=True):
+    wrapText = False
     for i, value in enumerate(lists):
         # Identity cell
         cell = worksheet.cell(row=row, column=i+1)
@@ -134,15 +135,17 @@ def generate_track_id():
 # ===========
 def clean_string(string):
     """Replace special characters and convert a string to lowercase."""
-    # # Replace special characters using a regular expression
-    # string = re.sub(r'[^\w\s]', '', string)
-    # # Create a translation table that removes special characters
-    # trans_table = string.maketrans('', '', string.punctuation)
-    # # Replace special characters using the translation table
-    # string = string.translate(trans_table)
-    # Convert the string to lowercase
     string = string.lower()
     return string
+# ===========
+def convert_sale_online_query(sale_channel):
+    if sale_channel=='offline':
+            return  "and sale_channel like '%offline%'"
+    elif sale_channel=='online':
+            return  "and sale_channel like '%online%'"
+    else :
+            return  ""
+
 #--- Generate functions
 # ===========
 def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,production_type):
@@ -156,12 +159,13 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     filter_template_cat_sql = template.replace(",", "','")
     filter_template_header_sql = template.replace(",", "<> 'N' or ")
     selected_template_list = list(map(str,template.split(",")))
+
     # - Connect to the database
     # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
 
     # - get header linesheet
-    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' and sale_channel like '%"+sale_channel+"%' and ("+filter_template_header_sql+" <> 'N')"
+    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' "+convert_sale_online_query(sale_channel)+" and ("+filter_template_header_sql+" <> 'N')"
     attribute = pd.read_sql_query(query, engine)
     # attribute = pd.read_sql(query, cnx)
     attribute = attribute.drop_duplicates(subset=['linesheet_code'])
@@ -371,14 +375,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     files = os.listdir(current_directory)
     import win32com.client
     # Open the Excel file
-    xl = win32com.client.Dispatch("Excel.Application")
-    xl.Visible = True
+    xl = win32com.client.DispatchEx("Excel.Application")
+    xl.Visible = False
     xl.DisplayAlerts = False
     xl.AutomationSecurity = 3
-    # try:
+
     wb = xl.Workbooks.Open(current_directory+'\\linesheet\\CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm')
-    # except:
-        # wb = xl.Workbooks.Open('../linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm')
     # Access the sheet
     sheet = wb.Sheets("IM_FORM")
     # Access the VBA project
@@ -399,22 +401,18 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # sheet.CodeName = "Sheet1"
     sheet.OnSheetActivate = "im_form.Worksheet_Change"
     filename = 'linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm'
-    try:
-        wb.win32com.client.save()
-    except:
-        try:
-            wb.save()
-        except:
-            xl.Application.Quit()
+    # try:
+        # wb.win32com.client.save()
+    # except:
+    wb.Save()
+    wb.Close()
+
+        # Quit Excel
+    xl.Quit()
     # Close the Excel application
     xl.Application.Quit()
-    # Save the Excel file
-    # wb.save('linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_M'+track_id+'.xlsm')
-    # os.remove('linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm')
-# open linesheet
-    import os
-    os.startfile('linesheet\\'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm')
-# Start the index.html file
+
+    return 'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm'
 
 if __name__ == '__main__':
     import sys
@@ -422,6 +420,7 @@ if __name__ == '__main__':
     args = sys.argv[2:]
     try:
         func = globals()[function_name]
-        func(*args)
+        print(func(*args))
+
     except KeyError:
         print('Unknown function name:', function_name)
