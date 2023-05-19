@@ -42,16 +42,28 @@ const createWindow = () => {
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 app.on('ready', () => {
 
-  //update apps
-  updateApp = require('update-electron-app');
-  updateApp({
-      updateInterval: '1 hour',
-      notifyUser: true
-  });
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+      // Load the url of the dev server if in development mode
+      win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+      if (!process.env.IS_TEST) win.webContents.openDevTools()
+  } else {
+    const server = 'https://dist.anystack.sh/v1/electron'
+    const productId = '9934be7a-a2f7-40d9-8881-5190fe96c6c1'
+    const url = `${server}/${productId}/releases`
+
+      autoUpdater.setFeedURL({
+          url: url,
+          serverType: 'json',
+          provider: "generic",
+          useMultipleRangeRequest: false
+      })
+
+      autoUpdater.checkForUpdatesAndNotify()
+  }
 
   //load div element
   ipcMain.on('load-file', (event, filePath) => {
