@@ -1,6 +1,6 @@
 module.exports = {
   packagerConfig: {
-   // icon: '/my-app/src/image/icon/app/icon.png' // no file extension required
+   icon: 'my-app/src/image/icon/app/icon.png' // no file extension required
   },
   rebuildConfig: {},
   makers: [
@@ -8,9 +8,9 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         // An URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features).
-        // iconUrl: '/src/image/icon/app/icon.ico',
+        // iconUrl: 'my-app/src/image/icon/app/icon.ico',
         // The ICO file to use as the icon for the generated Setup.exe
-        //setupIcon: '/my-app/src/image/icon/app/icon.ico',
+        // setupIcon: 'my-app/src/image/icon/app/icon.ico',
       },
     },
     {
@@ -22,7 +22,7 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
       options: {
-       // icon: '/my-app/src/image/icon/app/icon.png',
+      //  icon: 'my-app/src/image/icon/app/icon.png',
       },},
     },
     {
@@ -30,16 +30,16 @@ module.exports = {
       config: {},
     },
   ],
-  publishers: [
-    {
-      "name": "@electron-forge/publisher-github",
-      "config": {
-        "repository": {
-          "owner": "24ep",
-          "name": "LinesheetApps"
-        }
-      }
-    }
-  ],
+  // publishers: [
+  //   {
+  //     "name": "@electron-forge/publisher-github",
+  //     "config": {
+  //       "repository": {
+  //         "owner": "24ep",
+  //         "name": "spear"
+  //       }
+  //     }
+  //   }
+  // ],
 };
 

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, contextBridge  } = require('electron');
+const { app, BrowserWindow, ipcMain, contextBridge  ,autoUpdater} = require('electron');
 
 const path = require('path');
 const fs = require('fs');
@@ -26,7 +26,7 @@ const createWindow = () => {
     minWidth:960,
     minHeight:600,
     frame:false,
-    icon :'/my-app/src/image/icon/app/icon.png',
+    icon :'src/image/icon/app/icon.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -44,26 +44,44 @@ const createWindow = () => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 };
+
+// const { app, autoUpdater } = require('electron')
+autoUpdater.setFeedURL('https://dist.unlock.sh/v1/electron/9934de97-8f51-4518-8c9d-7fad7a0006c7')
+autoUpdater.checkForUpdates()
+
+setInterval(() => {
+  autoUpdater.checkForUpdates()
+}, 30000)
+
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  // autoUpdater.quitAndInstall()
+console.log('update installed')
+})
+
 app.on('ready', () => {
 
-  if (process.env.WEBPACK_DEV_SERVER_URL) {
-      // Load the url of the dev server if in development mode
-      win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-      if (!process.env.IS_TEST) win.webContents.openDevTools()
-  } else {
-    const server = 'https://dist.anystack.sh/v1/electron'
-    const productId = '9934be7a-a2f7-40d9-8881-5190fe96c6c1'
-    const url = `${server}/${productId}/releases`
 
-      autoUpdater.setFeedURL({
-          url: url,
-          serverType: 'json',
-          provider: "generic",
-          useMultipleRangeRequest: false
-      })
+  // autoUpdater.checkForUpdates()
+  autoUpdater.checkForUpdatesAndNotify()
 
-      autoUpdater.checkForUpdatesAndNotify()
-  }
+  // if (process.env.WEBPACK_DEV_SERVER_URL) {
+  //     // Load the url of the dev server if in development mode
+  //     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+  //     if (!process.env.IS_TEST) win.webContents.openDevTools()
+  // } else {
+  //   const server = 'https://dist.anystack.sh/v1/electron'
+  //   const productId = '9934de97-8f51-4518-8c9d-7fad7a0006c7'
+  //   const url = `${server}/${productId}/releases`
+
+  //     autoUpdater.setFeedURL({
+  //         url: url,
+  //         serverType: 'json',
+  //         provider: "generic",
+  //         useMultipleRangeRequest: false
+  //     })
+
+  //     autoUpdater.checkForUpdatesAndNotify()
+  // }
 
   //load div element
   ipcMain.on('load-file', (event, filePath) => {

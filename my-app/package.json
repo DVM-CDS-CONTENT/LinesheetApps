@@ -1,8 +1,8 @@
 {
-  "name": "conpad",
-  "productName": "conpad",
-  "version": "2.0.9",
-  "description": "conpad",
+  "name": "spear",
+  "productName": "spear",
+  "version": "2.0.0",
+  "description": "spear",
   "repository": "https://github.com/DVM-CDS-CONTENT/LinesheetApps",
   "main": "src/index.js",
   "scripts": {
