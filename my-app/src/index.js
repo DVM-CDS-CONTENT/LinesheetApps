@@ -17,31 +17,50 @@ if (require('electron-squirrel-startup')) {
 
 
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 600,
-    minWidth:960,
-    minHeight:600,
-    frame:false,
-    icon :'/my-app/src/image/icon/app/icon.png',
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation:false
-    },
-    titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      color: '#262626',
-      symbolColor: '#FFFFFF',
-      height:28
-    }
+  // Create the splash window.
+  const splash = new BrowserWindow({ 
+    width: 500, 
+    height: 500, 
+    transparent: true, 
+    frame: false, 
+    alwaysOnTop: true 
   });
 
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  splash.loadFile(path.join(__dirname, 'splash.html'));
+  splash.center();
+
+  setTimeout(function () {
+    splash.close();
+
+    // Create the main window.
+    const mainWindow = new BrowserWindow({
+      width: 1200,
+      height: 600,
+      minWidth: 960,
+      minHeight: 600,
+      frame: false,
+      icon: '/my-app/src/image/icon/app/icon.png',
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js'),
+        nodeIntegration: true,
+        contextIsolation: false
+      },
+      titleBarStyle: 'hidden',
+      titleBarOverlay: {
+        color: '#262626',
+        symbolColor: '#FFFFFF',
+        height: 28
+      }
+    });
+
+    // Load the index.html in the main window.
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }, 5000);
 };
+
 app.on('ready', () => {
   //update apps
   updateApp = require('update-electron-app');
