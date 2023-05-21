@@ -165,7 +165,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
 
     # - get header linesheet
-    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' "+convert_sale_online_query(sale_channel)+" and ("+filter_template_header_sql+" <> 'N')"
+    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' "+convert_sale_online_query(sale_channel)+" and ("+filter_template_header_sql+" not in ('N','AR'))"
     attribute = pd.read_sql_query(query, engine)
     # attribute = pd.read_sql(query, cnx)
     attribute = attribute.drop_duplicates(subset=['linesheet_code'])
@@ -292,13 +292,13 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     worksheet_form.cell(row=4, column=3).value = 'Value'
     ## add Row launch date
     worksheet_form.cell(row=5, column=2).value = 'Launch date'
-    worksheet_form.cell(row=5, column=3).value = launch_date
+    worksheet_form.cell(row=5, column=3).value = '=IN_LINK_DATA!B6' #launch_date
     ## add Row Production type
     worksheet_form.cell(row=6, column=2).value = 'Production type'
-    worksheet_form.cell(row=6, column=3).value = production_type
+    worksheet_form.cell(row=6, column=3).value = '=IN_LINK_DATA!B7' #production_type
     ## add stock_source stock
     worksheet_form.cell(row=7, column=2).value = 'stock_source'
-    worksheet_form.cell(row=7, column=3).value = stock_source
+    worksheet_form.cell(row=7, column=3).value = '=IN_LINK_DATA!B4' #stock_source
     worksheet_form.cell(row=4, column=2).font = openpyxl.styles.Font(color='B41010',bold=False)
     worksheet_form.cell(row=4, column=3).font = openpyxl.styles.Font(color='B41010',bold=False)
     worksheet_form.cell(row=5, column=2).font = openpyxl.styles.Font(color='F0F0F0',bold=False)
@@ -394,9 +394,11 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     code_name = sheet.codeName
     excelModule = wb.VBProject.VBComponents(code_name)
     # Insert the macro code
+    import os
 
 
-    with open('src/page/linesheet/config/multi_select_cell.vba', 'r') as f:
+
+    with open(os.path.join(os.path.dirname(__file__), 'multi_select_cell.vba'), 'r') as f:
         code = f.read()
     # module.CodeModule.AddFromString(code)
     excelModule.CodeModule.AddFromString(code)

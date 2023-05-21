@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "datatables.net-dt": "^1.13.4",
-    "xlsx": "^0.18.5"
-  }
-}

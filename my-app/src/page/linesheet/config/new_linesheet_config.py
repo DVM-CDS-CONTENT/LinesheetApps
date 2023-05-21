@@ -17,8 +17,6 @@ def get_family():
             <select multiple id="template_show" name="template_show" aria-label="stock_source" class="">
                 {options}
             </select>
-
-
     '''
     return html
 

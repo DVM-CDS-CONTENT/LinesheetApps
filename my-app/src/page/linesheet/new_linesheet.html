@@ -127,13 +127,13 @@
                     </div>
                 </div>
             </div>
-<div class="ms-3 me-3">
+<div class="ms-3 me-3" style="    height: -webkit-fill-available;">
 
-    <div class="row gx-5 ps-3" >
+    <div class="row gx-5 ps-3 h-100" >
 
                     <div class="col-2 pt-4 border-end">
                         <div id="folder_list">
-                            Linesheet
+                            <!-- Linesheet -->
                         </div>
                     </div>
                     <div class="col-10 ps-0 pe-0">
@@ -148,6 +148,7 @@
                 var { PythonShell } = require('python-shell');
                 var {DataTable}= require('datatables.net-dt');
                 var XLSX = require('xlsx');
+                var path = require('path');
 
                 var configOptions = [
                 { id: 'template_options', args: ['get_family'], variableName: 'familyList' , slim_id:'#template_show' },
@@ -159,10 +160,16 @@
                 global.SlimSelect = require('slim-select');
                 configOptions.forEach(option => {
                     let optionList = '';
-                    new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
+
+                    new PythonShell(path.join(__dirname, 'page/linesheet/config/new_linesheet_config.py'), { args: option.args })
+                    // new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
                     .on('error', err => {
                         console.error('An error occurred while running the Python script:', err);
                         // handle the error here
+                    })
+                    .on('stderr', message => {
+                        console.error('Received error message:', message);
+                        // Notiflix.Loading.remove();
                     })
                     .on('message', message => {
                         optionList += message;
@@ -199,7 +206,7 @@
                     // call python
                     let generate_form_ms = '';
                     console.log('reading_python');
-                    new PythonShell(`src/page/linesheet/config/new_linesheet_create.py`, {
+                    new PythonShell(path.join(__dirname, `page/linesheet/config/new_linesheet_create.py`), {
                         args: ['generate_form', brand, template,sku,launch_date,stock_source,sale_channel,production_type]
                     })
                     .on('error', err => {
@@ -225,7 +232,7 @@
                             'you file name is '+ generate_form_ms,
                             'Open the file',
                             function cb() {
-                                new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
+                                new PythonShell(path.join(__dirname, `page/linesheet/config/open_excel_linesheet.py`), {
                                     args: [generate_form_ms]
                                 })
                             },
@@ -235,7 +242,7 @@
                 }
                 function get_folder_linesheetlist(){
                     var folder_list_linesheetList=''
-                    new PythonShell(`src/page/linesheet/config/get_folder_list.py`, {args: ['nothing']})
+                    new PythonShell(path.join(__dirname, `page/linesheet/config/get_folder_list.py`), {args: ['nothing']})
                     .on('error', err => {
                         console.error('An error occurred while running the Python script:', err);
                         // handle the error here
@@ -250,7 +257,7 @@
                 get_folder_linesheetlist();
                 function get_linesheetlist(folder){
                     var linesheetList=''
-                    new PythonShell(`src/page/linesheet/config/new_linesheet_get_list.py`, {args: [folder]})
+                    new PythonShell(path.join(__dirname, `page/linesheet/config/new_linesheet_get_list.py`), {args: [folder]})
                     .on('error', err => {
                         console.error('An error occurred while running the Python script:', err);
                         // handle the error here
@@ -264,7 +271,7 @@
                 }
                 get_linesheetlist('linesheet');
                 function open_xlsm(file_location){
-                    new PythonShell(`src/page/linesheet/config/open_excel_linesheet.py`, {
+                    new PythonShell(path.join(__dirname, `page/linesheet/config/open_excel_linesheet.py`), {
                         args: [file_location]
                     })
                     .on('error', err => {
@@ -304,6 +311,6 @@
                 function read_json_xlsm(filePath) {
                     // Storing a variable in session storage
                     sessionStorage.setItem('linesheet_file_path', filePath);
-                    load_page('page/linesheet/edit_linesheet.html');
+                    load_page(path.join(__dirname, 'page/linesheet/edit_linesheet.html'));
                 }
             </script>

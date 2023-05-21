@@ -22,7 +22,7 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
       options: {
-      //  icon: 'my-app/src/image/icon/app/icon.png',
+       icon: 'my-app/src/image/icon/app/icon.png',
       },},
     },
     {
@@ -30,16 +30,16 @@ module.exports = {
       config: {},
     },
   ],
-  // publishers: [
-  //   {
-  //     "name": "@electron-forge/publisher-github",
-  //     "config": {
-  //       "repository": {
-  //         "owner": "24ep",
-  //         "name": "spear"
-  //       }
-  //     }
-  //   }
-  // ],
+  publishers: [
+    {
+      "name": "@electron-forge/publisher-github",
+      "config": {
+        "repository": {
+          "owner": "24ep",
+          "name": "spear"
+        }
+      }
+    }
+  ],
 };
 
