@@ -35,13 +35,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="-webkit-app-region: none;">
+
           <li class="nav-item dropdown" >
             <a class="nav-link"  id="navbarDarkDropdownMenuLink-linesheet-convert" role="button" data-bs-toggle="dropdown" aria-expanded="false">File</a>
             <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;" aria-labelledby="navbarDarkDropdownMenuLink-linesheet-convert">
-              <li><a class="dropdown-item"  onclick="load_page('page/linesheet/drop_linesheet.html')">Drop Linesheet</a></li>
-              <hr class="mt-1 mb-1">
+              <!-- <li><a class="dropdown-item"  onclick="load_page('page/linesheet/drop_linesheet.html')">Drop Linesheet</a></li> -->
+              <li><a class="dropdown-item" onclick="load_page('page/linesheet/new_linesheet.html')">New linesheet</a></li>
+              <!-- <hr class="mt-1 mb-1">
               <li><h6 class="dropdown-header" style="font-size:10px">Enrichments</h6></li>
-              <li><a class="dropdown-item"  onclick="load_page('page/linesheet/convertor.html')">Load Linesheet </a></li>
+              <li><a class="dropdown-item"  onclick="load_page('page/linesheet/convertor.html')">Load Linesheet </a></li> -->
             </ul>
           </li>
 
@@ -49,8 +51,8 @@
           <li class="nav-item dropdown">
             <a class="nav-link"  id="navbarDarkDropdownMenuLink-SizeGuide" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
             <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;" aria-labelledby="navbarDarkDropdownMenuLink-SizeGuide">
-              <li><a class="dropdown-item"  onclick="load_page('page/tools/size_guide_generator.html')"  >SizeGuide Generator</a></li>
-              <li><a class="dropdown-item"  onclick="load_page('page/tools/product_dimension_generate.html')" >Product dimensions guide Generator</a></li>
+              <li><a class="dropdown-item" onclick="load_page('page/tools/product_dimension_generate.html')">Product dimensions guide Generator</a></li>
+              <li><a class="dropdown-item" onclick="load_page('page/tools/size_guide_generator.html')">Size guide Generator</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown" >
@@ -59,7 +61,7 @@
               <li><a class="dropdown-item" onclick="load_page('page/prompt_role.html');$('#nav').load('page/nav/welcome_nav.html');">Welcome</a></li>
               <li><a class="dropdown-item disabled" >Check for update</a></li>
               <li><a class="dropdown-item" target="_blank" href="https://cds-content.notion.site/Guidebook-7e9b86704e864da49e48a89c12e6f92d">GuideBook</a></li>
-              <li><a class="dropdown-item" disabled href="https://www.central.co.th/th/information/about-us">License</a></li>
+              <!-- <li><a class="dropdown-item" disabled href="https://www.central.co.th/th/information/about-us">License</a></li> -->
               <hr class="mt-1 mb-1">
               <li><a class="dropdown-item" target="_blank" href="https://www.central.co.th/th/information/about-us">About US</a></li>
             </ul>

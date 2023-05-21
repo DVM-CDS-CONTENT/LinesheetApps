@@ -39,7 +39,7 @@ for excel_file, creation_time, update_time in excel_files:
     table_html += '<td class="text-center">' + datetime.fromtimestamp(update_time).strftime('%Y-%m-%d %H:%M:%S') + '</td>'
     table_html += '''<td class="text-center">
     <button class="border-0 bg-white" onclick="open_xlsm(&#39;'''+excel_file+'''&#39;)"><ion-icon name="open-outline"></ion-icon></button>
-    <button class="border-0 bg-white" onclick="open_editor()"><ion-icon name="create-outline"></ion-icon></button>
+    <button class="border-0 bg-white" onclick="read_json_xlsm(&#39;'''+folder_name+'''/'''+excel_file+'''&#39;)"><ion-icon name="create-outline"></ion-icon></button>
     <button class="border-0 bg-white" onclick="remove_file()"><ion-icon name="trash-outline"></ion-icon></button></td>'''
     table_html += '</tr>'
 table_html += '</tbody>'

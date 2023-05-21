@@ -17,8 +17,6 @@ def get_family():
             <select multiple id="template_show" name="template_show" aria-label="stock_source" class="">
                 {options}
             </select>
-
-
     '''
     return html
 
@@ -47,6 +45,122 @@ def get_input(attribute, type):
 
     '''
     return html
+
+
+
+# two grid getinput
+def get_text_input_two_grid(attribute, input_type,default_option_str):
+  if  input_type =='free_text':
+            html = f'''
+
+                <div class="row p-1">
+                    <div class="col-4" style="display: grid;">
+                        <span>{attribute}</span>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" id="{attribute}" value="{default_option_str}" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+        '''
+
+  return html
+
+def get_multi_select_input_two_grid(attribute, input_type,default_option_str):
+    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
+    input_value = pd.read_sql(query, cnx)
+    input_value['option_group'] = input_value['option_group'].fillna(input_value['attribute_code'])
+    input_group = np.unique(input_value['option_group'].tolist())
+    optgroup = ''
+    for group in input_group:
+        input_value_filter = input_value[input_value['option_group']==group]
+        input_list = input_value_filter['attribute_option_code'].tolist()
+        default_option = ["selected" if val in input_list else "" for val in default_option_str.split(",") if val]
+        options = ''.join([f'<option {default_option[i]} value="{value}">{value}</option>' for i, value in enumerate(input_list)])
+        optgroup += f'<optgroup label="{group}" data-selectall="true">{options}</optgroup>'
+
+        html = f'''
+
+            <div class="row p-1">
+                <div class="col-4" style="display: grid;">
+                    <span>{attribute}</span>
+                </div>
+                <div class="col-8">
+                    <input type="hidden" id="{attribute}" value="{default_option_str}"class="form-control" placeholder="">
+                    <select  {input_type}  id="{attribute}_show" name="{attribute}_show" class="" aria-label="{attribute}">
+                        {optgroup}
+                    </select>
+                </div>
+            </div>
+
+            '''
+
+    return html
+
+def get_single_select_input_two_grid(attribute, input_type,default_option_str):
+    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
+    input_value = pd.read_sql(query, cnx)
+    input_value['option_group'] = input_value['option_group'].fillna(input_value['attribute_code'])
+    input_group = np.unique(input_value['option_group'].tolist())
+    optgroup = ''
+    default_option=[]
+    for group in input_group:
+        input_value_filter = input_value[input_value['option_group']==group]
+        input_list = input_value_filter['attribute_option_code'].tolist()
+        default_option = ['selected' if default_option_str == val else '' for val in input_list]
+        options = ''.join([f'<option {(default_option[i])} value="{value}">{value}</option>' for i, value in enumerate(input_list)])
+        optgroup += f'<optgroup label="{group}" data-selectall="true">{options}</optgroup>'
+
+        html = f'''
+
+            <div class="row p-1">
+                <div class="col-4" style="display: grid;">
+                    <span>{attribute}</span>
+                </div>
+                <div class="col-8">
+                    <input type="hidden" id="{attribute}" value="{default_option_str}"class="form-control" placeholder="">
+                    <select  {input_type}  id="{attribute}_show" name="{attribute}_show" class="" aria-label="{attribute}">
+                        {optgroup}
+                    </select>
+                </div>
+            </div>
+
+            '''
+
+    return html
+
+def get_family_input_two_grid(attribute, input_type,default_option_str):
+    default_option=[]
+    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
+    attribute_fam = pd.read_sql(query, cnx)
+    columns = attribute_fam.columns.tolist()
+    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common']
+    columns_to_include = [value for value in columns if value not in columns_to_exclude]
+
+
+    default_option = ["selected" if val in default_option_str.split(",") else "" for val in columns_to_include]
+
+    option = ''.join([f'<option {default_option[i]} value="{value}">{value}</option>' for i,value in enumerate(columns_to_include)])
+    #  options = ''.join([f'<option {default_option[i]} value="{value}">{value}</option>' for i, value in enumerate(input_list)])
+
+    html = f'''
+        <div class="row p-1">
+            <div class="col-4" style="display: grid;">
+                <span>{attribute}</span>
+            </div>
+            <div class="col-8">
+                <input disabled type="hidden" id="{attribute}" value="{default_option_str}" class="form-control" placeholder="">
+                <select disabled {input_type}  id="{attribute}_show" name="{attribute}_show" class="" aria-label="{attribute}">
+                    {option}
+                </select>
+            </div>
+        </div>
+    '''
+    return html
+
 
 if __name__ == '__main__':
     import sys
