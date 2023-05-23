@@ -21,24 +21,6 @@ if (require('electron-squirrel-startup')) {
 
 const createWindow = () => {
 
-  // const installer_py = new BrowserWindow({
-  //   width: 500,
-  //   height: 500,
-  //   transparent: true,
-  //   frame: false,
-  //   alwaysOnTop: true,
-  //   webPreferences: {
-  //     nodeIntegration: true,
-  //     contextIsolation:false
-  //   },
-  // });
-
-  // installer_py.loadFile(path.join(__dirname, 'installer_py.html'));
-  // installer_py.once('did-finish-load', () => {
-
-
-  // installer_py.close();
-
  // Create the splash window.
   const splash = new BrowserWindow({
     width: 500,
@@ -76,7 +58,7 @@ setTimeout(function () {
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
 // Get the current window's webContents
   // const mainWindow = BrowserWindow.getFocusedWindow();
@@ -161,7 +143,7 @@ setTimeout(function () {
 
 
 
-app.on('ready', () => {
+app.on('ready', async  () => {
 
   createWindow();
 
@@ -174,17 +156,13 @@ app.on('ready', () => {
   }
   `;
 
-  // const resourcesFolderPath = path.join(__dirname, 'resources');
 
-  // // Create the "resources" folder
-  // fs.mkdirSync(resourcesFolderPath);
 
   try{
     fs.writeFileSync('resources/app-update.yml', appUpdateYaml);
   }catch (error) {
     // Code to handle the exception
   }
-
 
 
   //load div element
@@ -198,7 +176,7 @@ app.on('ready', () => {
       if(filePath=='page/nav/welcome_nav.html'){
         event.sender.send('nav-loaded', data);
       }
-      if(filePath=='page/prompt_role.html'){
+      if(filePath=='page/installer_py.html'){
         event.sender.send('page-loaded', data);
       }
       if(filePath=='page/footers.html'){
@@ -206,6 +184,9 @@ app.on('ready', () => {
       }
     });
   });
+
+
+
 });
 
 // app.on('ready',createWindow);
@@ -216,24 +197,12 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  const scriptPath = path.join(__dirname, 'preload.js');
-  require(scriptPath);
 
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
     mainWindow.webContents.insertCSS(menuStyle)
-
-
   }
 });
-
-// app.on('before-quit', () => {
-//   // Your JavaScript code to run during installation
-//   console.log('Running script during installation...');
-//   const scriptPath = path.join(__dirname, 'preload.js');
-//   require(scriptPath);
-
-// });
 

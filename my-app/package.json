@@ -1,7 +1,7 @@
 {
   "name": "spear",
   "productName": "spear",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "spear",
   "repository": {
     "type": "git",
@@ -63,6 +63,13 @@
     "publish": {
       "provider": "generic",
       "url": "https://dist.anystack.sh/v1/electron"
+    },
+    "directory":{
+      "output": "build"
+    },
+    "nsis":{
+      "alloToChangeInstallationDirectory":false,
+      "oneClick":false
     }
   }
 }
