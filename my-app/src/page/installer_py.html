@@ -1,0 +1,130 @@
+
+
+
+
+<div id="ss" class="p-2">
+Check path install
+    <div id="log">
+    </div>
+</div>
+
+<script>
+Notiflix.Loading.standard('install module path...');
+
+var fs = require('fs');
+var { execSync } = require('child_process');
+var { execInstall } = require('child_process');
+
+var { exec } = require('child_process');
+var { promisify } = require('util');
+var { appendFile } = require('fs');
+var which = require('which');
+var https = require('https');
+
+var path = require('path');
+
+
+
+exec('py -3.11 --version', (error, stdout, stderr) => {
+    if (error) {
+
+        console.log('Python is not installed.');
+
+        // Function to execute shell commands
+        const executeCommand = (command) => {
+            return new Promise((resolve, reject) => {
+                exec(command, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Command execution failed: ${error}`);
+                        reject(error);
+                    } else {
+                        console.log(stdout);
+                        resolve();
+                    }
+                });
+            });
+        };
+        const installPackage = async (packageName) => {
+            try {
+                console.log(`Installing ${packageName}...`);
+                document.getElementById('log').innerHTML = `Installing ${packageName}...`;
+                await executeCommand(`py -3.11 -m pip install ${packageName}`);
+                console.log(`${packageName} installation complete.`);
+                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `${packageName} installation complete...`;
+                Notiflix.Loading.change(`${packageName} installation complete`);
+            } catch (error) {
+                console.error('An error occurred during installation:', error);
+
+            }
+        };
+
+        // Function to install Python and add it to environment variables
+        const installPython = async () => {
+            try {
+
+                console.log('Installing Python...');
+                await executeCommand('curl https://www.python.org/ftp/python/3.11.2/python-3.11.2-amd64.exe -o python-3.11.2-amd64.exe');
+                Notiflix.Loading.change(`download more path`);
+                await executeCommand('python-3.11.2-amd64.exe /quiet InstallAllUsers=1 PrependPath=1');
+                console.log('Python installation complete.');
+                Notiflix.Loading.change(`Python installation complete.`);
+                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `Python installation complete...`;
+
+                installPackage('mysql-connector-python');
+                installPackage('numpy');
+                installPackage('pandas');
+                installPackage('sqlalchemy');
+                installPackage('openpyxl==3.1.0');
+                installPackage('pywin32');
+
+                console.log('library installation complete.');
+                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `library installation complete...`;
+                Notiflix.Loading.change(`library installation complete ...`);
+                Notiflix.Loading.change(`Restart Applications ... `);
+
+                // load_page(path.join(__dirname, 'page/linesheet/new_linesheet.html'));
+
+                function delay(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                }
+
+                async function closeapp() {
+                    Notiflix.Loading.change(`Restarting ... `);
+                    await delay(5000); // Wait for 2000 milliseconds (2 seconds)
+                    Notiflix.Loading.remove();
+                    var { app } = require('electron');
+                    app.relaunch();
+                    app.quit();
+                }
+
+                closeapp();
+
+
+
+
+            } catch (error) {
+                console.error('An error occurred during installation:', error);
+                Notiflix.Loading.remove();
+                load_page(path.join(__dirname, 'page/prompt_role.html'));
+            }
+        };
+
+        // Call the installPython function
+        installPython();
+
+
+
+    } else {
+        console.log('Python version:', stdout);
+        document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + 'Python version:'+ stdout;
+        Notiflix.Loading.remove();
+        load_page(path.join(__dirname, 'page/prompt_role.html'));
+        console.log(path.join(__dirname, 'page/prompt_role.html'));
+
+    }
+});
+
+
+
+
+</script>
