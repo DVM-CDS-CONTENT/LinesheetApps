@@ -82,7 +82,13 @@ def add_background_color(workbook, sheet_name, start_column, end_column, row, co
 def create_define_name(workbook ,sheet_name, attribute_code,length_list,column_num):
     string_range = get_string_location(1,column_num)+':'+get_string_location(length_list,column_num)
     new_range = openpyxl.workbook.defined_name.DefinedName(attribute_code, attr_text=sheet_name+'!'+string_range)
-    workbook.defined_names.append(new_range)
+
+    try:
+        workbook.defined_names.append(new_range)
+    except:
+        workbook.defined_names.add(new_range)
+
+
 # ===========
 def add_list_of_attribute(workbook, sheet_name,option_lists,attribute_code):
     sheet = workbook[sheet_name]
@@ -157,7 +163,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # 2. attribute option setting
     # replace to multi template  #####################################
     filter_template_cat_sql = template.replace(",", "','")
-    filter_template_header_sql = template.replace(",", "<> 'N' or ")
+    filter_template_header_sql = template.replace(",", " not in ('N','AR','AO') or ")
     selected_template_list = list(map(str,template.split(",")))
 
     # - Connect to the database
@@ -165,7 +171,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
 
     # - get header linesheet
-    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' "+convert_sale_online_query(sale_channel)+" and ("+filter_template_header_sql+" not in ('N','AR'))"
+    query = "SELECT * FROM im_form.attribute_setting where status = 'Actived' "+convert_sale_online_query(sale_channel)+" and ("+filter_template_header_sql+" not in ('N','AR','AO'))"
     attribute = pd.read_sql_query(query, engine)
     # attribute = pd.read_sql(query, cnx)
     attribute = attribute.drop_duplicates(subset=['linesheet_code'])
@@ -176,12 +182,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     attribute_options = attribute_options[['linesheet_code','input_option']]
     attribute_options = attribute_options.drop_duplicates()
     # - get categories
-    query = "SELECT backend_categories FROM im_form.categories_setting where Family in ('"+filter_template_cat_sql +"')"
+    query = "SELECT label_th FROM im_form.categories_setting where deepen_level = 1 and family in ('"+filter_template_cat_sql +"')"
     categories_setting = pd.read_sql_query(query, engine)
     # - Merge categories to options
     categories_setting['linesheet_code'] = 'online_categories'
     # - Rename the column headers
-    categories_setting = categories_setting.rename(columns={'backend_categories': 'input_option'})
+    categories_setting = categories_setting.rename(columns={'label_th': 'input_option'})
     attribute_options = pd.concat([attribute_options, categories_setting], axis=0)
     # - Close the connection
     # cnx.close()
@@ -292,10 +298,10 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     worksheet_form.cell(row=4, column=3).value = 'Value'
     ## add Row launch date
     worksheet_form.cell(row=5, column=2).value = 'Launch date'
-    worksheet_form.cell(row=5, column=3).value = '=IN_LINK_DATA!B6' #launch_date
+    worksheet_form.cell(row=5, column=3).value = '=IN_LINK_DATA!B7' #launch_date
     ## add Row Production type
     worksheet_form.cell(row=6, column=2).value = 'Production type'
-    worksheet_form.cell(row=6, column=3).value = '=IN_LINK_DATA!B7' #production_type
+    worksheet_form.cell(row=6, column=3).value = '=IN_LINK_DATA!B8' #production_type
     ## add stock_source stock
     worksheet_form.cell(row=7, column=2).value = 'stock_source'
     worksheet_form.cell(row=7, column=3).value = '=IN_LINK_DATA!B4' #stock_source
@@ -381,7 +387,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     xl = win32com.client.DispatchEx("Excel.Application")
     xl.Visible = False
     xl.DisplayAlerts = False
-    xl.AutomationSecurity = 3
+    xl.AutomationSecurity =1
+    # xl.AutomationSecurity = 3
 
     wb = xl.Workbooks.Open(current_directory+'\\linesheet\\CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm')
     # Access the sheet
