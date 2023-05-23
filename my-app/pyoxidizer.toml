@@ -1,0 +1,11 @@
+[app]
+name = "myapp"
+version = "0.1.0"
+bundled_python_interpreter = { version = "3.9" }
+
+[[app.binaries]]
+name = "main"
+path = "main.py"
+
+[app.entry_points]
+myapp = "main:main"
