@@ -199,11 +199,11 @@
         ]
       },
       {
-        "label": "Clutch Bag",
-        "chart_name_en": "Clutch Bag",
-        "chart_name_th": "กระเป๋าถือ",
+        "label": "Envelope Bag",
+        "chart_name_en": "Envelope Bag",
+        "chart_name_th": "กระเป๋าทรงซองจดหมาย",
         "group": "Girl",
-        "code": "clutch_bag",
+        "code": "envelope_bag",
         "dimension_list": [
           "dimension_height_list",
           "dimension_width_list",
@@ -310,11 +310,11 @@
         ]
       },
       {
-        "label": "Frame Bag",
-        "chart_name_en": "Frame Bag",
-        "chart_name_th": "กระเป๋าโครง",
+        "label": "Tote Bag",
+        "chart_name_en": "Tote Bag",
+        "chart_name_th": "กระเป๋าทรงโท้ท",
         "group": "Girl",
-        "code": "frame_bag",
+        "code": "tote_bag",
         "dimension_list": [
           "dimension_height_list",
           "dimension_width_list",
@@ -427,11 +427,11 @@
         ]
       },
       {
-        "label": "Wristlet Bag",
-        "chart_name_en": "Wristlet Bag",
-        "chart_name_th": "กระเป๋าคล้องข้อมือ",
+        "label": "Laptop Bag",
+        "chart_name_en": "Laptop Bag",
+        "chart_name_th": "กระเป๋าแล็ปท็อป",
         "group": "Unisex",
-        "code": "wristlet_bag",
+        "code": "laptop_bag",
         "dimension_list": [
           "dimension_width_list",
           "dimension_height_list",
@@ -492,11 +492,11 @@
         ]
       },
       {
-        "label": "Minaudiere Bag",
-        "chart_name_en": "Minaudiere Bag",
-        "chart_name_th": "กระเป๋าใบเล็ก",
+        "label": "Clutch Bag",
+        "chart_name_en": "Clutch Bag",
+        "chart_name_th": "กระเป๋าคลัช",
         "group": "Unisex",
-        "code": "minaudiere_bag",
+        "code": "clutch_bag",
         "dimension_list": [
           "dimension_width_list",
           "dimension_height_list",
