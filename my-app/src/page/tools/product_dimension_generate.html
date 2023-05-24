@@ -34,7 +34,7 @@
         <ul id="setting-list" class="ul-list">
             <li class="item-list">
                 <div class="form-floating ms-3">
-                    <select class="form-select border-0"  id="dimension" name="dimension" aria-label="dimension_image"
+                    <select class="form-select border-0" id="dimension" name="dimension" aria-label="dimension_image"
                         onchange="change_image_dimension()"></select>
                     <label for="size">Dimensions image</label>
                 </div>
@@ -49,7 +49,7 @@
             <li class="item-list">
                 <div class="form-floating ms-3">
                     <input disabled type="text" class="form-control border-0" id="chart_name" placeholder=""
-                        value="BELT" onchange="change_chart_name()" />
+                        value="Bangle" onchange="change_chart_name()" />
                     <label for="floatingInputValue">Chart name</label>
                 </div>
                 <div class="form-check ms-4 m-1">
@@ -161,6 +161,26 @@
                         onchange="change_dimension()">
                     <label for="floatingInputValue">Temple Arms</label>
                 </div>
+                <div class="form-floating ms-3" id="dimension_lugwidth_list">
+                    <input type="text" class="form-control border-0" placeholder="" value="0" id="dimension_lugwidth"
+                        onchange="change_dimension()">
+                    <label for="floatingInputValue">Lug Width</label>
+                </div>
+                <div class="form-floating ms-3" id="dimenison_lengthbucket_list">
+                    <input type="text" class="form-control border-0" placeholder="" value="0" id="dimenison_lengthbucket"
+                        onchange="change_dimension()">
+                    <label for="floatingInputValue">Length form Buckle</label>
+                </div>
+                <div class="form-floating ms-3" id="dimenison_lengthhole_list">
+                    <input type="text" class="form-control border-0" placeholder="" value="0" id="dimenison_lengthhole"
+                        onchange="change_dimension()">
+                    <label for="floatingInputValue">Length form Hole</label>
+                </div>
+                <div class="form-floating ms-3" id="dimension_straplength_list">
+                    <input type="text" class="form-control border-0" placeholder="" value="0" id="dimension_straplength"
+                        onchange="change_dimension()">
+                    <label for="floatingInputValue">Strap Length</label>
+                </div>
                 <div class="p-3">
                     <small for="row_value">(comma delimiter)</small>
                     <small for="row_value">Note : change event will be replace current size value that you
@@ -175,16 +195,13 @@
                 <strong>DIMENSIONS GUIDE</strong>
             </div>
         </div>
-        <div class="row bg-light m-0 p-0 border-left" style="height: 850px;">
-            <div class="col-10 p-0" >
-                <div class="p-2" style="text-align: -webkit-center; margin-top: 5%;">
-                    <div id="SizeGuideFrameDiv" style="
-              height: -webkit-fill-available;
-              padding-top: 30px;
-
-              background: white;
-              width: fit-content;
-            " class="SizeGuideFrameDiv"></div>
+        <div class="row bg-light m-0 p-0 border-left" style="height: 100vh;">
+            <div class="col-10 p-0">
+                <div class="p-2 d-flex align-items-center justify-content-center"
+                    style="text-align: -webkit-center; margin-top: 10%;">
+                    <div id="SizeGuideFrameDiv"
+                        style="height: -webkit-fill-available; padding-top: 30px; background: white; width: fit-content;"
+                        class="SizeGuideFrameDiv"></div>
                 </div>
             </div>
             <div class="col-2 p-2 border-start">
@@ -203,9 +220,9 @@
     document.getElementById("dimension_width_list").style.display = "block";
     document.getElementById("dimension_height_list").style.display = "none";
     document.getElementById("dimension_depth_list").style.display = "none";
-    document.getElementById("dimension_waistlength_list").style.display = "block";
-    document.getElementById("dimension_beltlength_list").style.display = "block";
-    document.getElementById("dimension_length_list").style.display = "none";
+    document.getElementById("dimension_waistlength_list").style.display = "none";
+    document.getElementById("dimension_beltlength_list").style.display = "none";
+    document.getElementById("dimension_length_list").style.display = "block";
     document.getElementById("dimension_handleheight_list").style.display = "none";
     document.getElementById("dimension_diameter_list").style.display = "none";
     document.getElementById("dimension_shoulderstrap_list").style.display = "none";
@@ -215,6 +232,10 @@
     document.getElementById("dimension_lenswidth_list").style.display = "none";
     document.getElementById("dimension_bridgesize_list").style.display = "none";
     document.getElementById("dimension_templearms_list").style.display = "none";
+    document.getElementById("dimension_lugwidth_list").style.display ="none";
+    document.getElementById("dimenison_lengthbucket_list").style.display ="none";
+    document.getElementById("dimenison_lengthhole_list").style.display ="none";
+    document.getElementById("dimension_straplength_list").style.display ="none";
 </script>
 
 
@@ -321,7 +342,7 @@
         change_css();
     }
 
-// hide list label
+    // hide list label
     function change_hide_list() {
         var total_list = ["dimension_width_list",
             "dimension_height_list",
@@ -337,7 +358,11 @@
             "dimension_lensheight_list",
             "dimension_lenswidth_list",
             "dimension_bridgesize_list",
-            "dimension_templearms_list"
+            "dimension_templearms_list",
+            "dimension_lugwidth_list",
+            "dimenison_lengthbucket_list",
+            "dimenison_lengthhole_list",
+            "dimension_straplength_list"
         ]
         var dimension_list_select = document.getElementById("dimension").value;
         fetch("./config.json")
@@ -383,7 +408,7 @@
         change_dimension();
     }
 
-// concat dimension and unit dimension
+    // concat dimension and unit dimension
     function change_dimension() {
         var width = document.getElementById("dimension_width").value;
         var height = document.getElementById("dimension_heigth").value;
@@ -400,6 +425,10 @@
         var lenswidth = document.getElementById("dimension_lenswidth").value;
         var bridgesize = document.getElementById("dimension_bridgesize").value;
         var templearms = document.getElementById("dimension_templearms").value;
+        var lugwidth = document.getElementById("dimension_lugwidth").value;
+        var lengthbucket = document.getElementById("dimenison_lengthbucket").value;
+        var lengthhole = document.getElementById("dimenison_lengthhole").value;
+        var straplength = document.getElementById("dimension_straplength").value;
 
         var unit = "";
         var lang = document.getElementById("lang").value;
@@ -446,6 +475,14 @@
                 resultSpan.innerHTML = bridgesize + " " + unit;
                 var resultSpan = document.getElementById("show_templearms");
                 resultSpan.innerHTML = templearms + " " + unit;
+                var resultSpan = document.getElementById("show_lugwidth");
+                resultSpan.innerHTML = lugwidth + " " + unit;
+                var resultSpan = document.getElementById("show_lengthbucket");
+                resultSpan.innerHTML = lengthbucket + " " + unit;
+                var resultSpan = document.getElementById("show_lengthhole");
+                resultSpan.innerHTML = lengthhole + " " + unit;
+                var resultSpan = document.getElementById("show_straplength");
+                resultSpan.innerHTML = straplength + " " + unit;
             });
 
     }
@@ -475,6 +512,10 @@
                         document.getElementById("show_lenswidth").style.display = "none";
                         document.getElementById("show_bridgesize").style.display = "none";
                         document.getElementById("show_templearms").style.display = "none";
+                        document.getElementById("show_lugwidth").style.display = "none";
+                        document.getElementById("show_lengthbucket").style.display = "none";
+                        document.getElementById("show_lengthhole").style.display = "none";
+                        document.getElementById("show_straplength").style.display = "none";
                         for (var i = 0; i < dimension.dimensions.length; i++) {
                             const show_dimension_list = dimension.dimensions[i].id;
                             const show_dimension = document.getElementById(show_dimension_list);

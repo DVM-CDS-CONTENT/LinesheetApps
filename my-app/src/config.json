@@ -103,456 +103,149 @@
 
     "dimension": [
       {
+        "label": "Bangle",
+        "chart_name_en": "Bangle",
+        "chart_name_th": "กำไล",
+        "group": "Unisex",
+        "code": "bangle",
+        "dimension_list": [
+          "dimension_width_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-290px",
+            "position": "absolute",
+            "right": "100px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-230px",
+            "position": "absolute",
+            "right": "355px"
+          }
+        ]
+      },
+      {
         "label": "Belt",
         "chart_name_en": "Belt",
         "chart_name_th": "เข็มขัด",
         "group": "Unisex",
         "code": "belt",
         "dimension_list": [
-          "dimension_waistlength_list",
           "dimension_beltlength_list",
           "dimension_width_list"
         ],
         "dimensions": [
           {
-            "id":"show_waistlength",
-            "position": "absolute",
-            "margin-top": "-270px",
-            "right": "410px"
-          },
-          {
             "id": "show_width",
-            "margin-top": "-170px",
+            "margin-top": "-275px",
             "position": "absolute",
-            "right": "160px"
+            "right": "130px"
           },
           {
             "id": "show_beltlength",
-            "margin-top": "-120px",
+            "margin-top": "-220px",
             "position": "absolute",
             "right": "380px"
           }
         ]
       },
       {
-        "label": "Microwave",
-        "chart_name_en": "Microwave",
-        "chart_name_th": "ไมโครเวฟ",
+        "label": "Dangling Earring",
+        "chart_name_en": "Dangling Earring",
+        "chart_name_th": "ต่างหูห้อย",
         "group": "Unisex",
-        "code": "microwave",
+        "code": "dangling_earring",
         "dimension_list": [
-          "dimension_width_list",
-          "dimension_depth_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-80px",
-            "position": "absolute",
-            "right": "360px"
-          },
-          {
-            "id": "show_depth",
-            "margin-top": "-100px",
-            "position": "absolute",
-            "right": "180px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-190px",
-            "position": "absolute",
-            "right": "160px"
-          }
-        ]
-      },
-      {
-        "label": "Backpack Bag",
-        "chart_name_en": "Backpack Bag",
-        "chart_name_th": "กระเป๋าเป้",
-        "group": "Girl",
-        "code": "backpack_bag",
-        "dimension_list": [
-          "dimension_height_list",
           "dimension_width_list",
           "dimension_length_list"
         ],
         "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-230px",
-            "position": "absolute",
-            "right": "490px"
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-90px",
-            "position": "absolute",
-            "right": "450px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-80px",
-            "position": "absolute",
-            "right": "300px"
-          }
-        ]
-      },
-      {
-        "label": "Envelope Bag",
-        "chart_name_en": "Envelope Bag",
-        "chart_name_th": "กระเป๋าทรงซองจดหมาย",
-        "group": "Girl",
-        "code": "envelope_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-230px",
-            "position": "absolute",
-            "right": "210px"
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-140px",
-            "position": "absolute",
-            "right": "230px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-110px",
-            "position": "absolute",
-            "right": "380px"
-          }
-        ]
-      },
-      {
-        "label": "Bucket Bag",
-        "chart_name_en": "Bucket Bag",
-        "chart_name_th": "กระเป๋าบัคเก็ต",
-        "group": "Girl",
-        "code": "bucket_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list",
-          "dimension_handleheight_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-180px",
-            "position": "absolute",
-            "right": "219px"
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-90px",
-            "position": "absolute",
-            "right": "230px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "370px"
-          },
-          {
-            "id": "show_handleheight",
-            "margin-top": "-340px",
-            "position": "absolute",
-            "right": "450px"
-          }
-        ]
-      },
-      {
-        "label": "Crossbody Bag",
-        "chart_name_en": "Crossbody Bag",
-        "chart_name_th": "กระเป๋าสะพายข้าง",
-        "group": "Girl",
-        "code": "crossbody_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list",
-          "dimension_handleheight_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-170px",
-            "position": "absolute",
-            "right": "250px"
-
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-80px",
-            "position": "absolute",
-            "right": "250px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "370px"
-          },
-          {
-            "id": "show_handleheight",
-            "margin-top": "-280px",
-            "position": "absolute",
-            "right": "230px"
-          }
-        ]
-      },
-      {
-        "label": "Tote Bag",
-        "chart_name_en": "Tote Bag",
-        "chart_name_th": "กระเป๋าทรงโท้ท",
-        "group": "Girl",
-        "code": "tote_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list",
-          "dimension_handleheight_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-180px",
-            "position": "absolute",
-            "right": "200px"
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-100px",
-            "position": "absolute",
-            "right": "220px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-80px",
-            "position": "absolute",
-            "right": "360px"
-          },
-          {
-            "id": "show_handleheight",
-            "margin-top": "-300px",
-            "position": "absolute",
-            "right": "200px"
-          }
-        ]
-      },
-      {
-        "label": "Barrel Bag",
-        "chart_name_en": "Barrel Bag",
-        "chart_name_th": "กระเป๋ากีฬา",
-        "group": "Girl",
-        "code": "barrel_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list",
-          "dimension_shoulderstrap_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-160px",
-            "position": "absolute",
-            "right": "470px"
-          },
-          {
-            "id": "show_width",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "400px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "230px"
-          },
-          {
-            "id": "show_shoulderstrap",
-            "margin-top": "-280px",
-            "position": "absolute",
-            "right": "470px"
-          }
-        ]
-      },
-      {
-        "label": "Satchel Bag",
-        "chart_name_en": "Satchel Bag",
-        "chart_name_th": "กระเป่านักเรียน",
-        "group": "Unisex",
-        "code": "satchel_bag",
-        "dimension_list": [
-          "dimension_height_list",
-          "dimension_width_list",
-          "dimension_length_list",
-          "dimension_shoulderstrap_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_height",
-            "margin-top": "-180px",
-            "position": "absolute",
-            "right": "470px"
-          },
           {
             "id": "show_width",
             "margin-top": "-60px",
             "position": "absolute",
-            "right": "460px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-50px",
-            "position": "absolute",
-            "right": "250px"
-          },
-          {
-            "id": "show_shoulderstrap",
-            "margin-top": "-340px",
-            "position": "absolute",
-            "right": "470px"
-          }
-        ]
-      },
-      {
-        "label": "Laptop Bag",
-        "chart_name_en": "Laptop Bag",
-        "chart_name_th": "กระเป๋าแล็ปท็อป",
-        "group": "Unisex",
-        "code": "laptop_bag",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_height_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-120px",
-            "position": "absolute",
-            "right": "450px"
-          },
-          {
-            "id": "show_height",
-            "margin-top": "-230px",
-            "position": "absolute",
-            "right": "470px"
-
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-120px",
-            "position": "absolute",
             "right": "300px"
-          }
-        ]
-      },
-      {
-        "label": "Baguette Bag",
-        "chart_name_en": "Baguette Bag",
-        "chart_name_th": "กระเป๋าทรงสี่เหลี่ยม",
-        "group": "Unisex",
-        "code": "baguette_bag",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_height_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "200px"
-          },
-          {
-            "id": "show_height",
-            "margin-top": "-250px",
-            "position": "absolute",
-            "right": "180px"
           },
           {
             "id": "show_length",
-            "margin-top": "-40px",
+            "margin-top": "-300px",
             "position": "absolute",
-            "right": "370px"
+            "right": "600px"
           }
         ]
       },
       {
-        "label": "Clutch Bag",
-        "chart_name_en": "Clutch Bag",
-        "chart_name_th": "กระเป๋าคลัช",
+        "label": "Daybed",
+        "chart_name_en": "Daybed",
+        "chart_name_th": "เดย์เบด",
         "group": "Unisex",
-        "code": "clutch_bag",
+        "code": "daybed",
+        "value": "daybed",
         "dimension_list": [
           "dimension_width_list",
           "dimension_height_list",
-          "dimension_length_list"
+          "dimension_depth_list"
         ],
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-120px",
+            "margin-top": "-420px",
             "position": "absolute",
-            "right": "180px"
+            "right": "330px"
           },
           {
             "id": "show_height",
-            "margin-top": "-240px",
+            "margin-top": "-215px",
             "position": "absolute",
-            "right": "170px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-100px",
-            "position": "absolute",
-            "right": "370px"
-          }
-        ]
-      },
-      {
-        "label": "Sofa",
-        "chart_name_en": "Sofa",
-        "chart_name_th": "โซฟา",
-        "group": "Unisex",
-        "code": "sofa",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_depth_list",
-          "dimension_height_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-400px",
-            "position": "absolute",
-            "right": "350px"
+            "right": "530px"
           },
           {
             "id": "show_depth",
-            "margin-top": "-260px",
+            "margin-top": "-290px",
             "position": "absolute",
-            "right": "120px"
-          },
-          {
-            "id": "show_height",
-            "margin-top": "-210px",
-            "position": "absolute",
-            "right": "550px"
+            "right": "130px"
           }
+        ]
+      },
+      {
+        "label": "Hoop Earring",
+        "chart_name_en": "Hoop Earring",
+        "chart_name_th": "ต่างหูห่วง",
+        "group": "Unisex",
+        "code": "hoop_earring",
+        "dimension_list": [
+          "dimension_diameter_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_diameter",
+            "margin-top": "-330px",
+            "position": "absolute",
+            "right": "340px"
+          }
+      
+        ]
+      },
+      {
+        "label": "Diamond Ring",
+        "chart_name_en": "Diamond Ring",
+        "chart_name_th": "แหวนเพชร",
+        "group": "Unisex",
+        "code": "ring_ornament",
+        "dimension_list": [
+          "dimension_width_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-135px",
+            "position": "absolute",
+            "right": "330px"
+          }
+          
         ]
       },
       {
@@ -567,149 +260,42 @@
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-180px",
+            "margin-top": "-190px",
             "position": "absolute",
-            "right": "270px"
+            "right": "255px"
           }
         ]
       },
+      
       {
-        "label": "Diamond Ring",
-        "chart_name_en": "Diamond Ring",
-        "chart_name_th": "แหวนเพชร",
+        "label": "Microwave",
+        "chart_name_en": "Microwave",
+        "chart_name_th": "ไมโครเวฟ",
         "group": "Unisex",
-        "code": "ring_ornament",
+        "code": "microwave",
         "dimension_list": [
           "dimension_width_list",
-          "dimension_length_list"
+          "dimension_depth_list",
+          "dimension_height_list"
         ],
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-80px",
+            "margin-top": "-140px",
             "position": "absolute",
-            "right": "350px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-270px",
-            "position": "absolute",
-            "right": "170px"
-          }
-        ]
-      },
-      {
-        "label": "Daybad",
-        "chart_name_en": "Daybad",
-        "chart_name_th": "เดย์เบด",
-        "group": "Unisex",
-        "code": "daybad",
-        "value": "daybad",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_height_list",
-          "dimension_depth_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-420px",
-            "position": "absolute",
-            "right": "320px"
-          },
-          {
-            "id": "show_height",
-            "margin-top": "-200px",
-            "position": "absolute",
-            "right": "520px"
+            "right": "400px"
           },
           {
             "id": "show_depth",
-            "margin-top": "-270px",
+            "margin-top": "-170px",
             "position": "absolute",
-            "right": "120px"
-          }
-        ]
-      },
-      {
-        "label": "Hoop Earring",
-        "chart_name_en": "Hoop Earring",
-        "chart_name_th": "ต่างหูห่วง",
-        "group": "Unisex",
-        "code": "hoop_earring",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_diameter_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-100px",
-            "position": "absolute",
-            "right": "320px"
+            "right": "160px"
           },
           {
-            "id": "show_diameter",
-            "margin-top": "-300px",
+            "id": "show_height",
+            "margin-top": "-290px",
             "position": "absolute",
-            "right": "300px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-270px",
-            "position": "absolute",
-            "right": "500px"
-          }
-        ]
-      },
-      {
-        "label": "Dangling Earing",
-        "chart_name_en": "Dangling Earing",
-        "chart_name_th": "ต่างหูห้อย",
-        "group": "Unisex",
-        "code": "dangling_earing",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-70px",
-            "position": "absolute",
-            "right": "300px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-280px",
-            "position": "absolute",
-            "right": "550px"
-          }
-        ]
-      },
-      {
-        "label": "Bangle",
-        "chart_name_en": "Bangle",
-        "chart_name_th": "กำไล",
-        "group": "Unisex",
-        "code": "bangle",
-        "dimension_list": [
-          "dimension_width_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_width",
-            "margin-top": "-180px",
-            "position": "absolute",
-            "right": "120px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-130px",
-            "position": "absolute",
-            "right": "320px"
+            "right": "130px"
           }
         ]
       },
@@ -728,27 +314,27 @@
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-100px",
+            "margin-top": "-120px",
             "position": "absolute",
-            "right": "220px"
+            "right": "215px"
           },
           {
             "id": "show_depth",
-            "margin-top": "-120px",
+            "margin-top": "-170px",
             "position": "absolute",
-            "right": "350px"
+            "right": "370px"
           },
           {
             "id": "show_length",
-            "margin-top": "-90px",
+            "margin-top": "-130px",
             "position": "absolute",
-            "right": "450px"
+            "right": "460px"
           },
           {
             "id": "show_height",
-            "margin-top": "-200px",
+            "margin-top": "-250px",
             "position": "absolute",
-            "right": "100px"
+            "right": "90px"
           }
         ]
       },
@@ -766,21 +352,21 @@
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-70px",
+            "margin-top": "-100px",
             "position": "absolute",
-            "right": "180px"
+            "right": "90px"
           },
           {
             "id": "show_height",
-            "margin-top": "-200px",
+            "margin-top": "-320px",
             "position": "absolute",
-            "right": "480px"
+            "right": "580px"
           },
           {
             "id": "show_length",
-            "margin-top": "-70px",
+            "margin-top": "-110px",
             "position": "absolute",
-            "right": "350px"
+            "right": "380px"
           }
         ]
       },
@@ -802,40 +388,513 @@
           {
 
               "id": "show_frameheight",
-              "margin-top": "-220px",
+              "margin-top": "-340px",
               "position": "absolute",
-              "right": "500px"
+              "right": "550px"
             },
              {
               "id": "show_framewidth",
-              "margin-top": "-320px",
+              "margin-top": "-480px",
               "position": "absolute",
-              "right": "320px"
+              "right": "265px"
             },
              {
               "id": "show_lensheight",
-              "margin-top": "-250px",
+              "margin-top": "-340px",
               "position": "absolute",
-              "right": "380px"
+              "right": "340px"
             },
              {
               "id": "show_lenswidth",
-              "margin-top": "-250px",
+              "margin-top": "-390px",
               "position": "absolute",
-              "right": "250px"
+              "right": "170px"
             },
             {
               "id": "show_bridgesize",
-              "margin-top": "-200px",
+              "margin-top": "-290px",
               "position": "absolute",
-              "right": "330px"
+              "right": "270px"
             },
             {
               "id": "show_templearms",
-              "margin-top": "-50px",
+              "margin-top": "-80px",
               "position": "absolute",
-              "right": "320px"
+              "right": "270px"
 
+          }
+        ]
+      },
+      {
+        "label": "Men watch",
+        "chart_name_en": "Men watch",
+        "chart_name_th": "นาฬิกาผู้ชาย",
+        "group": "Boy",
+        "code": "men_watch",
+        "dimension_list": [
+          "dimension_diameter_list",
+          "dimension_lugwidth_list",
+          "dimenison_lengthbucket_list",
+          "dimenison_lengthhole_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_diameter",
+            "margin-top": "-325px",
+            "position": "absolute",
+            "right": "330px"
+          },
+          {
+            "id": "show_lugwidth",
+            "margin-top": "-190px",
+            "position": "absolute",
+            "right": "350px"
+          },
+          {
+            "id": "show_lengthbucket",
+            "margin-top": "-50px",
+            "position": "absolute",
+            "right": "480px"
+          },
+          {
+            "id": "show_lengthhole",
+            "margin-top": "-50px",
+            "position": "absolute",
+            "right": "230px"
+          }
+        ]
+      },
+      {
+        "label": "Women watch",
+        "chart_name_en": "Women watch",
+        "chart_name_th": "นาฬิกาผู้หญิง",
+        "group": "Boy",
+        "code": "women_watch",
+        "dimension_list": [
+          "dimension_diameter_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_diameter",
+            "margin-top": "-325px",
+            "position": "absolute",
+            "right": "330px"
+          },
+          {
+            "id": "show_lugwidth",
+            "margin-top": "-190px",
+            "position": "absolute",
+            "right": "350px"
+          },
+          {
+            "id": "show_lengthbucket",
+            "margin-top": "-50px",
+            "position": "absolute",
+            "right": "480px"
+          },
+          {
+            "id": "show_lengthhole",
+            "margin-top": "-50px",
+            "position": "absolute",
+            "right": "230px"
+          }
+        ]
+      },
+      {
+        "label": "Backpack",
+        "chart_name_en": "Backpack",
+        "chart_name_th": "กระเป๋าเป้",
+        "group": "Girl",
+        "code": "backpack",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-265px",
+            "position": "absolute",
+            "right": "500px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-90px",
+            "position": "absolute",
+            "right": "450px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-70px",
+            "position": "absolute",
+            "right": "250px"
+          }
+        ]
+      },
+      {
+        "label": "Baguette Bag",
+        "chart_name_en": "Baguette Bag",
+        "chart_name_th": "กระเป๋าทรงสี่เหลี่ยม",
+        "group": "Unisex",
+        "code": "baguette_bag",
+        "dimension_list": [
+          "dimension_width_list",
+          "dimension_height_list",
+          "dimension_straplength_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-90px",
+            "position": "absolute",
+            "right": "180px"
+          },
+          {
+            "id": "show_height",
+            "margin-top": "-200px",
+            "position": "absolute",
+            "right": "170px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-60px",
+            "position": "absolute",
+            "right": "380px"
+          },
+          {
+            "id": "show_straplength",
+            "margin-top": "-360px",
+            "position": "absolute",
+            "right": "140px"
+          }
+        ]
+      },
+      {
+        "label": "Barrel Bag",
+        "chart_name_en": "Barrel Bag",
+        "chart_name_th": "กระเป๋ากีฬา",
+        "group": "Girl",
+        "code": "barrel_bag",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list",
+          "dimension_shoulderstrap_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-215px",
+            "position": "absolute",
+            "right": "480px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-100px",
+            "position": "absolute",
+            "right": "410px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-100px",
+            "position": "absolute",
+            "right": "200px"
+          },
+          {
+            "id": "show_shoulderstrap",
+            "margin-top": "-370px",
+            "position": "absolute",
+            "right": "520px"
+          }
+        ]
+      },
+      {
+        "label": "Bucket Bag",
+        "chart_name_en": "Bucket Bag",
+        "chart_name_th": "กระเป๋าบัคเก็ต",
+        "group": "Girl",
+        "code": "bucket_bag",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list",
+          "dimension_diameter_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-200px",
+            "position": "absolute",
+            "right": "180px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-80px",
+            "position": "absolute",
+            "right": "200px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-50px",
+            "position": "absolute",
+            "right": "390px"
+          },
+          {
+            "id": "show_diameter",
+            "margin-top": "-410px",
+            "position": "absolute",
+            "right": "290px"
+          }
+        ]
+      },
+      {
+        "label": "Clutch Bag",
+        "chart_name_en": "Clutch Bag",
+        "chart_name_th": "กระเป๋าคลัช",
+        "group": "Unisex",
+        "code": "clutch_bag",
+        "dimension_list": [
+          "dimension_width_list",
+          "dimension_height_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-130px",
+            "position": "absolute",
+            "right": "180px"
+          },
+          {
+            "id": "show_height",
+            "margin-top": "-270px",
+            "position": "absolute",
+            "right": "160px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-100px",
+            "position": "absolute",
+            "right": "390px"
+          }
+        ]
+      },
+      {
+        "label": "Crossbody Bag",
+        "chart_name_en": "Crossbody Bag",
+        "chart_name_th": "กระเป๋าสะพายข้าง",
+        "group": "Girl",
+        "code": "crossbody_bag",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list",
+          "dimension_shoulderstrap_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-170px",
+            "position": "absolute",
+            "right": "200px"
+
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-60px",
+            "position": "absolute",
+            "right": "200px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-30px",
+            "position": "absolute",
+            "right": "360px"
+          },
+          {
+            "id": "show_shoulderstrap",
+            "margin-top": "-310px",
+            "position": "absolute",
+            "right": "180px"
+          }
+        ]
+      },
+      {
+        "label": "Laptop Bag",
+        "chart_name_en": "Laptop Bag",
+        "chart_name_th": "กระเป๋าแล็ปท็อป",
+        "group": "Unisex",
+        "code": "laptop_bag",
+        "dimension_list": [
+          "dimension_width_list",
+          "dimension_height_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-110px",
+            "position": "absolute",
+            "right": "480px"
+          },
+          {
+            "id": "show_height",
+            "margin-top": "-260px",
+            "position": "absolute",
+            "right": "510px"
+
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-100px",
+            "position": "absolute",
+            "right": "270px"
+          }
+        ]
+      },
+      {
+        "label": "Satchel Bag",
+        "chart_name_en": "Satchel Bag",
+        "chart_name_th": "กระเป๋าทรงนักเรียน",
+        "group": "Unisex",
+        "code": "satchel_bag",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list",
+          "dimension_shoulderstrap_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-200px",
+            "position": "absolute",
+            "right": "450px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-70px",
+            "position": "absolute",
+            "right": "420px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-70px",
+            "position": "absolute",
+            "right": "245px"
+          },
+          {
+            "id": "show_shoulderstrap",
+            "margin-top": "-360px",
+            "position": "absolute",
+            "right": "470px"
+          }
+        ]
+      },
+      {
+        "label": "Tote Bag",
+        "chart_name_en": "Tote Bag",
+        "chart_name_th": "กระเป๋าทรงโท้ท",
+        "group": "Girl",
+        "code": "tote_bag",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list",
+          "dimension_straplength_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-190px",
+            "position": "absolute",
+            "right": "170px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-90px",
+            "position": "absolute",
+            "right": "190px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-60px",
+            "position": "absolute",
+            "right": "380px"
+          },
+          {
+            "id": "show_straplength",
+            "margin-top": "-360px",
+            "position": "absolute",
+            "right": "150px"
+          }
+        ]
+      },
+      {
+        "label": "Wallet",
+        "chart_name_en": "Wallet",
+        "chart_name_th": "กระเป๋าสตางค์",
+        "group": "Girl",
+        "code": "wallet",
+        "dimension_list": [
+          "dimension_height_list",
+          "dimension_width_list",
+          "dimension_length_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_height",
+            "margin-top": "-270px",
+            "position": "absolute",
+            "right": "170px"
+          },
+          {
+            "id": "show_width",
+            "margin-top": "-150px",
+            "position": "absolute",
+            "right": "200px"
+          },
+          {
+            "id": "show_length",
+            "margin-top": "-110px",
+            "position": "absolute",
+            "right": "390px"
+          }
+        ]
+      },
+      
+      {
+        "label": "Sofa",
+        "chart_name_en": "Sofa",
+        "chart_name_th": "โซฟา",
+        "group": "Unisex",
+        "code": "sofa",
+        "dimension_list": [
+          "dimension_width_list",
+          "dimension_depth_list",
+          "dimension_height_list"
+        ],
+        "dimensions": [
+          {
+            "id": "show_width",
+            "margin-top": "-450px",
+            "position": "absolute",
+            "right": "350px"
+          },
+          {
+            "id": "show_depth",
+            "margin-top": "-350px",
+            "position": "absolute",
+            "right": "100px"
+          },
+          {
+            "id": "show_height",
+            "margin-top": "-250px",
+            "position": "absolute",
+            "right": "580px"
           }
         ]
       },
@@ -854,79 +913,30 @@
         "dimensions": [
           {
             "id": "show_width",
-            "margin-top": "-60px",
+            "margin-top": "-40px",
             "position": "absolute",
-            "right": "400px"
+            "right": "440px"
           },
           {
             "id": "show_handleheight",
-            "margin-top": "-250px",
+            "margin-top": "-420px",
             "position": "absolute",
-            "right": "430px"
+            "right": "510px"
           },
           {
             "id": "show_length",
-            "margin-top": "-60px",
+            "margin-top": "-40px",
             "position": "absolute",
-            "right": "280px"
+            "right": "240px"
           },
           {
             "id": "show_height",
-            "margin-top": "-150px",
-            "position": "absolute",
-            "right": "420px"
-          }
-        ]
-      },
-      {
-        "label": "Men watch",
-        "chart_name_en": "Men watch",
-        "chart_name_th": "นาฬิกาผู้ชาย",
-        "group": "Boy",
-        "code": "men_watch",
-        "dimension_list": [
-          "dimension_diameter_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_diameter",
-            "margin-top": "-180px",
+            "margin-top": "-230px",
             "position": "absolute",
             "right": "500px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-130px",
-            "position": "absolute",
-            "right": "250px"
-          }
-        ]
-      },
-      {
-        "label": "Women watch",
-        "chart_name_en": "Women watch",
-        "chart_name_th": "นาฬิหาผู้กญิง",
-        "group": "Boy",
-        "code": "women_watch",
-        "dimension_list": [
-          "dimension_diameter_list",
-          "dimension_length_list"
-        ],
-        "dimensions": [
-          {
-            "id": "show_diameter",
-            "margin-top": "-180px",
-            "position": "absolute",
-            "right": "500px"
-          },
-          {
-            "id": "show_length",
-            "margin-top": "-130px",
-            "position": "absolute",
-            "right": "250px"
           }
         ]
       }
+      
     ]
   }
