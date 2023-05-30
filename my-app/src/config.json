@@ -61,6 +61,11 @@
         "code": "UK"
       }
     ],
+
+    "test":[
+      {"label":"Baby clothing","chart_name_en":"Baby clothing","chart_name_th":"เสื้อผ้าเด็กแรกเกิด","group":"Baby","code":"baby_clothing"}
+    ],
+
     "measurement": [
       {"label":"Boy T-Shirt","chart_name_en":"Boy T-Shirt","chart_name_th":"เสื้อยืดเด็กผู้ชาย","group":"Boy","code":"boy_t_shirt"},
       {"label":"Boy Wetsuit","chart_name_en":"Boy Wetsuit","chart_name_th":"ชุดดำน้ำเด็กผู้ชาย","group":"Boy","code":"boy_wetsuit"},
@@ -74,7 +79,6 @@
       {"label":"Girl Underwear","chart_name_en":"Girl Underwear","chart_name_th":"ชุดชั้นในเด็กผู้หญิง","group":"Girl","code":"girl_underwear"},
       {"label":"Girl Wetsuit","chart_name_en":"Girl Wetsuit","chart_name_th":"ชุดดำน้ำเด็กผู้หญิง","group":"Girl","code":"girl_wetsuit"},
       {"label":"Baby shoes","chart_name_en":"Baby shoes","chart_name_th":"รองเท้าเด็กเล็ก","group":"Baby","code":"baby_shoes"},
-      {"label":"Baby clothing","chart_name_en":"Baby clothing","chart_name_th":"เสื้อผ้าเด็กแรกเกิด","group":"Baby","code":"baby_clothing"},
       {"label":"Men Jacket Suit","chart_name_en":"Men Jacket Suit","chart_name_th":"แจ็คเก็ตและสูทผู้ชาย","group":"Men","code":"men_jacket_suit"},
       {"label":"Men Jumpsuit","chart_name_en":"Men Jumpsuit","chart_name_th":"จั๊มสูทผู้ชาย","group":"Men","code":"men_jumpsuit"},
       {"label":"Men Loafer Shoes","chart_name_en":"Men Loafer Shoes","chart_name_th":"รองเท้าโลฟเฟอร์ผู้ชาย","group":"Men","code":"men_loafer_shoes"},
