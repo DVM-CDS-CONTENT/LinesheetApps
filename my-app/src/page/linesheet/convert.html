@@ -1,0 +1,654 @@
+<style>
+    @font-face {
+        font-family: 'CPNRegular';
+        src: url('./font/CPN-Regular.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBold';
+        src: url('./font/CPN-Bold.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBoldCondensed';
+        src: url('./font/CPN-BoldCondensed.ttf');
+    }
+    body {
+        background: #C5C6D6;
+    }
+    input.model_selection {
+    border-radius: 5px;
+    border: 1px solid #e3e3e3;
+    width: 100%;
+    padding: 3px 5px;
+    margin: 5px 0px;
+    }
+
+    .product-list {
+    height: 100%;
+    }
+
+    .clean_page {
+        font-family: 'CPNRegular';
+        font-size: 15px;
+        font-weight: 500;
+        color: #0c1f3e;
+    }
+    .nav_input {
+        height: 40px;
+        left: 0px;
+        top: 76px;
+        background: #FFFFFF;
+        border: 1px solid rgba(233, 233, 233, 0.88);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+    }
+    .box_input {
+        justify-self: start;
+    }
+    .head_card_file {
+        text-align: left;
+        border: 0x solid #D1D5DB;
+        border-radius: 5px 5px 0 0;
+        background-color: #EEEEEE;
+        padding: 1px;
+    }
+    .card_file {
+        text-align: left;
+        border: 0px solid #D1D5DB;
+        border-radius: 0 0 5px 5px;
+        background-color: #ffffff;
+        padding: 1px;
+        justify-content: center;
+    }
+    .head_group_name {
+        text-align: left;
+        border: 0x solid #D1D5DB;
+        border-radius: 5px 5px 0 0;
+        background-color: #EEEEEE;
+        padding: 2%;
+    }
+    input.form-control {
+        height: 26px;
+    }
+    label {
+        height: 26px;
+    }
+    .btn-convert {
+        display: inline-flex;
+        height: 40px;
+        padding: 0;
+        background-color: black;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'CPNBold';
+        cursor: pointer;
+    }
+    .btn-convert:hover {
+        background-color: black;
+    }
+    .btn-convert:active {
+        background-color: #0c1f3e;
+    }
+    .btn_text,
+    .btn_icon {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 30px;
+        color: #FFFFFF;
+        height: 100%;
+    }
+    .nav-pills .nav-link.active {
+        background-color: black;
+    }
+    .nav-pills .nav-link:not(.active) {
+        border-color: black;
+    }
+    .line {
+        border: none;
+        height: 1px;
+        background-color: #717171;
+        margin: 10px 0;
+    }
+</style>
+<style>
+
+    .ss-main .ss-values .ss-value {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        background-color: #e0dbdb;
+        border-radius: var(--ss-border-radius);
+        animation-name: ss-valueIn;
+        animation-duration: var(--ss-animation-timing);
+        animation-timing-function: ease-out;
+        animation-fill-mode: both;
+        margin: 3px;
+        padding:3px;
+    }
+    .ss-main .ss-values .ss-max {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        font-size: 12px;
+        color: var(--ss-bg-color);
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        background-color: #e0dbdb;
+        border-radius: var(--ss-border-radius);
+    }
+    .ss-main .ss-values .ss-value .ss-value-text {
+        font-size: 12px;
+        color: #000000;
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        font-weight: 500;
+    }
+    .ss-main .ss-values .ss-value .ss-value-delete {
+        display: inline-grid;
+    }
+</style>
+<div class="clean_page">
+    <div class="nav_input col p-2 ">
+        <div class="box_input">
+            <input type="file" id="myFile" />
+        </div>
+    </div>
+    <div class="container-fluid"">
+        <div class=" row mb-3">
+            <div class="col-4">
+                <div class="container p-2">
+                    <div class="row head_card_file">
+                        <div class="col-6 p-1">
+                            <span style="padding-left: 15px;">File informations</span>
+                        </div>
+                        <div class="col-6 p-1 text-end">
+                            <span style="padding-right: 15px;" class="name_file">CDS2301-0343
+                                NS-</span>
+                            </div>
+                        </div>
+                        <div class="row card_file">
+                            <div id="brand"></div>
+                            <div id="sku"></div>
+                            <div id="sale_channel"></div>
+                            <div id="production_type"></div>
+                            <div id="stock_source"></div>
+                            <div id="template"></div>
+                            <div class="row">
+                                <div class="col-md-4 offset-md-8 text-end p-2" style="font-size: 12px;" id="other_information">
+                                <a href="#">Other information</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="container" style="padding-left: 8px;">
+                            <div class="row head_group_name ">
+                                <div class="col">
+                                    <span>Model</span>
+                                </div>
+                            </div>
+                            <div class="row card_file">
+                                <div class="row p-1">
+                                    <div class="col">
+                                        <div id="model_list">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="container" style="padding-right: 8px; padding-left: 0;">
+                            <div class="row head_group_name">
+                                <div class="col">
+                                    <span>Product</span>
+                                </div>
+                                <div class="col-4">
+                                    <span
+                                    style="font-size: 12px; color: #898989; text-align: left;">all
+                                    SKU selected</span>
+                                </div>
+                            </div>
+                            <div class="row card_file">
+                                <div class="row p-1">
+                                    <div class="col">
+                                        <div class="input-group mb-2">
+                                            <span class="form-control product-list h-100">sku<span>
+                                            <span class="input-group-text p-0 border-0 " id="basic-addon1">hex</span>
+                                            <span class="input-group-text p-0 border-0 " id="basic-addon1">shade</span>
+                                            <span class="input-group-text p-0 border-0 " id="basic-addon1">size</span>
+                                        </div>
+                                        <div id="ibc_list">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6" style="background-color: #EFF0F6; height: 100%; ">
+                <div class="container">
+                    <nav aria-label="breadcrumb"
+                    style="--bs-breadcrumb-divider: '>'; padding-top: 10px; font-size: 12px; font-weight: bold;">
+                    <ol class="breadcrumb breadcrumb-chevron p-2">
+                        <li class="breadcrumb-item">
+                            <a class="link-body-emphasis fw-bold text-decoration-none"
+                            href="#" style="color: #0c1f3e;">Import</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a class="link-body-emphasis fw-bold text-decoration-none"
+                            href="#" style="color: #0c1f3e;">Linesheet
+                            validate</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a class="link-body-emphasis fw-bold text-decoration-none"
+                            href="#" style="color: #A6192E;">Cleaning</a>
+                        </li>
+                    </ol>
+                </nav>
+                <div class="row">
+                    <div class="container">
+                        <div class="row"
+                        style="align-items: center; justify-content: end;">
+                        <div class="col-2"
+                        style=" font-size: 12px ; text-align: left;">
+                        <small>Convert to</small>
+                    </div>
+                    <div class="col-2">
+                        <div class="btn-group">
+                            <button class="btn btn-sm dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            style="font-size: 12px; font-family: CPNBold; ">
+                            <small>PIM tempate</small>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                href="#">Action</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8" style="display: inline-flex;">
+                    <div class="col-2">
+                        <svg class="bd-placeholder-img"
+                        width="80" height="80"
+                        xmlns="http://www.w3.org/2000/svg"
+                        role="img"
+                        aria-label="Placeholder: Thumbnail"
+                        focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%"
+                        height="100%"
+                        fill="#E2E2E2">
+                    </rect>
+                </svg>
+            </div>
+            <div class="col-10"
+            style="text-align: left; padding-left: 40px;">
+            <span id="code_sku"
+            style="font-family: CPNBold;">CDS23010343</span><br>
+            <span id="name_sku">Girl's Pyiamas
+                Disney Licensed Aristocat
+                Showtime Print
+                23023049DG</span>
+            </div>
+        </div>
+        <div class="col-4 ">
+            <button type="button" class="btn-convert">
+                <span class="btn_text">Convert</span>
+                <span class="btn_icon">
+                    <ion-icon
+                    name="play-forward-outline"></ion-icon>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <strong
+        style="font-size: 24px; text-align: left;">Variant</strong>
+        <div class="col-7" style="text-align: left;">
+            <small>Variant attribute is information that use
+                identity</small>
+            </div>
+            <div class="col-3">
+            </div>
+            <hr class="line">
+        </div>
+        <div class="row">
+            <form class="needs-validation" novalidate="">
+                <div class="col-s-6">
+                    <label for="state" class="form-label"
+                    style="color: #6E7191;">Size</label>
+                    <select class="form-select" id="state"
+                    required="">
+                    <option value="">
+                        Choose...
+                    </option>
+                    <option>California
+                    </option>
+                </select>
+                <div class="invalid-feedback">
+                    Please provide a
+                    valid state.
+                </div>
+            </div>
+        </form>
+        <form class="needs-validation" novalidate=""
+        style="padding-top:5px;">
+        <div class="col-md-6">
+            <label for="state" class="form-label"
+            style="color: #6E7191;">Color</label>
+            <select class="form-select" id="state"
+            required="">
+            <option value="">
+                Choose...
+            </option>
+            <option>California
+            </option>
+        </select>
+        <div class="invalid-feedback">
+            Please provide a
+            valid state.
+        </div>
+    </div>
+</form>
+</div>
+<div class="row pt-4">
+    <strong
+    style="font-size: 24px; text-align: left;">Common</strong>
+    <div class="col-6" style="text-align: left;">
+        <small>Common attribute is information that use
+            for all product in same body</small>
+        </div>
+        <div class="col-3"
+        style="display: flex; align-items: center; margin-bottom: 10px; font-family: 'CPNBold'; color:#EF4444;">
+        <ion-icon name="warning-outline"
+        style="font-size: 16px;"></ion-icon>
+        <small style="margin-left: 5px;">1 Require
+            attribute is missing</small>
+        </div>
+        <div class="col-3"
+        style="display: flex; align-items: center; margin-bottom: 10px; font-family: 'CPNBold'; color:#000000;">
+        <ion-icon name="add-outline"
+        style="font-size: 16px;"></ion-icon>
+        <small style="margin-left: 5px;">Filters</small>
+        <span  class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill" style="text-align: center;">Show all</span>
+    </div>
+    <hr class="line">
+</div>
+</div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+            <label for="exampleFormControlTextarea1" class="form-label">Product name EN</label>
+            <textarea class="form-control" id="productname_en" rows="3"></textarea>
+    </div>
+    <div class="col-sm-6">
+        <label for="firstName" class="form-label">Product name TH</label>
+        <textarea class="form-control" id="productname_th" rows="3"></textarea>
+        
+    </div>
+    <div class="col-sm-6">
+        <label for="firstName" class="form-label">Short description
+            EN</label>
+            <input type="text" class="form-control" id="firstName"
+            placeholder="" value="" required="">
+            <div class="invalid-feedback">
+                Valid first name is required.
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <label for="firstName" class="form-label">Short description
+                TH</label>
+                <input type="text" class="form-control" id="firstName"
+                placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                    Valid first name is required.
+                </div>
+            </div>
+            <div class="row" style="display:block; color: #6E7191">
+                <form class="needs-validation" novalidate="">
+                    <div class="col-md-6">
+                        <label for="state" class="form-label" ">Material clothing</label>
+                        <select class=" form-select" id="state"
+                        required="">
+                        <option value="">
+                            Choose...
+                        </option>
+                        <option>California
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a
+                        valid state.
+                    </div>
+                </div>
+            </form>
+            <form class="needs-validation" novalidate=""
+            style="padding-top:5px;">
+            <div class="col-md-6">
+                <label for="state" class="form-label">Material
+                    (Option)</label>
+                    <select class="form-select" id="state"
+                    required="">
+                    <option value="">
+                        Choose...
+                    </option>
+                    <option>California
+                    </option>
+                </select>
+                <div class="invalid-feedback">
+                    Please provide a
+                    valid state.
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+<div class="col-2" style="background-color: #ffffff; height:100vh; font-size: 12px;  ">
+    <ul class="nav nav-pills mb-3 p-2" id="pills-tab" role="tablist"
+    style="color: black; justify-content: left;">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-home" type="button" role="tab"
+        aria-controls="pills-home" aria-selected="true">Translate</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-profile" type="button" role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false">Cleaning</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-contact" type="button" role="tab"
+        aria-controls="pills-contact"
+        aria-selected="false">Generate</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-disabled" type="button" role="tab"
+        aria-controls="pills-disabled"
+        aria-selected="false">Validate</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+    aria-labelledby="pills-home-tab" tabindex="0">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <small>Common</small><br>
+                    <strong class="card-title">Translate
+                        description EN to TH</strong>
+                        <p class="card-text">This function will
+                            replace any text in product
+                            name to proper case
+                        </p>
+                        <div class="row">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-6">
+                                <a href="#"
+                                class="btn btn-primary"
+                                style="background-color: #000000; font-size: 12px;">Apply</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+    aria-labelledby="pills-profile-tab" tabindex="0">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title
+                        treatment</h5>
+                        <p class="card-text">With supporting
+                            text below as a natural
+                            lead-in to additional content.
+                        </p>
+                        <a href="#" class="btn btn-primary"
+                        style="background-color: #000000; ">Go
+                        somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm ">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title
+                            treatment</h5>
+                            <p class="card-text">With supporting
+                                text below as a natural
+                                lead-in to additional content.
+                            </p>
+                            <a href="#" class="btn btn-primary"
+                            style="background-color: #000000;">Go
+                            somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+        aria-labelledby="pills-contact-tab" tabindex="0">...</div>
+        <div class="tab-pane fade" id="pills-disabled" role="tabpanel"
+        aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
+    </div>
+</div>
+</div>
+</div>
+<script>
+function get_linesheet_information(attribute_name){
+    var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+    linesheet_info = convertExcelToJsonTransposed(linesheet_file_path,'IN_LINK_DATA');
+    return (linesheet_info.find(item => item.attribute === attribute_name) || {}).value;
+    // document.getElementById("brand_name").value = (linesheet_info.find(item => item.attribute === 'brand') || {}).value;;
+
+}
+function get_linesheet_group_model() {
+  var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+
+  linesheet_info = convertExcelToJson(linesheet_file_path, 'IM_FORM');
+  const uniqueCatalogueNumbers = new Set(
+    linesheet_info
+      .filter(item => item.ibc !== undefined)
+      .map(item => item.catalogue_number_for_group)
+  );
+
+  const liElements = Array.from(uniqueCatalogueNumbers)
+    .map(catalogueNumber => `<input placeholder="No catalog" onclick="get_linesheet_group_ibc('${catalogueNumber}')" class="model_selection" value="${catalogueNumber}">`)
+    .join('');
+
+  document.getElementById("model_list").innerHTML = liElements;
+}
+
+
+function get_linesheet_group_ibc(catalogue_number_for_group){
+    var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+
+    linesheet_info = convertExcelToJson(linesheet_file_path,'IM_FORM');
+    // console.log(linesheet_info);
+    const liElements = linesheet_info
+        .filter(item => item.ibc !== undefined && item.catalogue_number_for_group == catalogue_number_for_group )
+        .map(item => `
+        <div class="input-group mb-2">
+            <input type="text" value="${item.ibc}" class="form-control product-list h-100" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <span class="input-group-text p-0 border-0 " id="basic-addon1"><input type="color" class="form-control product-list form-control-color h-100 rounded-0" id="${item.ibc}_color_hex" value="${item.color_hex}"></span>
+            <span class="input-group-text p-0 border-0 w-25" id="basic-addon1"><input type="text" class="form-control product-list h-100 rounded-0" id="${item.ibc}_color_shade" value="${item.color_shade}"></span>
+            <span class="input-group-text p-0 border-0 w-25" id="basic-addon1"><input type="text" class="form-control product-list  h-100 rounded-0" id="${item.ibc}_size" value="${item.size}"></span>
+            </div>
+       `)
+        .join('');
+        document.getElementById("ibc_list").innerHTML=liElements
+
+
+}
+get_linesheet_group_model();
+
+
+function runSlimSelect(select_id) {
+            new SlimSelect({
+                select: select_id,
+                settings: {
+                    closeOnSelect: false,
+                    allowDeselectOption: true,
+                },
+                events: {
+                    afterChange: (newVal) => {
+                        input = select_id.replace('_show', '');
+                        document.querySelector(input).value = newVal.map(val => val.value).join(',');
+                    }
+                }
+            });
+
+        }
+
+var configOptions = [
+        { id: 'brand', args: ['get_text_input_two_grid', 'brand', 'free_text',get_linesheet_information('brand')], variableName: 'brandList'  , slim_id:'#brand_show' },
+        { id: 'sku', args: ['get_text_input_two_grid', 'sku', 'free_text',get_linesheet_information('sku')], variableName: 'skuList'  , slim_id:'#sku_show' },
+        { id: 'sale_channel', args: ['get_multi_select_input_two_grid', 'sale_channel', 'multiple',get_linesheet_information('sale_channel')], variableName: 'SaleChannelList' , slim_id:'#sale_channel_show'  },
+        { id: 'stock_source', args: ['get_multi_select_input_two_grid', 'stock_source', 'multiple',get_linesheet_information('stock_source')], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  },
+        { id: 'production_type', args: ['get_single_select_input_two_grid', 'production_type', 'single',get_linesheet_information('production_type')], variableName: 'ProductionTypeList' , slim_id:'#production_type_show'  },
+        { id: 'template', args: ['get_family_input_two_grid', 'template', 'multiple',get_linesheet_information('template')], variableName: 'templateList' , slim_id:'#template_show'  }
+    ];
+
+configOptions.forEach(option => {
+    let optionList = '';
+    new PythonShell(`src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
+    .on('error', err => {
+        console.error('An error occurred while running the Python script:', err);
+        // handle the error here
+    })
+    .on('stderr', message => {
+                console.error('Received error message:', message);
+    })
+    .on('message', message => {
+        optionList += message;
+        if (optionList) {
+            document.getElementById(option.id).innerHTML = optionList;
+            runSlimSelect(option.slim_id);
+        }
+    });
+
+});
+
+
+</script>
