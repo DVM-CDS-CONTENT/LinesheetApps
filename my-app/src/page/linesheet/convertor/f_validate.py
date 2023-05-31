@@ -1,15 +1,18 @@
 import pandas as pd
 import os
+import sys
 
-path_name = 'my-app/linesheet/CDS_LINESHEET_SANRIO_30_SKUs_TID_20230529180252220.xlsm'
+
 expected_sku_count = 30
+
 
 def open_file(path_name):
     abs_path = os.path.abspath(path_name)
     sys.stdout.reconfigure(encoding='utf-8')
     df = pd.read_excel(abs_path, skiprows=11)
     actual_sku_count = len(df)
-    # print(df.head())
+    print(df.to_string())
+
     validate_number(actual_sku_count)
     validate_character_th(df)
 
@@ -30,19 +33,19 @@ def validate_character_th(df):
         try:
             if len(product_name_th) < 20:
                 # print(len(product_name_th))
-                count_correct = count_correct+1       
+                count_correct = count_correct+1
             else:
                 count_notcorrect = count_notcorrect + 1
                 product_name_th_error.append(product_name_th)
                 # print(len(product_name_th),product_name_th)
-                
+
         except TypeError:
         # Handle the case where product_name_th is not a string
             print("Invalid value for product name")
     print(count_correct)
-    print(count_notcorrect)       
-    print(product_name_th_error)       
-        
+    print(count_notcorrect)
+    print(product_name_th_error)
+
 
 def validate_size(df):
     pass
@@ -59,6 +62,7 @@ def validate_productname_th(df):
 def validate_category(df):
     pass
 
-if __name__ == '__main__':
-    import sys
+if __name__ == 'main':
+
+    path_name = sys.argv[1]
     open_file(path_name)

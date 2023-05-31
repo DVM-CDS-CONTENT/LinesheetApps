@@ -89,7 +89,7 @@
 <div class="clean_page">
          <div class="nav_input col p-2 ">
                   <div class="box_input">
-                           <input type="file" id="myFile" />
+                           <input type="file" id="myFile" accept=".xlsx, .xlsm " />
                   </div>
          </div>
 
@@ -102,8 +102,8 @@
                                                       <span style="padding-left: 15px;">File informations</span>
                                              </div>
                                              <div class="col-6 p-1 text-end">
-                                                      <span style="padding-right: 15px;" class="text_input">CDS2301-0343
-                                                               NS-18608 Ceeeeeeeeeeeeee</span>
+                                                      <span style="padding-right: 15px;" class="text_input"
+                                                               id="name_file">No file selected</span>
                                              </div>
                                     </div>
                                     <div class="row card_file">
@@ -251,14 +251,47 @@
                                     <div class="row" style="padding-top: 30px;">
                                              <div class="col py-5"
                                                       style="text-align: left; list-style-type: none; padding-left: 20px; ">
-                                                      <div
-                                                               style="display: flex; align-items: center; margin-bottom: 10px;">
-                                                               <ion-icon name="checkmark-circle"
-                                                                        style="font-size: 22px;" id="icon"></ion-icon>
-                                                               <span style="margin-left: 10px;" id="alert">validate
-                                                                        number of sku
-                                                                        equal with count of sku in
-                                                                        Linesheet</span>
+                                                      <div style="display: flex; align-items: center; margin-bottom: 10px;"
+                                                               id="equal_count">
+                                                               <ion-icon name="checkmark-circle-outline"
+                                                                        style="font-size: 22px; color: #3ECC72;"
+                                                                        id="icon"></ion-icon>
+                                                               <span style="margin-left: 10px;">validate number of sku
+                                                                        equal
+                                                                        with count of sku in Linesheet</span>
+                                                      </div>
+                                                      <div style="display: flex; align-items: center; margin-bottom: 10px;"
+                                                               id="equal_count">
+                                                               <ion-icon name="checkmark-circle-outline"
+                                                                        style="font-size: 22px; color: #3ECC72;"
+                                                                        id="icon"></ion-icon>
+                                                               <span style="margin-left: 10px;">validate size less than
+                                                                        20 incase size standard is US or UK</span>
+                                                      </div>
+                                                      <div style="display: flex; align-items: center; margin-bottom: 10px;"
+                                                               id="count_charecter">
+                                                               <ion-icon name="checkmark-circle-outline"
+                                                                        style="font-size: 22px; color: #3ECC72;"
+                                                                        id="icon"></ion-icon>
+                                                               <span style="margin-left: 10px;">validate count of
+                                                                        charecter in product name meet with guideline
+                                                                        (maximun 100 charecther)</span>
+                                                      </div>
+                                                      <div style="display: flex; align-items: center; margin-bottom: 10px;"
+                                                               id="check_typefile">
+                                                               <ion-icon name="checkmark-circle-outline"
+                                                                        style="font-size: 22px; color: #3ECC72;"
+                                                                        id="icon"></ion-icon>
+                                                               <span style="margin-left: 10px;">validate type of file is
+                                                                        XLSM</span>
+                                                      </div>
+                                                      <div style="display: flex; align-items: center; margin-bottom: 10px;"
+                                                               id="check_dropdown">
+                                                               <ion-icon name="checkmark-circle-outline"
+                                                                        style="font-size: 22px; color: #3ECC72;"
+                                                                        id="icon"></ion-icon>
+                                                               <span style="margin-left: 10px;">validate dropdown is
+                                                                        available on system</span>
                                                       </div>
                                              </div>
                                     </div>
@@ -301,3 +334,35 @@
                   </div>
          </div>
 </div>
+<script>
+         var PythonShell = ''
+
+         var { PythonShell } = require('python-shell');
+         // const  {DataTable}= require('datatables.net-dt');
+         var XLSX = require('xlsx');
+         var path = require('path')
+
+         document.getElementById("myFile").addEventListener("change", function (event) {
+                  var selectedFile = event.target.files[0];
+                  var nameSpan = document.getElementById("name_file");
+                  if (selectedFile) {
+                           nameSpan.textContent = selectedFile.name;
+                  } else {
+                           nameSpan.textContent = "No file selected";
+                  }
+                  // ทำสิ่งที่ต้องการกับไฟล์ที่เลือกเข้ามาที่นี่
+                  filename = selectedFile.name
+
+                  console.log("file:", filename);
+                  console.log("ขนาดไฟล์:", selectedFile.size, "bytes");
+                  console.log("ประเภทไฟล์:", selectedFile.type);
+
+                  new PythonShell(path.join(__dirname, `page/linesheet/convertor/f_validate.py`), {
+                           args: [selectedFile.name, selectedFile.size, selectedFile.type]
+                  })
+                           .on('error', err => {
+                                    console.log('error');
+                                    console.error('An error occurred while running the Python script:', err);
+                           })
+         });
+</script>

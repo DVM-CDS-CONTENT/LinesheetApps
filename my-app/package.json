@@ -25,6 +25,7 @@
     "-": "^0.0.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
     "@electron-forge/publisher-github": "^6.1.1",
+    "bootstrap-icons": "^1.10.5",
     "cross-env": "^7.0.3",
     "datatables.net-dt": "^1.13.4",
     "dom-to-image": "^2.6.0",
@@ -64,12 +65,12 @@
       "provider": "generic",
       "url": "https://dist.anystack.sh/v1/electron"
     },
-    "directory":{
+    "directory": {
       "output": "build"
     },
-    "nsis":{
-      "alloToChangeInstallationDirectory":false,
-      "oneClick":false
+    "nsis": {
+      "alloToChangeInstallationDirectory": false,
+      "oneClick": false
     }
   }
 }
