@@ -128,23 +128,12 @@ label.form-check-label{
 
 
 </style>
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<link href="./style/style.css"></link>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai&display=swap" rel="stylesheet">
-
-
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script> -->
 
 <div id="nav_choose_file">
     <div class="nav_input">
         <div class="box_input p-3 shadow-sm border-bottom bg-white">
-            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="handleFileChange(event)"/>
+            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="handleFileChange()"/>
         </div>
     </div>
 
@@ -273,7 +262,7 @@ label.form-check-label{
                 </div>
             </div>
             <div class="p-2 bd-highlight">
-                <button type="button" class="btn btn-dark" style="width: 242px;text-align-last: left;font-weight: 500;">
+                <button type="button" class="btn btn-dark" onclick="handleFileChange()" style="width: 242px;text-align-last: left;font-weight: 500;">
                     <div class="d-flex bd-highlight" >
                         <div class="p-2 flex-grow-1 bd-highlight">
                              <span>Start Convert</span>
@@ -316,21 +305,26 @@ label.form-check-label{
 
     }
 
-    // const XLSX = require('xlsx');
-    // const { PythonShell } = require('python-shell');
-    // const os = require('os');
-    // const path = require('path');
-    // const fs = require('fs');
+    var XLSX = require('xlsx');
+    var { PythonShell } = require('python-shell');
+    var os = require('os');
+    var path = require('path');
+    var fs = require('fs');
 
   // Function to handle file input change
-    function handleFileChange(event) {
-      console.log('call handleFileChange');
-      const file = event.target.files[0];
-      const reader = new FileReader();
+//   document.getElementById('linesheet_input').files[0] = sessionStorage.getItem('linesheet_file_path');
 
-      reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+    function handleFileChange() {
+      console.log('call handleFileChange');
+    //   const file = event.target.files[0];
+    //   const file= sessionStorage.getItem('linesheet_file_path')
+    //   const reader = new FileReader();
+
+    //   reader.onload = function (e) {
+        // const data = new Uint8Array(e.target.result);
+        const file= sessionStorage.getItem('linesheet_file_path')
+        // const workbook = XLSX.read(data, { type: 'array' });
+        const workbook = XLSX.readFile(file);
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         let jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 0 ,defval: ''});
 
@@ -339,13 +333,16 @@ label.form-check-label{
 
         jsonData = jsonData.filter(row => row['ibc'] !== '');
        // Find the columns to delete
-        const columnsToDelete = Object.keys(jsonData[0]).filter(key => key.startsWith('__EMPTY'));
+
+
+        // const columnsToDelete = Object.keys(jsonData[0]).filter(key => key.startsWith('__EMPTY'));
 
         // Remove the columns from each row in the jsonData
         jsonData = jsonData.map(row => {
-        columnsToDelete.forEach(column => {
-            delete row[column];
-        });
+        // columnsToDelete.forEach(column => {
+        //     delete row[column];
+        // });
+
         return row;
         });
 
@@ -364,6 +361,9 @@ label.form-check-label{
 
         new PythonShell(`src/page/linesheet/convertor/main.py`, { args: [filePath]}  )
         .on('error', err => {console.error('An error occurred while running the Python script:', err);})
+        .on('stderr', message => {
+            console.error('Received error message:', message);
+        })
         .on('message', message => {
             document.getElementById('convert_logs').innerHTML = document.getElementById('convert_logs').innerHTML +'</br>'+ message
 
@@ -377,9 +377,9 @@ label.form-check-label{
             // }
             // });
         });
-      };
+    //   };
 
-      reader.readAsArrayBuffer(file);
+    //   reader.readAsArrayBuffer(file);
     }
 
 </script>

@@ -185,6 +185,7 @@
                             new SlimSelect({
                                 select: select_id,
                                 settings: {
+                                    showSearch: true,
                                     closeOnSelect: false,
                                     allowDeselectOption: true,
                                 },
@@ -229,7 +230,7 @@
                                 if( errormessage.includes("Programmatic access to Visual Basic Project is not trusted")){
                                     Notiflix.Report.warning(
                                         'Need config in excel',
-                                        'Please select trust access to the VBA project object model before use this via open an excel > Option > Trust center > Trust center setting > select trust access to the VBA project object model, refernace : https://docs.cdse-commercecontent.com/spear/troubleshoot ',
+                                        'Please select trust access to the VBA project object model before use this via open an excel > Option > Trust center > Trust center setting > Macro setting >select trust access to the VBA project object model, refernace : https://docs.cdse-commercecontent.com/spear/troubleshoot ',
                                         'Okay',
                                     );
                                 }

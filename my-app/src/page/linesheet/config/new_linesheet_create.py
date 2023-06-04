@@ -162,6 +162,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # 1. attribute_setting
     # 2. attribute option setting
     # replace to multi template  #####################################
+
     filter_template_cat_sql = template.replace(",", "','")
     filter_template_header_sql = template.replace(",", " not in ('N','AR','AO') or ")
     selected_template_list = list(map(str,template.split(",")))
@@ -183,12 +184,15 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     attribute_options = attribute_options.drop_duplicates()
     # - get categories
     query = "SELECT label_th FROM im_form.categories_setting where deepen_level = 1 and family in ('"+filter_template_cat_sql +"')"
+
     categories_setting = pd.read_sql_query(query, engine)
+    # print(categories_setting)
     # - Merge categories to options
     categories_setting['linesheet_code'] = 'online_categories'
     # - Rename the column headers
     categories_setting = categories_setting.rename(columns={'label_th': 'input_option'})
     attribute_options = pd.concat([attribute_options, categories_setting], axis=0)
+
     # - Close the connection
     # cnx.close()
 # #### @ Create an config backup file ##########################3
