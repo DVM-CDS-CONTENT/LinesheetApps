@@ -1,0 +1,13 @@
+Lib/site-packages/brotli/__init__.py
+Lib/site-packages/brotli/__pycache__/__init__.cpython-310.pyc
+Lib/site-packages/brotli/__pycache__/brotli.cpython-310.pyc
+Lib/site-packages/brotli/__pycache__/build.cpython-310.pyc
+Lib/site-packages/brotli/_brotli.pyd
+Lib/site-packages/brotli/brotli.py
+Lib/site-packages/brotli/build.py
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/PKG-INFO
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/SOURCES.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/dependency_links.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/not-zip-safe
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/requires.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/top_level.txt

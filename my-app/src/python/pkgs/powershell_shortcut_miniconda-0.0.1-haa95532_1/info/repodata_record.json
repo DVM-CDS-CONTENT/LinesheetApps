@@ -1,0 +1,26 @@
+{
+  "build": "haa95532_1",
+  "build_number": 1,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [
+    "anaconda-navigator >=1.9.8"
+  ],
+  "depends": [
+    "python"
+  ],
+  "features": "",
+  "fn": "powershell_shortcut_miniconda-0.0.1-haa95532_1.conda",
+  "legacy_bz2_md5": "1469cc99e03c2a9116b3c250788ed99a",
+  "legacy_bz2_size": 62366,
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "19b6facebf1a84f97fcfdc7f7c0dab6a",
+  "name": "powershell_shortcut_miniconda",
+  "sha256": "cef38de4a2f8a921bafc09b6edf9a6bbfd61a34c6604d23aa6481c36d21f7631",
+  "size": 130909,
+  "subdir": "win-64",
+  "timestamp": 1674501034260,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/powershell_shortcut_miniconda-0.0.1-haa95532_1.conda",
+  "version": "0.0.1"
+}

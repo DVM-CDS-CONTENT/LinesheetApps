@@ -1,0 +1,65 @@
+{
+  "paths": [
+    {
+      "_path": "Lib/site-packages/_ruamel_yaml.cp310-win_amd64.pyd",
+      "path_type": "hardlink",
+      "sha256": "a7d0d726f92985e27cd755027547231936c4f016739bdef21c7dbd8d33a01ddc",
+      "size_in_bytes": 251392
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/INSTALLER",
+      "path_type": "hardlink",
+      "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+      "size_in_bytes": 5
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/LICENSE",
+      "path_type": "hardlink",
+      "sha256": "16174d2cf8c2ee4b900bf8573106bc61c1ce0092da4fa781cc0ee81047a46539",
+      "size_in_bytes": 1121
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/METADATA",
+      "path_type": "hardlink",
+      "sha256": "66c18293ff516a03befe1b334e5643e10c453aef189ba8e884db805fbe0378ac",
+      "size_in_bytes": 2076
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/RECORD",
+      "path_type": "hardlink",
+      "sha256": "d87f9031d16579266cbae18ae0f0d728f6a5238efe5528fd25622d4a0e89d7e0",
+      "size_in_bytes": 938
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/REQUESTED",
+      "path_type": "hardlink",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_in_bytes": 0
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/WHEEL",
+      "path_type": "hardlink",
+      "sha256": "5b6ea960dec72ec053d63ac348bf6e7607ff99d34a2666262f6dec20ff857203",
+      "size_in_bytes": 102
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/direct_url.json",
+      "path_type": "hardlink",
+      "sha256": "23146e35439a7ef7f73799c3e4bb4aea79b1f9b9a243caeb0833c55ed629943b",
+      "size_in_bytes": 96
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/namespace_packages.txt",
+      "path_type": "hardlink",
+      "sha256": "b8ccc27461cd768c3bfe29cec7aad96b11ba378e5c5561c4ad4d218e2b6f7a1b",
+      "size_in_bytes": 19
+    },
+    {
+      "_path": "Lib/site-packages/ruamel.yaml.clib-0.2.6.dist-info/top_level.txt",
+      "path_type": "hardlink",
+      "sha256": "d6c25b6b7206776b1a6f7bbfea45b234f4bcc86fc01ed3f425d99a0e80785c1d",
+      "size_in_bytes": 20
+    }
+  ],
+  "paths_version": 1
+}
