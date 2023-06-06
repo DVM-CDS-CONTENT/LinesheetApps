@@ -25,7 +25,7 @@ function runPythonScript(scriptCode, webContents) {
 // execSync(path.join(__dirname, 'python/Scripts/activate.bat'));
 // execSync('pip install package_name');
 
- // Install pip if needed
+// Install pip if needed
 //  const installCommand = spawnSync(pythonExecutable, ['-c','-m venv python']);
 //  if (installCommand.stderr && installCommand.stderr.length > 0) {
 //    const errorMessage = installCommand.stderr.toString();
