@@ -1,7 +1,7 @@
 {
   "name": "spear",
   "productName": "spear",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "spear",
   "repository": {
     "type": "git",
@@ -68,7 +68,7 @@
       "output": "build"
     },
     "nsis":{
-      "alloToChangeInstallationDirectory":false,
+      "allowToChangeInstallationDirectory":false,
       "oneClick":false
     }
   }

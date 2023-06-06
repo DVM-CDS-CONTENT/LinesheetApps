@@ -232,7 +232,7 @@ app.on('ready', async  () => {
       if(filePath=='page/nav/welcome_nav.html'){
         event.sender.send('nav-loaded', data);
       }
-      if(filePath=='page/installer_py.html'){
+      if(filePath=='page/prompt_role.html'){
         event.sender.send('page-loaded', data);
       }
       if(filePath=='page/footers.html'){
