@@ -89,7 +89,7 @@
 <div class="clean_page">
          <div class="nav_input col p-2 ">
                   <div class="box_input">
-                           <input type="file" id="myFile" accept=".xlsx, .xlsm " />
+                           <input type="file" id="myFile" accept=".xlsx, .xlsm" />
                   </div>
          </div>
 
@@ -334,7 +334,35 @@
                   </div>
          </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  $(document).ready(function() {
+    // เมื่อผู้ใช้เลือกไฟล์
+    $("#myFile").change(function() {
+      var file = $(this).prop("files")[0];
+      var formData = new FormData();
+      formData.append("file", file);
+      
+      // ส่งไฟล์ไปยังเซิร์ฟเวอร์ Python
+      $.ajax({
+        url: "/validate_file",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          // ดำเนินการตามการตอบกลับจากเซิร์ฟเวอร์
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    });
+  });
+</script>
+<!-- <script>
          var PythonShell = ''
 
          var { PythonShell } = require('python-shell');
@@ -345,24 +373,39 @@
          document.getElementById("myFile").addEventListener("change", function (event) {
                   var selectedFile = event.target.files[0];
                   var nameSpan = document.getElementById("name_file");
+                  var brandNameInput = document.getElementById("brand_name");
+                  var equal_count = document.getElementById("equal_count");
+
                   if (selectedFile) {
                            nameSpan.textContent = selectedFile.name;
-                  } else {
-                           nameSpan.textContent = "No file selected";
+                           var filename = selectedFile.name;
+
+                           console.log("file:", filename);
+                           console.log("ขนาดไฟล์:", selectedFile.size, "bytes");
+                           console.log("ประเภทไฟล์:", selectedFile.type);
+
+                           brandNameInput.value = filename; 
+                           total_skuInput.value = filename; 
+                           
+                  //          var options = {
+                  //                   args: [filename]
+                  //          };
+
+                  //          var PythonShell = require('python-shell');
+                  //          var path = require('path');
+                  //          var scriptPath = path.join(__dirname, 'page/linesheet/convertor/f_validate.py');
+
+                  //          PythonShell.run(scriptPath, options, function (err) {
+                  //                   if (err) {
+                  //                            console.error('An error occurred while running the Python script:', err);
+                  //                   } else {
+                  //                            console.log('Python script executed successfully');
+                  //                   }
+                  //          });
+                  // } else {
+                  //          nameSpan.textContent = "No file selected";
+                  //          brandNameInput.value = ""; // Clear the input field if no file is selected
                   }
-                  // ทำสิ่งที่ต้องการกับไฟล์ที่เลือกเข้ามาที่นี่
-                  filename = selectedFile.name
-
-                  console.log("file:", filename);
-                  console.log("ขนาดไฟล์:", selectedFile.size, "bytes");
-                  console.log("ประเภทไฟล์:", selectedFile.type);
-
-                  new PythonShell(path.join(__dirname, `page/linesheet/convertor/f_validate.py`), {
-                           args: [selectedFile.name, selectedFile.size, selectedFile.type]
-                  })
-                           .on('error', err => {
-                                    console.log('error');
-                                    console.error('An error occurred while running the Python script:', err);
-                           })
          });
-</script>
+
+</script> -->
