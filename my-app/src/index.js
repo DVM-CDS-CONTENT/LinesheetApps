@@ -1,21 +1,20 @@
 const { app, BrowserWindow, ipcMain, contextBridge , dialog , globalShortcut ,shell } = require('electron');
 // Electron Builder
 const { autoUpdater } =  require('electron-updater');
-const child_process = require('child_process');
 
 const path = require('path');
 const fs = require('fs');
 
-const { spawn ,spawnSync,execSync } = require('child_process');
+const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
 
-// Set the PYTHONHOME and PATH environment variables
+// // Set the PYTHONHOME and PATH environment variables
 process.env.PYTHONHOME = path.join(__dirname, 'python');
 process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 
 // Execute a Python script
-function runPythonScript(scriptCode, webContents) {
-  const pythonExecutable = process.platform === 'win32' ? 'python.exe' : 'python';
+// function runPythonScript(scriptCode, webContents) {
+//   const pythonExecutable = process.platform === 'win32' ? 'python.exe' : 'python';
 
 //  spawnSync(pythonExecutable, ['-m', 'venv', 'python']);
 
@@ -42,18 +41,18 @@ function runPythonScript(scriptCode, webContents) {
 
 
 
-  const pythonProcess = child_process.spawn(pythonExecutable, ['-c', scriptCode]);
+  // const pythonProcess = child_process.spawn(pythonExecutable, ['-c', scriptCode]);
 
-  pythonProcess.stdout.on('data', (data) => {
-    webContents.executeJavaScript("console.log(`Python stdout: "+data+"`);");
+  // pythonProcess.stdout.on('data', (data) => {
+  //   webContents.executeJavaScript("console.log(`Python stdout: "+data+"`);");
 
-  });
+  // });
 
-  pythonProcess.stderr.on('data', (data) => {
-    // console.error(`Python stderr: ${data}`);
-    webContents.executeJavaScript("console.error(`Python stderr: "+data+"`);");
-  });
-}
+  // pythonProcess.stderr.on('data', (data) => {
+  //   // console.error(`Python stderr: ${data}`);
+  //   webContents.executeJavaScript("console.error(`Python stderr: "+data+"`);");
+  // });
+// }
 
 // const { autoUpdater, AppUpdater } = require("electron-updater");
 process.env.GITHUB_TOKEN = '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';
@@ -121,8 +120,8 @@ setTimeout(function () {
   const webContents = mainWindow.webContents;
 
 
-  const pythonScriptCode = "print('Hello, World!')";
-  runPythonScript(pythonScriptCode, webContents);
+  // const pythonScriptCode = "print('Hello, World!')";
+  // runPythonScript(pythonScriptCode, webContents);
 
   // Set up auto-updater
   const server = 'https://dist.anystack.sh/v1/electron';
@@ -138,7 +137,9 @@ setTimeout(function () {
   });
 
   autoUpdater.checkForUpdatesAndNotify();
-  //  autoUpdater.checkForUpdates();
+
+
+  // //  autoUpdater.checkForUpdates();
 
   // setInterval(() => {
   //   autoUpdater.checkForUpdatesAndNotify();
@@ -242,31 +243,31 @@ app.on('ready', async  () => {
   });
 
 
-    // Listen for the restart event
-    ipcMain.on('restart-app', () => {
-      // app.relaunch();
-      // app.quit();
-      // app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
+    // // Listen for the restart event
+    // ipcMain.on('restart-app', () => {
+    //   // app.relaunch();
+    //   // app.quit();
+    //   // app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
 
-        // Relaunch the app after a short delay
-      setTimeout(() => {
-        // Spawn a new process to run the Electron app again
-        spawn(process.execPath, [app.getPath('exe')], {
-          detached: true,
-          stdio: 'ignore',
-        }).unref();
-      }, 3000);
-      app.quit();
-    });
+    //     // Relaunch the app after a short delay
+    //   setTimeout(() => {
+    //     // Spawn a new process to run the Electron app again
+    //     spawn(process.execPath, [app.getPath('exe')], {
+    //       detached: true,
+    //       stdio: 'ignore',
+    //     }).unref();
+    //   }, 3000);
+    //   app.quit();
+    // });
 
     // shell.openExternal('https://docs.cdse-commercecontent.com/spear');
 
-//  const guide = new BrowserWindow({
-//     fullscreen: true
-//   });
+ const guide = new BrowserWindow({
+    fullscreen: true
+  });
 
-//   // Load a website URL
-//   guide.loadURL('https://docs.cdse-commercecontent.com/spear');
+  // Load a website URL
+  guide.loadURL('https://docs.cdse-commercecontent.com/spear');
 
 
 });
