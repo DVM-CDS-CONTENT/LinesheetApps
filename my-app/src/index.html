@@ -57,7 +57,8 @@
         $('#nav').html(data);
       });
 
-      ipcRenderer.send('load-file', 'page/prompt_role.html');
+      // ipcRenderer.send('load-file', 'page/prompt_role.html');
+      ipcRenderer.send('load-file', 'page/installer_py.html');
       ipcRenderer.on('page-loaded', (event, data) => {
         $('#page').html(data);
       });

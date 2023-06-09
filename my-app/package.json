@@ -1,7 +1,7 @@
 {
   "name": "spear",
   "productName": "spear",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "spear",
   "repository": {
     "type": "git",
@@ -25,21 +25,26 @@
     "-": "^0.0.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
     "@electron-forge/publisher-github": "^6.1.1",
+    "cross-env": "^7.0.3",
     "datatables.net-dt": "^1.13.4",
     "dom-to-image": "^2.6.0",
     "electron-builder": "^23.6.0",
     "electron-prebuilt": "^1.4.13",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^5.3.0",
+    "find-process": "^1.4.7",
     "jquery": "^3.6.4",
     "notiflix": "^3.2.6",
+    "numpy": "^0.0.1",
     "pako": "^2.1.0",
+    "pandas": "^0.0.3",
     "pj-custom-electron-titlebar": "^3.2.0",
     "python-shell": "^5.0.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "slim-select": "^2.5.0",
     "update-electron-app": "^2.0.1",
+    "which": "^3.0.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
@@ -48,7 +53,9 @@
     "@electron-forge/maker-rpm": "^6.1.1",
     "@electron-forge/maker-squirrel": "^6.1.1",
     "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "^24.1.3"
+    "electron": "^24.1.3",
+    "electron-rebuild": "^3.2.9",
+    "mysql": "^2.18.1"
   },
   "build": {
     "appId": "com.electron.spear",
@@ -56,6 +63,13 @@
     "publish": {
       "provider": "generic",
       "url": "https://dist.anystack.sh/v1/electron"
+    },
+    "directory":{
+      "output": "build"
+    },
+    "nsis":{
+      "alloToChangeInstallationDirectory":false,
+      "oneClick":false
     }
   }
 }

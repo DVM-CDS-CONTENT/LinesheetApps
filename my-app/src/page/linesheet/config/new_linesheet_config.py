@@ -1,11 +1,15 @@
 import mysql.connector
 import pandas as pd
 import numpy as np
+from sqlalchemy import create_engine
 
 def get_family():
-    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+
+    engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
+    # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
-    attribute = pd.read_sql(query, cnx)
+    attribute = pd.read_sql(query, engine)
+
     columns = attribute.columns.tolist()
     columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common']
     columns_to_include = [value for value in columns if value not in columns_to_exclude]
@@ -21,9 +25,10 @@ def get_family():
     return html
 
 def get_input(attribute, type):
-    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
     query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
-    input_value = pd.read_sql(query, cnx)
+    input_value = pd.read_sql(query, engine)
     input_value['option_group'] = input_value['option_group'].fillna(input_value['attribute_code'])
     input_group = np.unique(input_value['option_group'].tolist())
     optgroup = ''
@@ -67,9 +72,10 @@ def get_text_input_two_grid(attribute, input_type,default_option_str):
   return html
 
 def get_multi_select_input_two_grid(attribute, input_type,default_option_str):
-    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
+    # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
-    input_value = pd.read_sql(query, cnx)
+    input_value = pd.read_sql(query, engine)
     input_value['option_group'] = input_value['option_group'].fillna(input_value['attribute_code'])
     input_group = np.unique(input_value['option_group'].tolist())
     optgroup = ''
@@ -99,9 +105,10 @@ def get_multi_select_input_two_grid(attribute, input_type,default_option_str):
     return html
 
 def get_single_select_input_two_grid(attribute, input_type,default_option_str):
-    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
+    # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
-    input_value = pd.read_sql(query, cnx)
+    input_value = pd.read_sql(query, engine)
     input_value['option_group'] = input_value['option_group'].fillna(input_value['attribute_code'])
     input_group = np.unique(input_value['option_group'].tolist())
     optgroup = ''
@@ -133,9 +140,10 @@ def get_single_select_input_two_grid(attribute, input_type,default_option_str):
 
 def get_family_input_two_grid(attribute, input_type,default_option_str):
     default_option=[]
-    cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
+    engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
+    # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
-    attribute_fam = pd.read_sql(query, cnx)
+    attribute_fam = pd.read_sql(query, engine)
     columns = attribute_fam.columns.tolist()
     columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common']
     columns_to_include = [value for value in columns if value not in columns_to_exclude]
