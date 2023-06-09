@@ -58,16 +58,19 @@
       });
 
       // ipcRenderer.send('load-file', 'page/prompt_role.html');
-      ipcRenderer.send('load-file', 'page/installer_py.html');
+      ipcRenderer.send('load-file', 'page/prompt_role.html');
       ipcRenderer.on('page-loaded', (event, data) => {
         $('#page').html(data);
       });
 
+      //
       ipcRenderer.send('load-file', 'page/footers.html');
       ipcRenderer.on('footers-loaded', (event, data) => {
         $('#footers').html(data);
       });
     });
+
+
 
     const Notiflix = require('notiflix');
 

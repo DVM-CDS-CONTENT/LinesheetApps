@@ -1,4 +1,4 @@
-
+<!--
 
 
 
@@ -63,13 +63,14 @@ exec('py -3.11 --version', (error, stdout, stderr) => {
             try {
 
                 console.log('Installing Python...');
+                Notiflix.Loading.change(`download more path..`);
                 await executeCommand('curl https://www.python.org/ftp/python/3.11.2/python-3.11.2-amd64.exe -o python-3.11.2-amd64.exe');
-                Notiflix.Loading.change(`download more path`);
+                Notiflix.Loading.change(`install more module, please check your popup allow to install`);
                 await executeCommand('python-3.11.2-amd64.exe /quiet InstallAllUsers=1 PrependPath=1');
-                console.log('Python installation complete.');
-                Notiflix.Loading.change(`Python installation complete.`);
+                console.log('Python installation complete...');
+                Notiflix.Loading.change(`Python installation complete...`);
                 document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `Python installation complete...`;
-
+                Notiflix.Loading.change(`install library package...`);
                 installPackage('mysql-connector-python');
                 installPackage('numpy');
                 installPackage('pandas');
@@ -89,12 +90,13 @@ exec('py -3.11 --version', (error, stdout, stderr) => {
                 }
 
                 async function closeapp() {
-                    Notiflix.Loading.change(`Restarting ... `);
+                    Notiflix.Loading.change(`The app will be close , please open it again ... `);
                     await delay(5000); // Wait for 2000 milliseconds (2 seconds)
                     Notiflix.Loading.remove();
-                    var { app } = require('electron');
-                    app.relaunch();
-                    app.quit();
+
+                    var { ipcRenderer } = require('electron');
+                    ipcRenderer.send('restart-app');
+
                 }
 
                 closeapp();
@@ -127,4 +129,4 @@ exec('py -3.11 --version', (error, stdout, stderr) => {
 
 
 
-</script>
+</script> -->

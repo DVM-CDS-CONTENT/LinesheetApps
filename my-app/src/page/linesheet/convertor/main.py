@@ -117,7 +117,7 @@ linesheet = linesheet.rename(columns={"product_detail_en" : "description_en"})
 linesheet = linesheet.rename(columns={"product_detail_th" : "description_th"})
 
 # drop rows 2-13
-linesheet = linesheet.drop(index=range(0,11))
+# linesheet = linesheet.drop(index=range(0,11))
 
 ##-------end read excel
 from f_function import *
@@ -147,7 +147,7 @@ for linesheet_code in linesheet.columns:
 
         if  func != 'categories' and func != 'categories full path' :
             func_call =  globals()[func]
-
+            print(func_call)
             linesheet[linesheet_code] = linesheet.apply(func_call,axis=1, args=(linesheet_code,my_dict))
 
         pim_code = template_dict[linesheet_code]

@@ -1,16 +1,60 @@
-const { app, BrowserWindow, ipcMain, contextBridge , dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, contextBridge , dialog , globalShortcut ,shell } = require('electron');
 // Electron Builder
 const { autoUpdater } =  require('electron-updater');
-
 
 const path = require('path');
 const fs = require('fs');
 
+const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
+
+// // Set the PYTHONHOME and PATH environment variables
+process.env.PYTHONHOME = path.join(__dirname, 'python');
+process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 
+// Execute a Python script
+// function runPythonScript(scriptCode, webContents) {
+//   const pythonExecutable = process.platform === 'win32' ? 'python.exe' : 'python';
+
+//  spawnSync(pythonExecutable, ['-m', 'venv', 'python']);
+
+// Activate the virtual environment
+
+// execSync(path.join(__dirname, 'python/Scripts/activate'));
+// execSync(path.join(__dirname, 'python/Scripts/activate.bat'));
+// execSync('pip install package_name');
+
+// Install pip if needed
+//  const installCommand = spawnSync(pythonExecutable, ['-c','-m venv python']);
+//  if (installCommand.stderr && installCommand.stderr.length > 0) {
+//    const errorMessage = installCommand.stderr.toString();
+//    webContents.executeJavaScript(`console.error('Failed to install pip:', ${JSON.stringify(errorMessage)});`);
+//    return;
+//  }
+
+//  const installCommand2 = spawnSync(pythonExecutable, ['-c',"'"+path.join(__dirname, 'python/Scripts/activate')+"'"]);
+//  if (installCommand2.stderr && installCommand2.stderr.length > 0) {
+//    const errorMessage = installCommand2.stderr.toString();
+//    webContents.executeJavaScript(`console.error('Failed to install pip:', ${JSON.stringify(errorMessage)});`);
+//    return;
+//  }
+
+
+
+  // const pythonProcess = child_process.spawn(pythonExecutable, ['-c', scriptCode]);
+
+  // pythonProcess.stdout.on('data', (data) => {
+  //   webContents.executeJavaScript("console.log(`Python stdout: "+data+"`);");
+
+  // });
+
+  // pythonProcess.stderr.on('data', (data) => {
+  //   // console.error(`Python stderr: ${data}`);
+  //   webContents.executeJavaScript("console.error(`Python stderr: "+data+"`);");
+  // });
+// }
 
 // const { autoUpdater, AppUpdater } = require("electron-updater");
-
 process.env.GITHUB_TOKEN = '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';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -18,9 +62,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-
 const createWindow = () => {
-
  // Create the splash window.
   const splash = new BrowserWindow({
     width: 500,
@@ -56,7 +98,20 @@ setTimeout(function () {
     }
   });
 
+
+
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+   // Register a global shortcut to toggle DevTools
+   globalShortcut.register('CommandOrControl+Shift+I', () => {
+    const webContents = mainWindow.webContents;
+    if (webContents.isDevToolsOpened()) {
+      webContents.closeDevTools();
+    } else {
+      webContents.openDevTools();
+    }
+  });
+
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
@@ -65,7 +120,8 @@ setTimeout(function () {
   const webContents = mainWindow.webContents;
 
 
-
+  // const pythonScriptCode = "print('Hello, World!')";
+  // runPythonScript(pythonScriptCode, webContents);
 
   // Set up auto-updater
   const server = 'https://dist.anystack.sh/v1/electron';
@@ -81,7 +137,9 @@ setTimeout(function () {
   });
 
   autoUpdater.checkForUpdatesAndNotify();
-  //  autoUpdater.checkForUpdates();
+
+
+  // //  autoUpdater.checkForUpdates();
 
   // setInterval(() => {
   //   autoUpdater.checkForUpdatesAndNotify();
@@ -135,8 +193,6 @@ setTimeout(function () {
   });
 }, 5000);
 
-
-
 }
 
 
@@ -145,6 +201,7 @@ setTimeout(function () {
 
 app.on('ready', async  () => {
 
+  // Run a "Hello, World!" Python script when the Electron application is ready
   createWindow();
 
   const appUpdateYaml = `
@@ -176,7 +233,7 @@ app.on('ready', async  () => {
       if(filePath=='page/nav/welcome_nav.html'){
         event.sender.send('nav-loaded', data);
       }
-      if(filePath=='page/installer_py.html'){
+      if(filePath=='page/prompt_role.html'){
         event.sender.send('page-loaded', data);
       }
       if(filePath=='page/footers.html'){
@@ -185,6 +242,32 @@ app.on('ready', async  () => {
     });
   });
 
+
+    // // Listen for the restart event
+    // ipcMain.on('restart-app', () => {
+    //   // app.relaunch();
+    //   // app.quit();
+    //   // app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
+
+    //     // Relaunch the app after a short delay
+    //   setTimeout(() => {
+    //     // Spawn a new process to run the Electron app again
+    //     spawn(process.execPath, [app.getPath('exe')], {
+    //       detached: true,
+    //       stdio: 'ignore',
+    //     }).unref();
+    //   }, 3000);
+    //   app.quit();
+    // });
+
+    // shell.openExternal('https://docs.cdse-commercecontent.com/spear');
+
+ const guide = new BrowserWindow({
+    fullscreen: true
+  });
+
+  // Load a website URL
+  guide.loadURL('https://docs.cdse-commercecontent.com/spear');
 
 
 });

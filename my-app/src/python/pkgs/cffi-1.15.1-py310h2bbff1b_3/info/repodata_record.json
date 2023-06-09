@@ -1,0 +1,27 @@
+{
+  "build": "py310h2bbff1b_3",
+  "build_number": 3,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "pycparser",
+    "python >=3.10,<3.11.0a0",
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "features": "",
+  "fn": "cffi-1.15.1-py310h2bbff1b_3.conda",
+  "legacy_bz2_md5": "133c206236d294bb655c080030e57952",
+  "legacy_bz2_size": 230624,
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "cf341ccfe4fd5ade242f6ed205c38a3a",
+  "name": "cffi",
+  "sha256": "4f16177e5781a167205e7cc29887b5da5bfcb3290c6325f626494d0b28267bf1",
+  "size": 245174,
+  "subdir": "win-64",
+  "timestamp": 1670423542690,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/cffi-1.15.1-py310h2bbff1b_3.conda",
+  "version": "1.15.1"
+}
