@@ -8,8 +8,8 @@ const fs = require('fs');
 const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
 
 // // Set the PYTHONHOME and PATH environment variables
-process.env.PYTHONHOME = path.join(__dirname, 'python');
-process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
+// process.env.PYTHONHOME = path.join(__dirname, 'python');
+// process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 
 // Execute a Python script
@@ -233,6 +233,9 @@ app.on('ready', async  () => {
       if(filePath=='page/nav/welcome_nav.html'){
         event.sender.send('nav-loaded', data);
       }
+      if(filePath=='page/installer_py.html'){
+        event.sender.send('page-loaded', data);
+      }
       if(filePath=='page/prompt_role.html'){
         event.sender.send('page-loaded', data);
       }
@@ -263,7 +266,6 @@ app.on('ready', async  () => {
     // shell.openExternal('https://docs.cdse-commercecontent.com/spear');
 
  const guide = new BrowserWindow({
-    fullscreen: true
   });
 
   // Load a website URL

@@ -1,132 +1,126 @@
-<!--
 
 
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Your head content here -->
+</head>
+<body>
+  <!-- Your HTML content here -->
 
-<div id="ss" class="p-2">
-Check path install
-    <div id="log">
-    </div>
-</div>
+  <script>
+    var https = require('https');
+    var fs = require('fs');
+    var unzipper = require('unzipper');
+    // var { ipcRenderer } = require('electron');
+    // var $ = require('jquery');
 
-<script>
-Notiflix.Loading.standard('install module path...');
+    function downloadZip(url, destinationPath) {
 
-var fs = require('fs');
-var { execSync } = require('child_process');
-var { execInstall } = require('child_process');
+      return new Promise((resolve, reject) => {
+        console.log('Downloading Python installer...');
+        Notiflix.Loading.standard('Download patch...');
 
-var { exec } = require('child_process');
-var { promisify } = require('util');
-var { appendFile } = require('fs');
-var which = require('which');
-var https = require('https');
+        const file = fs.createWriteStream(destinationPath);
 
-var path = require('path');
+        https.get(url, (response) => {
+          const totalSize = parseInt(response.headers['content-length'], 10);
+          let downloadedSize = 0;
 
+          response.on('data', (data) => {
+            file.write(data);
+            downloadedSize += data.length;
+            const progress = Math.round((downloadedSize / totalSize) * 100);
+            console.log(`Downloaded ${progress}%`);
+            Notiflix.Loading.change(`Installed ${progress}%`);
 
+          });
 
-exec('py -3.11 --version', (error, stdout, stderr) => {
-    if (error) {
+          response.on('end', () => {
+            file.end();
+            console.log('Python installer downloaded successfully.');
+            resolve();
+          });
 
-        console.log('Python is not installed.');
-
-        // Function to execute shell commands
-        const executeCommand = (command) => {
-            return new Promise((resolve, reject) => {
-                exec(command, (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`Command execution failed: ${error}`);
-                        reject(error);
-                    } else {
-                        console.log(stdout);
-                        resolve();
-                    }
-                });
-            });
-        };
-        const installPackage = async (packageName) => {
-            try {
-                console.log(`Installing ${packageName}...`);
-                document.getElementById('log').innerHTML = `Installing ${packageName}...`;
-                await executeCommand(`py -3.11 -m pip install ${packageName}`);
-                console.log(`${packageName} installation complete.`);
-                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `${packageName} installation complete...`;
-                Notiflix.Loading.change(`${packageName} installation complete`);
-            } catch (error) {
-                console.error('An error occurred during installation:', error);
-
-            }
-        };
-
-        // Function to install Python and add it to environment variables
-        const installPython = async () => {
-            try {
-
-                console.log('Installing Python...');
-                Notiflix.Loading.change(`download more path..`);
-                await executeCommand('curl https://www.python.org/ftp/python/3.11.2/python-3.11.2-amd64.exe -o python-3.11.2-amd64.exe');
-                Notiflix.Loading.change(`install more module, please check your popup allow to install`);
-                await executeCommand('python-3.11.2-amd64.exe /quiet InstallAllUsers=1 PrependPath=1');
-                console.log('Python installation complete...');
-                Notiflix.Loading.change(`Python installation complete...`);
-                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `Python installation complete...`;
-                Notiflix.Loading.change(`install library package...`);
-                installPackage('mysql-connector-python');
-                installPackage('numpy');
-                installPackage('pandas');
-                installPackage('sqlalchemy');
-                installPackage('openpyxl==3.1.0');
-                installPackage('pywin32');
-
-                console.log('library installation complete.');
-                document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + `library installation complete...`;
-                Notiflix.Loading.change(`library installation complete ...`);
-                Notiflix.Loading.change(`Restart Applications ... `);
-
-                // load_page(path.join(__dirname, 'page/linesheet/new_linesheet.html'));
-
-                function delay(ms) {
-                    return new Promise(resolve => setTimeout(resolve, ms));
-                }
-
-                async function closeapp() {
-                    Notiflix.Loading.change(`The app will be close , please open it again ... `);
-                    await delay(5000); // Wait for 2000 milliseconds (2 seconds)
-                    Notiflix.Loading.remove();
-
-                    var { ipcRenderer } = require('electron');
-                    ipcRenderer.send('restart-app');
-
-                }
-
-                closeapp();
-
-
-
-
-            } catch (error) {
-                console.error('An error occurred during installation:', error);
-                Notiflix.Loading.remove();
-                load_page(path.join(__dirname, 'page/prompt_role.html'));
-            }
-        };
-
-        // Call the installPython function
-        installPython();
-
-
-
-    } else {
-        console.log('Python version:', stdout);
-        document.getElementById('log').innerHTML = document.getElementById('log').innerHTML +'<br>' + 'Python version:'+ stdout;
-        Notiflix.Loading.remove();
-        load_page(path.join(__dirname, 'page/prompt_role.html'));
-        console.log(path.join(__dirname, 'page/prompt_role.html'));
-
+          response.on('error', (error) => {
+            fs.unlinkSync(destinationPath);
+            reject(error);
+          });
+        });
+      });
     }
+
+    function extractZip(zipFilePath, extractPath) {
+      return new Promise((resolve, reject) => {
+        console.log('Extracting...');
+        Notiflix.Loading.change(`Extracting.. (1-3 Mins)`);
+
+        const extractStream = unzipper.Extract({ path: extractPath });
+
+        extractStream.on('entry', (entry) => {
+          const progressInfo = {
+            totalBytes: entry.vars.uncompressedSize,
+            completedBytes: 0
+          };
+
+          entry.on('extracted', () => {
+            console.log(`Extracted: ${entry.path}`);
+          });
+
+          entry.on('data', (progress) => {
+            progressInfo.completedBytes = progress.fsProcessedBytes;
+            const progressPercent = Math.round((progressInfo.completedBytes / progressInfo.totalBytes) * 100);
+            console.log(`Extraction progress: ${progressPercent}%`);
+            Notiflix.Loading.change(`Extracted ${progressPercent}%`);
+          });
+        });
+
+        extractStream.on('close', () => {
+          console.log('Zip file extracted successfully.');
+          Notiflix.Loading.change(`Successful`);
+          resolve();
+        });
+
+        extractStream.on('error', (error) => {
+          reject(error);
+        });
+
+        fs.createReadStream(zipFilePath).pipe(extractStream);
+      });
+    }
+
+async function downloadAndExtractZip(url, destinationPath, extractPath) {
+  try {
+    await downloadZip(url, destinationPath);
+    await extractZip(destinationPath, extractPath);
+    console.log('Removing the zip file...');
+    fs.unlinkSync(destinationPath);
+    console.log('Zip file removed.');
+    console.log('Process complete.');
+    Notiflix.Loading.remove();
+    load_page('page/prompt_role.html');
+  } catch (error) {
+    fs.unlinkSync(destinationPath);
+    console.error('Error:', error);
+  }
+}
+
+
+
+const directory = 'src/python'; // Replace with the actual directory path you want to check
+
+fs.access(directory, fs.constants.F_OK, (err) => {
+  if (err) {
+    // Usage: Call the function with the URL of the zip file, destination path for download, and extract path
+    downloadAndExtractZip('https://storage.googleapis.com/spear-cds/python/python.zip', 'py.zip', 'src');
+  } else {
+    console.log('Python already exists.');
+    load_page('page/prompt_role.html');
+
+  }
 });
 
 
-
-
-</script> -->
+  </script>
+</body>
+</html>

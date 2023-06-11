@@ -25,6 +25,8 @@
     "-": "^0.0.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
     "@electron-forge/publisher-github": "^6.1.1",
+    "@google-cloud/storage": "^6.11.0",
+    "adm-zip": "^0.5.10",
     "cross-env": "^7.0.3",
     "datatables.net-dt": "^1.13.4",
     "dom-to-image": "^2.6.0",
@@ -43,6 +45,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "slim-select": "^2.5.0",
+    "unzipper": "^0.10.14",
     "update-electron-app": "^2.0.1",
     "which": "^3.0.1",
     "xlsx": "^0.18.5"
@@ -64,12 +67,16 @@
       "provider": "generic",
       "url": "https://dist.anystack.sh/v1/electron"
     },
-    "directory":{
+    "directory": {
       "output": "build"
     },
-    "nsis":{
-      "allowToChangeInstallationDirectory":false,
-      "oneClick":false
+    "nsis": {
+      "allowToChangeInstallationDirectory": false,
+      "oneClick": false
+    },
+    "win": {
+      "target": "msi",
+      "icon": "./src/image/icon/app/nav.ico"
     }
   }
 }
