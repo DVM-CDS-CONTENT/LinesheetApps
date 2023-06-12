@@ -69,17 +69,6 @@
     "publish": {
       "provider": "generic",
       "url": "https://dist.anystack.sh/v1/electron"
-    },
-    "directory": {
-      "output": "build"
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": false,
-      "oneClick": false
-    },
-    "win": {
-      "target": "msi",
-      "icon": "./src/image/icon/app/nav.ico"
     }
   }
 }
