@@ -13,6 +13,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "build": "electron-builder",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -47,8 +48,10 @@
     "slim-select": "^2.5.0",
     "unzipper": "^0.10.14",
     "update-electron-app": "^2.0.1",
+    "util": "^0.12.5",
     "which": "^3.0.1",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
