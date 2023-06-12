@@ -48,6 +48,7 @@
     "slim-select": "^2.5.0",
     "unzipper": "^0.10.14",
     "update-electron-app": "^2.0.1",
+    "electron-rebuild": "^3.2.9",
     "util": "^0.12.5",
     "which": "^3.0.1",
     "xlsx": "^0.18.5"
