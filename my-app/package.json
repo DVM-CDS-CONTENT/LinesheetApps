@@ -13,7 +13,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "build": "electron-builder",
+    "build": "electron-builder build",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
