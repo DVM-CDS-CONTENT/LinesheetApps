@@ -15,7 +15,6 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "build": "electron-builder build",
-    "postinstall": "electron-builder install-app-deps",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
