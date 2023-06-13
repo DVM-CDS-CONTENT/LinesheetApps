@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/DVM-CDS-CONTENT/LinesheetApps"
   },
-  "main": "src/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "-": "^0.0.1",
+    "@electron-forge/cli": "^6.1.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
     "@electron-forge/publisher-github": "^6.1.1",
     "@google-cloud/storage": "^6.11.0",
