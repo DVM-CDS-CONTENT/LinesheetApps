@@ -102,7 +102,8 @@
     {"label":"Women Underwear","chart_name_en":"Women Underwear","chart_name_th":"ชุดชั้นในผู้หญิง","group":"Women","code":"women_underwear"},
     {"label":"Women Wetsuit","chart_name_en":"Women Wetsuit","chart_name_th":"ชุดดำน้ำผู้หญิง","group":"Women","code":"women_wetsuit"},
     {"label":"Hat","chart_name_en":"Hat","chart_name_th":"หมวก","group":"Accessories","code":"hat"},
-    {"label":"Ring","chart_name_en":"Ring","chart_name_th":"แหวน","group":"Accessories","code":"ring"}
+    {"label":"Ring","chart_name_en":"Ring","chart_name_th":"แหวน","group":"Accessories","code":"ring"},
+    {"label":"Luggage","chart_name_en":"Luggage","chart_name_th":"กระเป๋าเดินทาง","group":"Unisex","code":"luggage"}
 ],
 
   "dimension": [
