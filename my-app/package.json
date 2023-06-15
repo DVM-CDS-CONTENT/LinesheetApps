@@ -9,7 +9,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "dev":"npm install && npm start",
+    "dev": "npm install && npm start",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -25,8 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "-": "^0.0.1",
-    "@electron-forge/cli": "^6.1.1",
     "@6c65726f79/custom-titlebar": "^0.9.1",
+    "@electron-forge/cli": "^6.1.1",
     "@electron-forge/publisher-github": "^6.1.1",
     "@google-cloud/storage": "^6.11.0",
     "adm-zip": "^0.5.10",
@@ -50,6 +50,8 @@
     "unzipper": "^0.10.14",
     "update-electron-app": "^2.0.1",
     "util": "^0.12.5",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
     "which": "^3.0.1",
     "xlsx": "^0.18.5"
   },
