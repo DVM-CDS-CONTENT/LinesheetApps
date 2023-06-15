@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "spear-win32-x64/spear.exe",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "spear-win32-x64/(.*)",
+        "dest": "spear-win32-x64/spear.exe"
+      }
+    ]
+  }
