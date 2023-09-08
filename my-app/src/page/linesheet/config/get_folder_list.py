@@ -1,7 +1,3 @@
-import os
-
-folder_path = "./"
-folder_list = [f for f in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, f))]
-
-for asset in folder_list:
-  print('<div onclick="get_linesheetlist(&#39;'+asset+'&#39;)"><ion-icon name="folder-outline" class="me-2"></ion-icon>'+asset+'</div>')
+version https://git-lfs.github.com/spec/v1
+oid sha256:0ddb38bc8f2f432a3c2f3889566098c8edcdaac0a89de4a9b5417487e185e828
+size 1840

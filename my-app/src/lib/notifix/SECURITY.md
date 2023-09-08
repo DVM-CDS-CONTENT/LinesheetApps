@@ -1,14 +1,3 @@
-# Security Policy
-
-## Supported Versions
-
-Notiflix is a dependency-free JavaScript library that has no vulnerabilities. Supported versions can be found in the table below.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 3.x.x   | :white_check_mark: |
-| < 3.0.0   | :x:                |
-
-## Reporting a Vulnerability
-
-[Report](https://github.com/notiflix/Notiflix/issues)
+version https://git-lfs.github.com/spec/v1
+oid sha256:cfa9cb3a5d2d1e15a24ba971cc1c253c16ba1287eee9378a8044b9a776877e18
+size 392
