@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f6b802b372133449c730a2eab122a53eba09f6501ba0a0e0745a22d7015c0368
-size 310
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "name": "boltons",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1677629031089,
+  "version": "23.0.0"
+}

@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ed8d7cd36963ed8ac11e3df9a5dbf9ad4bf3f3b1069e7776e486b2412fbfa61e
-size 304
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "name": "idna",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1666125624542,
+  "version": "3.4"
+}

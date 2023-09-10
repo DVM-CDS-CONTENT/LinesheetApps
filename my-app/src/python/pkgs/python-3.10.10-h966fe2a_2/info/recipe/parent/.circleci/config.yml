@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7a666f5c066a2fa8cde4693819f96ac2c7f441f16f9b701f944bb399f8e99a5d
-size 585
+# This file was generated automatically from conda-smithy. To update this configuration,
+# update the conda-forge.yml and/or the recipe/meta.yaml.
+# -*- mode: yaml -*-
+
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/test
+    machine: true
+    steps:
+      - run:
+          # The Circle-CI build should not be active, but if this is not true for some reason, do a fast finish.
+          command: exit 0
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - /.*/

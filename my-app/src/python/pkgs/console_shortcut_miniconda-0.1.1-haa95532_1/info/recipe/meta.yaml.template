@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9875be464e78a878268199d7d961fb4b2fac3940d292c520cad9b390215b5b93
-size 488
+package:
+  name: console_shortcut_miniconda
+  version: 0.1.1
+
+build:
+  number: 1
+  skip: True  # [not win]
+
+app:
+  entry:
+    start cmd.exe /K "${CONDA_ROOT_PREFIX}\\Scripts\\activate.bat" "${CONDA_PREFIX}"
+  summary: Anaconda Powershell Prompt
+  type: desk
+
+requirements:
+  run:
+    - python
+  run_constrained:
+    - anaconda-navigator >=1.9.8
+
+about:
+  license: BSD-3-Clause
+  license_family: BSD
+  summary: Console shortcut creator for Windows (using menuinst)

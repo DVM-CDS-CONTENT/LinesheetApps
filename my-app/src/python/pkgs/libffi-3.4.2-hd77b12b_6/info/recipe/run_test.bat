@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c136b887124d46d6652028a8920869d60446a764f1d93a9876896b760c40736b
-size 552
+if not exist %LIBRARY_PREFIX%/bin/ffi-7.dll exit /b 1
+if not exist %LIBRARY_PREFIX%/lib/libffi.lib exit /b 1
+if not exist %LIBRARY_PREFIX%/lib/ffi.lib exit /b 1
+if not exist %LIBRARY_PREFIX%/lib/pkgconfig/libffi.pc exit /b 1
+if not exist %LIBRARY_PREFIX%/include/ffi.h exit /b 1
+if not exist %LIBRARY_PREFIX%/include/ffitarget.h exit /b 1
+echo "platform name"
+echo %SUBDIR%
+if %SUBDIR%==win-64 (llvm-nm %LIBRARY_PREFIX%/lib/libffi.lib | grep "__imp_ffi_type_void" ) else (llvm-nm %LIBRARY_PREFIX%/lib/libffi.lib | grep "__imp__ffi_type_void")

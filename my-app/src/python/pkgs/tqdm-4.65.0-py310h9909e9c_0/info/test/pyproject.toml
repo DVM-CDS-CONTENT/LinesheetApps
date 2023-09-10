@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7808795136354e0c2c41ba533906ca804cc58da54c2806e693e2c0b3880fff8e
-size 234
+[build-system]
+requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "tqdm/_dist_ver.py"
+write_to_template = "__version__ = '{version}'\n"

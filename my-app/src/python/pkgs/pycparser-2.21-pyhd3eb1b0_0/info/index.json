@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5806553d00f3080778a28a35a600538087428f6da0380666a8a96766290c5891
-size 314
+{
+  "arch": null,
+  "build": "pyhd3eb1b0_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.6"
+  ],
+  "license": "BSD-3-clause",
+  "license_family": "BSD",
+  "name": "pycparser",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1636541382349,
+  "version": "2.21"
+}

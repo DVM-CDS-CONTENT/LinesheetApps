@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:593055d81b54af020da886a4a0b9d4344e2fe6fac567c41c82e63e2e144e21fc
-size 309
+{
+  "arch": null,
+  "build": "pyhd3eb1b0_0",
+  "build_number": 0,
+  "depends": [
+    "python"
+  ],
+  "license": "BSD 3-Clause",
+  "license_family": "BSD",
+  "name": "jsonpointer",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1615660585436,
+  "version": "2.1"
+}

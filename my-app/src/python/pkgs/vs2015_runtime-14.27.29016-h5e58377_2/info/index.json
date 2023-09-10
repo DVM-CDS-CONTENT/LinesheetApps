@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2c35ffcb5043752efce237f97fd01b4ed2a37d445d0077f1fb2a7437d0be438f
-size 224
+{
+  "arch": "x86_64",
+  "build": "h5e58377_2",
+  "build_number": 2,
+  "depends": [],
+  "name": "vs2015_runtime",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1605602872095,
+  "version": "14.27.29016"
+}

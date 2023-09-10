@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:63bb31fd418120a4f124a344fdebcfbe0da429c909116181be70df801b3dc938
-size 298
+{
+  "arch": null,
+  "build": "h04d1e81_0",
+  "build_number": 0,
+  "depends": [],
+  "license": "CC-PDDC OR BSD-3-Clause",
+  "license_family": "BSD",
+  "name": "tzdata",
+  "noarch": "generic",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1680170368293,
+  "version": "2023c"
+}

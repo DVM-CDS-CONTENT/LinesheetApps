@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:32cb07e01ed1c67e79b184c657da8fa1a0739fddd4a5162cea101cb0b3dcd05b
-size 238
+; command for getting a coverage report:
+;  py.test --doctest-modules --cov=boltons --cov-report html --cov-config tests/.coveragerc tests/ boltons/
+; (run from project directory)
+
+[run]
+branch = True
+
+[html]
+directory = htmlcov

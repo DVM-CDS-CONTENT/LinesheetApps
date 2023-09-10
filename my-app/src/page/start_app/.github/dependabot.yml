@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:38c4ff63ccfd9cafb4f0ec4eb5d783f314948d56f6680a0692012b929c255ec3
-size 175
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 99
+  versioning-strategy: increase

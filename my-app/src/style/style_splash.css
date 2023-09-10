@@ -1,3 +1,46 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:88bba637e2d993695272ffc06ed90828bf7f6f6ab6d6d53b606627b7620b2578
-size 698
+/* styles.css */
+
+/* Add styles here to customize the appearance of your app */
+body {
+    background-color: transparent;
+    background-image: url("background.jpg");
+  }
+
+  .flex {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
+
+  .loader {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .center {
+    border: none !important;
+    text-align: center;
+  }

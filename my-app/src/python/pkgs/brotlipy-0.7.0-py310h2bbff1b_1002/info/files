@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1f2003284414f8b899e73a44485d441ec7f431bdd3dc631b93490e70a03c1187
-size 713
+Lib/site-packages/brotli/__init__.py
+Lib/site-packages/brotli/__pycache__/__init__.cpython-310.pyc
+Lib/site-packages/brotli/__pycache__/brotli.cpython-310.pyc
+Lib/site-packages/brotli/__pycache__/build.cpython-310.pyc
+Lib/site-packages/brotli/_brotli.pyd
+Lib/site-packages/brotli/brotli.py
+Lib/site-packages/brotli/build.py
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/PKG-INFO
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/SOURCES.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/dependency_links.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/not-zip-safe
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/requires.txt
+Lib/site-packages/brotlipy-0.7.0-py3.10.egg-info/top_level.txt

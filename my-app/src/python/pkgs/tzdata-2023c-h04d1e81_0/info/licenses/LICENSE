@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:025a35028a91f66b8cb1708b01df3f31cd6d3320d00ef2aaf835393270841551
-size 257
+Unless specified below, all files in the tz code and data (including
+this LICENSE file) are in the public domain.
+
+If the files date.c, newstrftime.3, and strftime.c are present, they
+contain material derived from BSD and use the BSD 3-clause license.

@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:87bb1931e9808c697628f65ee32bd4f1e6c24c5c732f27b79e5198768f5e4a74
-size 224
+
+
+
+
+pip check
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+tqdm --help
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+tqdm -v | rg 4.65.0
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+pytest -k "not tests_perf"
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

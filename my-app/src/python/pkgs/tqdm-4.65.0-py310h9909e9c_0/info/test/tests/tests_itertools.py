@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b18768a11d9fc9767956576feb1d882d191210cc86be0a068affe36d7f8d070d
-size 654
+"""
+Tests for `tqdm.contrib.itertools`.
+"""
+import itertools as it
+
+from tqdm.contrib.itertools import product
+
+from .tests_tqdm import StringIO, closing
+
+
+class NoLenIter(object):
+    def __init__(self, iterable):
+        self._it = iterable
+
+    def __iter__(self):
+        for i in self._it:
+            yield i
+
+
+def test_product():
+    """Test contrib.itertools.product"""
+    with closing(StringIO()) as our_file:
+        a = range(9)
+        assert list(product(a, a[::-1], file=our_file)) == list(it.product(a, a[::-1]))
+
+        assert list(product(a, NoLenIter(a), file=our_file)) == list(it.product(a, NoLenIter(a)))

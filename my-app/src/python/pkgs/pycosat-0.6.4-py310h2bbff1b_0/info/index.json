@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e4fed8700cec5e2a39418d96d079c7d105129d559c1233ce1a08033ffd782012
-size 371
+{
+  "arch": "x86_64",
+  "build": "py310h2bbff1b_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10,<3.11.0a0",
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "name": "pycosat",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1666813698157,
+  "version": "0.6.4"
+}

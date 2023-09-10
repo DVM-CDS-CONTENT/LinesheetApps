@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ebeda4cb14422ee4bcfda5c0575073f0d3a109810dec810ef5cdcf62fe0e8f34
-size 22
+["ruamel.yaml", "pip"]

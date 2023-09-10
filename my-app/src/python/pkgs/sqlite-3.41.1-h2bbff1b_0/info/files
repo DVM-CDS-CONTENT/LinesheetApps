@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c9f8d9f060a200e1d8d6d0a675fa3845b2dda2b9355b6d995441902194624b3f
-size 132
+Library/bin/sqlite3.dll
+Library/bin/sqlite3.exe
+Library/include/sqlite3.h
+Library/include/sqlite3ext.h
+Library/lib/sqlite3.lib

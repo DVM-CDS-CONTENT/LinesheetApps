@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:59859cacf9a71c8d0348df980f674d5a84f2ed99619ab31562b5a4f9cb004701
-size 366
+{
+  "arch": "x86_64",
+  "build": "h2bbff1b_0",
+  "build_number": 0,
+  "depends": [
+    "ca-certificates",
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "license": "OpenSSL",
+  "license_family": "Apache",
+  "name": "openssl",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1676332010104,
+  "version": "1.1.1t"
+}

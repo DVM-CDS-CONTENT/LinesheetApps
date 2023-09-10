@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:703c0a856533b960d3fd4219594be7c8feb972451fcf82a4753d947386f8ce3f
-size 294
+from setuptools import setup, Extension
+
+
+setup(
+    name='greet',
+    version='1.0',
+    description='Python Package with Hello World C Extension',
+    ext_modules=[
+        Extension(
+            'greet',
+            sources=['foo.c'],
+            py_limited_api=True)
+    ],
+)

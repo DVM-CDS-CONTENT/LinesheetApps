@@ -1,3 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e60b579d11b9077eb90c4bf8f835470c6876c49d5cefb87eebf1412f6d1cae8e
-size 201
+REM use bootstrapped pip to install certifi without depending on installed pip
+set PYTHONPATH=%cd%\pip_wheel;%cd%\setuptools_wheel
+%PYTHON% -m pip install .\certifi --ignore-installed --no-deps -vv

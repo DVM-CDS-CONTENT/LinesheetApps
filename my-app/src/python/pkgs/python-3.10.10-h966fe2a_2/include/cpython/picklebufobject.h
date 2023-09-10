@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:90327d76cc64a5e375660143050facb3aa59422b983e57c6624d0f92b9812785
-size 877
+/* PickleBuffer object. This is built-in for ease of use from third-party
+ * C extensions.
+ */
+
+#ifndef Py_PICKLEBUFOBJECT_H
+#define Py_PICKLEBUFOBJECT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef Py_LIMITED_API
+
+PyAPI_DATA(PyTypeObject) PyPickleBuffer_Type;
+
+#define PyPickleBuffer_Check(op) Py_IS_TYPE(op, &PyPickleBuffer_Type)
+
+/* Create a PickleBuffer redirecting to the given buffer-enabled object */
+PyAPI_FUNC(PyObject *) PyPickleBuffer_FromObject(PyObject *);
+/* Get the PickleBuffer's underlying view to the original object
+ * (NULL if released)
+ */
+PyAPI_FUNC(const Py_buffer *) PyPickleBuffer_GetBuffer(PyObject *);
+/* Release the PickleBuffer.  Returns 0 on success, -1 on error. */
+PyAPI_FUNC(int) PyPickleBuffer_Release(PyObject *);
+
+#endif /* !Py_LIMITED_API */
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_PICKLEBUFOBJECT_H */

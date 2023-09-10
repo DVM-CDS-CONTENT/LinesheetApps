@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4e32dfca06f56cd261043b9de10a7901e939436c7f36626dc716e2f435fd1b15
-size 468
+import os.path
+import sys
+
+
+# Enable running IDLE with idlelib in a non-standard location.
+# This was once used to run development versions of IDLE.
+# Because PEP 434 declared idle.py a public interface,
+# removal should require deprecation.
+idlelib_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if idlelib_dir not in sys.path:
+    sys.path.insert(0, idlelib_dir)
+
+from idlelib.pyshell import main  # This is subject to change
+main()

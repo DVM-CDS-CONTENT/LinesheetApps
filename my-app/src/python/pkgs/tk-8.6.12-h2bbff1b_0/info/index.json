@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:56cbd3e8e434fd0c3e85ab6b226afb86c0858af87e279ee8d3f68995fbdc5a32
-size 333
+{
+  "arch": "x86_64",
+  "build": "h2bbff1b_0",
+  "build_number": 0,
+  "depends": [
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "license": "Tcl/Tk",
+  "license_family": "BSD",
+  "name": "tk",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1654036853710,
+  "version": "8.6.12"
+}

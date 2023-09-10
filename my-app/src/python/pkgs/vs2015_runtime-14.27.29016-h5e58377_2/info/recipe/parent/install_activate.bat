@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:493a982675efaa0bf9132abfbc5bc1d7c36ab48649c08fc5d5936c45a4a737be
-size 392
+mkdir "%PREFIX%\etc\conda\activate.d"
+COPY "%RECIPE_DIR%\activate.bat" "%PREFIX%\etc\conda\activate.d\vs%YEAR%_compiler_vars.bat"
+pushd "%PREFIX%\etc\conda\activate.d"
+sed -i 's/@YEAR@/%YEAR%/g' vs%YEAR%_compiler_vars.bat
+sed -i 's/@VER@/%VER%/g' vs%YEAR%_compiler_vars.bat
+sed -i 's/@cross_compiler_target_platform@/%cross_compiler_target_platform%/g' vs%YEAR%_compiler_vars.bat
+popd

@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:db441476ca36d6bb3cf6cc7e06a0c1d2ed02825419e7ed65992e9e039da34db8
-size 1003
+#ifndef Py_CPYTHON_TUPLEOBJECT_H
+#  error "this header file must not be included directly"
+#endif
+
+typedef struct {
+    PyObject_VAR_HEAD
+    /* ob_item contains space for 'ob_size' elements.
+       Items must normally not be NULL, except during construction when
+       the tuple is not yet visible outside the function that builds it. */
+    PyObject *ob_item[1];
+} PyTupleObject;
+
+PyAPI_FUNC(int) _PyTuple_Resize(PyObject **, Py_ssize_t);
+PyAPI_FUNC(void) _PyTuple_MaybeUntrack(PyObject *);
+
+/* Macros trading safety for speed */
+
+/* Cast argument to PyTupleObject* type. */
+#define _PyTuple_CAST(op) (assert(PyTuple_Check(op)), (PyTupleObject *)(op))
+
+#define PyTuple_GET_SIZE(op)    Py_SIZE(_PyTuple_CAST(op))
+
+#define PyTuple_GET_ITEM(op, i) (_PyTuple_CAST(op)->ob_item[i])
+
+/* Macro, *only* to be used to fill in brand new tuples */
+#define PyTuple_SET_ITEM(op, i, v) ((void)(_PyTuple_CAST(op)->ob_item[i] = v))
+
+PyAPI_FUNC(void) _PyTuple_DebugMallocStats(FILE *out);

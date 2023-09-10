@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4f85408a5ae3f497b6b4181c846db76afe8cb5003f905af1d4417b44697e9ce2
-size 558
+{
+  "app_entry": "start cmd.exe /K \"${CONDA_ROOT_PREFIX}\\\\Scripts\\\\activate.bat\" \"${CONDA_PREFIX}\"",
+  "app_type": "desk",
+  "arch": "x86_64",
+  "build": "haa95532_1",
+  "build_number": 1,
+  "constrains": [
+    "anaconda-navigator >=1.9.8"
+  ],
+  "depends": [
+    "python"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "name": "console_shortcut_miniconda",
+  "platform": "win",
+  "subdir": "win-64",
+  "summary": "Anaconda Powershell Prompt",
+  "timestamp": 1674500931723,
+  "type": "app",
+  "version": "0.1.1"
+}

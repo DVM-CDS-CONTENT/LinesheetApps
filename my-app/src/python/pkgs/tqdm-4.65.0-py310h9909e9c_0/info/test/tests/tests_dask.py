@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f41ab70c3e9540bc2c43b7edbe8ee81b05ab8f2dd20483bae31347dfcfdcfa9d
-size 485
+from time import sleep
+
+from .tests_tqdm import importorskip, mark
+
+pytestmark = mark.slow
+
+
+def test_dask(capsys):
+    """Test tqdm.dask.TqdmCallback"""
+    ProgressBar = importorskip('tqdm.dask').TqdmCallback
+    dask = importorskip('dask')
+
+    schedule = [dask.delayed(sleep)(i / 10) for i in range(5)]
+    with ProgressBar(desc="computing"):
+        dask.compute(schedule)
+    _, err = capsys.readouterr()
+    assert "computing: " in err
+    assert '5/5' in err

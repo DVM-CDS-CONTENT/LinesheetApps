@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f73839b7ae8914d19fd89077253e8f0ab62adccad09163472c1cf7c7bc74d50a
-size 538
+***************
+*** 192,198 ****
+          - ncurses  # [unix]
+          - libffi
+          - ld_impl_{{ target_platform }} >=2.36.1  # [linux]
+-         - libuuid  # [unix]
+        run:
+          - ld_impl_{{ target_platform }} >=2.36.1  # [linux]
+          - tzdata
+--- 191,197 ----
+          - ncurses  # [unix]
+          - libffi
+          - ld_impl_{{ target_platform }} >=2.36.1  # [linux]
++         - libuuid  # [linux]
+        run:
+          - ld_impl_{{ target_platform }} >=2.36.1  # [linux]
+          - tzdata

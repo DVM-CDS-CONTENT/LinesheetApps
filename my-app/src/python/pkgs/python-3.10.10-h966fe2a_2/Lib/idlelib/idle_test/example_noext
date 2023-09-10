@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ec3f7a3773f65ee985181e92d7e327366937dd1aad11133009bf1c3fd868eb50
-size 72
+#!usr/bin/env python
+
+def example_function(some_argument):
+    pass

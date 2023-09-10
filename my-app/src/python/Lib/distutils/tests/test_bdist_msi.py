@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9c0b38d07df20f670ea7b4663c74ad5e5b3e81a1e152b51c0ad474aee95cf146
-size 870
+"""Tests for distutils.command.bdist_msi."""
+import sys
+import unittest
+from test.support import run_unittest
+from test.support.warnings_helper import check_warnings
+from distutils.tests import support
+
+
+@unittest.skipUnless(sys.platform == 'win32', 'these tests require Windows')
+class BDistMSITestCase(support.TempdirManager,
+                       support.LoggingSilencer,
+                       unittest.TestCase):
+
+    def test_minimal(self):
+        # minimal test XXX need more tests
+        from distutils.command.bdist_msi import bdist_msi
+        project_dir, dist = self.create_dist()
+        with check_warnings(("", DeprecationWarning)):
+            cmd = bdist_msi(dist)
+        cmd.ensure_finalized()
+
+
+def test_suite():
+    return unittest.makeSuite(BDistMSITestCase)
+
+if __name__ == '__main__':
+    run_unittest(test_suite())

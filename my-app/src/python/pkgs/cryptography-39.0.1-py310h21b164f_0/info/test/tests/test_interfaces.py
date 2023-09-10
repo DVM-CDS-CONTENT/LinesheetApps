@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00fcb3d58ee6b2bad897c2500bea818ab4a3a5382f85bfa095fc03e569a9e1c3
-size 576
+# This file is dual licensed under the terms of the Apache License, Version
+# 2.0, and the BSD License. See the LICENSE file in the root of this repository
+# for complete details.
+
+import abc
+
+from cryptography.utils import verify_interface
+
+
+class TestVerifyInterface:
+    def test_noop(self):
+        class SimpleInterface(metaclass=abc.ABCMeta):
+            @abc.abstractmethod
+            def method(self):
+                """A simple method"""
+
+        class NonImplementer:
+            pass
+
+        verify_interface(SimpleInterface, NonImplementer)

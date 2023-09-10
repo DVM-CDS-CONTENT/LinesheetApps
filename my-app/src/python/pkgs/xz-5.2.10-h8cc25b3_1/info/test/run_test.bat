@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:534f855cb142471132adfe1989f7f6eb7392bd27f775a57bb47a93eac95901cd
-size 632
+
+
+
+
+xz.exe --help
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+unxz.exe --help
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\\bin\\liblzma.dll exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\\lib\\liblzma.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\\lib\\liblzma_static.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\\include\\lzma.h exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\\bin\\xz.exe exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if exist %PREFIX%\\lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

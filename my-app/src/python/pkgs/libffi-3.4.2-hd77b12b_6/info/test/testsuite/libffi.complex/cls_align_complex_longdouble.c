@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:011eb91c4af932b8eaa0eeeeddd3d8ab188aa78d2dbcda0e468e39e9669e873f
-size 268
+/* Area:	ffi_call, closure_call
+   Purpose:	Check structure alignment of complex.
+   Limitations:	none.
+   PR:		none.
+   Originator:	<vogt@linux.vnet.ibm.com>.  */
+
+/* { dg-do run } */
+
+#include "complex_defs_longdouble.inc"
+#include "cls_align_complex.inc"

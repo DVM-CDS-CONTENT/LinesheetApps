@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0b0dfea9ecae658c1cdea64ba77772b58512aec5bb41e16ed856317622472e15
-size 98
+["pytest-timeout", "pip", "rich", "dask", "ripgrep", "numpy", "pytest-asyncio", "pytest", "keras"]

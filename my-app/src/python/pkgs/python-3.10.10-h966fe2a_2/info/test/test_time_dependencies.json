@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c40e42dbd85c13a3f7e81a98a0861008648cbfe834b05f0cb82260f351369d8b
-size 46
+["cmake", "ripgrep", "ninja", "vs2017_win-64"]

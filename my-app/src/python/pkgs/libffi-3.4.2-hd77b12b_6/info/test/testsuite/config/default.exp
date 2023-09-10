@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5eb9b0586ede47dd2f6adecd233b87deaeaf92b9a652ed2cefbe61eddd10f60c
-size 25
+load_lib "standard.exp"

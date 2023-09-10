@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dbaf083a2b2c1b82ff9aa027e19bed8dbe037bc365b19ff0dd477e727f2dbe2b
-size 46
+["ruamel_yaml", "pip", "pytest", "pytest-cov"]

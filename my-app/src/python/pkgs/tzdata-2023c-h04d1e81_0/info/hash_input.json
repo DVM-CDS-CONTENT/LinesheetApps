@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9d358c854b1f69767736f4a15414613fa80e6ffa5f4b117d8a8e8fee510c91ea
-size 96
+{
+  "channel_targets": "defaults",
+  "c_compiler": "gcc",
+  "c_compiler_version": "11.2.0"
+}

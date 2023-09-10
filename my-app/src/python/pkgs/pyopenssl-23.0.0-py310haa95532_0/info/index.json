@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2c3a11f7b3d501b9c3673391cb2cccc0e47cd45af648c4c0cd02556493525292
-size 347
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "cryptography >=38.0.0,<40",
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "Apache-2.0",
+  "license_family": "Apache",
+  "name": "pyopenssl",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1677607885883,
+  "version": "23.0.0"
+}

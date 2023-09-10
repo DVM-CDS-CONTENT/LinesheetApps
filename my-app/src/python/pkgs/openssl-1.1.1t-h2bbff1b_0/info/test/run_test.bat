@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a4854395c6360572aee38c4d0924bc7cfb133b27ffaaf4be705bccee75a6fa87
-size 404
+
+
+
+
+copy NUL checksum.txt
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+openssl sha256 checksum.txt
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+openssl ecparam -name prime256v1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+python -c "import certifi; import ssl; import urllib.request as urlrq; urlrq.urlopen('https://pypi.org', context=ssl.create_default_context(cafile=certifi.where()))"
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

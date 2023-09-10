@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6baf1275c8e490d6dcb75fed9f030a65ae6178ec59090a91991bea85b575193b
-size 522
+#ifndef Py_CPYTHON_SYSMODULE_H
+#  error "this header file must not be included directly"
+#endif
+
+PyAPI_FUNC(PyObject *) _PySys_GetObjectId(_Py_Identifier *key);
+PyAPI_FUNC(int) _PySys_SetObjectId(_Py_Identifier *key, PyObject *);
+
+PyAPI_FUNC(size_t) _PySys_GetSizeOf(PyObject *);
+
+typedef int(*Py_AuditHookFunction)(const char *, PyObject *, void *);
+
+PyAPI_FUNC(int) PySys_Audit(
+    const char *event,
+    const char *argFormat,
+    ...);
+PyAPI_FUNC(int) PySys_AddAuditHook(Py_AuditHookFunction, void*);

@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ee33cddf0fbf6b13adc54a08508e4a7407f35eecec610566727790e5b8e40d23
-size 293
+"""Tests harness for distutils.versionpredicate.
+
+"""
+
+import distutils.versionpredicate
+import doctest
+from test.support import run_unittest
+
+def test_suite():
+    return doctest.DocTestSuite(distutils.versionpredicate)
+
+if __name__ == '__main__':
+    run_unittest(test_suite())

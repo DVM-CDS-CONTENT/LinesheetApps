@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2b23746857129954b204c76e7b5b5bf1d91753cc2457fc9017ac635c814a9ffc
-size 66
+["mock", "pytest", "pytest-cov", "pytest-mock", "requests", "pip"]

@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:668c99e076dfb95e014829c4028460dee94a32b1fbb1c44116dffbf2dc48bf5b
-size 666
+"""distutils.command.x
+
+Implements the Distutils 'x' command.
+"""
+
+# created 2000/mm/dd, John Doe
+
+__revision__ = "$Id$"
+
+from distutils.core import Command
+
+
+class x(Command):
+
+    # Brief (40-50 characters) description of the command
+    description = ""
+
+    # List of option tuples: long name, short name (None if no short
+    # name), and help string.
+    user_options = [('', '',
+                     ""),
+                   ]
+
+    def initialize_options(self):
+        self. = None
+        self. = None
+        self. = None
+
+    def finalize_options(self):
+        if self.x is None:
+            self.x = 
+
+    def run(self):

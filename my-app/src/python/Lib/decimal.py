@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f205d8dc95d81b5d2b59362cbe0e385cfeeb98c14a70971f3372be1403378b03
-size 331
+
+try:
+    from _decimal import *
+    from _decimal import __doc__
+    from _decimal import __version__
+    from _decimal import __libmpdec_version__
+except ImportError:
+    from _pydecimal import *
+    from _pydecimal import __doc__
+    from _pydecimal import __version__
+    from _pydecimal import __libmpdec_version__

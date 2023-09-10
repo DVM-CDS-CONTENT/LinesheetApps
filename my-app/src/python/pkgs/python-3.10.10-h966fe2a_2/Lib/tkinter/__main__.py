@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a535e36b6f3eb57ee9b7f9633ab082e41ca0bb8c3dd701521240757468ef5151
-size 155
+"""Main entry point"""
+
+import sys
+if sys.argv[0].endswith("__main__.py"):
+    sys.argv[0] = "python -m tkinter"
+from . import _test as main
+main()

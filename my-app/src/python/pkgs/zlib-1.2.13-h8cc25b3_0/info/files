@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c306f7607f459379e70bca9444095258110797a8344ab611a526ab0dccf92b47
-size 234
+Library/bin/zlib.dll
+Library/include/zconf.h
+Library/include/zlib.h
+Library/lib/pkgconfig/zlib.pc
+Library/lib/z.lib
+Library/lib/zdll.lib
+Library/lib/zlib.lib
+Library/lib/zlibstatic.lib
+Library/share/man/man3/zlib.3
+zlib.dll

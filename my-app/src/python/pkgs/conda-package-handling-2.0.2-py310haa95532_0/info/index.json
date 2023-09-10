@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d4ac9164b1f738d510f12597f1f5bbce33d71ce00c622e20bf132946da60ff25
-size 364
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "conda-package-streaming >=0.7.0",
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "name": "conda-package-handling",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1672865235487,
+  "version": "2.0.2"
+}

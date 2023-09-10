@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1fe3ae20bf37571cb010983375404ea14bd226ea86ded8c52f21070407123e99
-size 693
+diff --git sqlite3.c sqlite3.c
+index 123c65e..7b22843 100644
+--- sqlite3.c
++++ sqlite3.c
+@@ -258,6 +258,8 @@
+ extern "C" {
+ #endif
+ 
++// Always dll export, providing only a shared lib for sqlite.
++#define SQLITE_API __declspec( dllexport )
+ 
+ /*
+ ** Provide the ability to override linkage features of the interface.
+diff --git sqlite3.h sqlite3.h
+index 37d1024..abeca23 100644
+--- sqlite3.h
++++ sqlite3.h
+@@ -41,6 +41,10 @@
+ extern "C" {
+ #endif
+ 
++#ifndef SQLITE_EXPORTS
++// Always dll import, providing only a shared lib for sqlite.
++#define SQLITE_API __declspec( dllimport )
++#endif
+ 
+ /*
+ ** Provide the ability to override linkage features of the interface.

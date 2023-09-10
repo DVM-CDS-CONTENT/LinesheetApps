@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3ebd563f70f3d317558774e74916af1c294852fd943e041a79dc46c8fbcc458e
-size 348
+// Implementation of PEP 585: support list[int] etc.
+#ifndef Py_GENERICALIASOBJECT_H
+#define Py_GENERICALIASOBJECT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+PyAPI_FUNC(PyObject *) Py_GenericAlias(PyObject *, PyObject *);
+PyAPI_DATA(PyTypeObject) Py_GenericAliasType;
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_GENERICALIASOBJECT_H */

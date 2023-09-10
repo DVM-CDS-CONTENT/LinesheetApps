@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6a13eaac0fed5a680186aa88d6bdd1f2c4ef4b2a83f5af5b4cdddff703f48408
-size 32
+{"weak": ["xz >=5.2.10,<6.0a0"]}

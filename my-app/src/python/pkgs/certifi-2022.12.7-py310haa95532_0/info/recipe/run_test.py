@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8cf0e5857a8321f57ca11f5252463a87261fc7ac77d5db0530262c5e207c0cd4
-size 495
+import certifi
+import pip
+
+
+def certifi_tests():
+    """
+    Tests to validate certifi pkg
+    """
+
+
+if hasattr(pip, 'main'):
+    pip.main(['install', "pem"])
+else:
+    pip._internal.main(['install', "pem"])
+certificate = certifi.where()
+assert certificate[-10::] == "cacert.pem", "Unable to find the certificate file"
+import pem
+certs = pem.parse_file(certificate)
+cert_key = str(certs[0])
+assert cert_key != None, "Failed to find the valid certificate "
+
+
+certifi_tests()

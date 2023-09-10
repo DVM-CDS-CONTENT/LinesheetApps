@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9cc3da0531e291012c8265313e60c63a5e4698faf1551dc1d1f73953e4f70699
-size 461
+import os
+import unittest
+from test import support
+from test.support import import_helper
+
+
+# skip tests if _ctypes was not built
+ctypes = import_helper.import_module('ctypes')
+ctypes_symbols = dir(ctypes)
+
+def need_symbol(name):
+    return unittest.skipUnless(name in ctypes_symbols,
+                               '{!r} is required'.format(name))
+
+def load_tests(*args):
+    return support.load_package_tests(os.path.dirname(__file__), *args)

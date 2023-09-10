@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cd10397ec47195d565a7fb259b3276420ce27b1cfe5022e71bee5f6130e97120
-size 138
+pandas
+mysql-connector-python
+sqlalchemy
+openpyxl==3.1.0
+pywin32
+
+libx11
+libXext-devel
+libXrender-devel
+libSM-devel
+libX11-devel

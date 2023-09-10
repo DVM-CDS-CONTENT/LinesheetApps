@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8cedfc7c3df26daac0f8e49182805ae323ffb9c4da5640d66f5fc03e878f7d9c
-size 341
+{
+  "arch": "x86_64",
+  "build": "h2bbff1b_0",
+  "build_number": 0,
+  "depends": [
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "license": "blessing",
+  "license_family": "Other",
+  "name": "sqlite",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1678878184865,
+  "version": "3.41.1"
+}

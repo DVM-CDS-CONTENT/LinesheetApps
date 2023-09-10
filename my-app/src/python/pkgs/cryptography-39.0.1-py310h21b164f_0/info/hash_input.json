@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de070c17d44522472910c6feaa68ab86c29b16cb577fa28d4930cda326bb01eb
-size 135
+{
+  "rust_compiler_version": "1.46.0",
+  "channel_targets": "defaults",
+  "target_platform": "win-64",
+  "rust_compiler": "rust"
+}

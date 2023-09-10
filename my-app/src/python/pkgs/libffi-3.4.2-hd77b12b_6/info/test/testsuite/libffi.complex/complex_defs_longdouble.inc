@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:32ee85e67ca61d1c2edfc00f7437696c85c49483c7caaed4a89620b08fc2869b
-size 253
+/* -*-c-*- */
+/* Complex base type.  */
+#define T_FFI_TYPE ffi_type_complex_longdouble
+/* C type corresponding to the base type.  */
+#define T_C_TYPE long double
+/* C cast for a value of type T_C_TYPE that is passed to printf.  */
+#define T_CONV

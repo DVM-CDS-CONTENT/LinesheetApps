@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a185a2bd55c9d57fa778109ccb8cbd26176b389dd540393d4db36878febc85b1
-size 255
+from tqdm.notebook import tqdm as tqdm_notebook
+
+
+def test_notebook_disabled_description():
+    """Test that set_description works for disabled tqdm_notebook"""
+    with tqdm_notebook(1, disable=True) as t:
+        t.set_description("description")

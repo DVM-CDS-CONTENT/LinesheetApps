@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fe2fe587d984783ba39d5555cba67b7c8d3e7d14a600679c394ddd93a5bbd0f4
-size 467
+# Copyright 2007 Google, Inc. All Rights Reserved.
+# Licensed to PSF under a Contributor Agreement.
+
+"""Fixer for StandardError -> Exception."""
+
+# Local imports
+from .. import fixer_base
+from ..fixer_util import Name
+
+
+class FixStandarderror(fixer_base.BaseFix):
+    BM_compatible = True
+    PATTERN = """
+              'StandardError'
+              """
+
+    def transform(self, node, results):
+        return Name("Exception", prefix=node.prefix)

@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:93ca6b396b2bce55a14d68e1a513718fca37defbd59a18a8d3ecd6645be66134
-size 216
+%PYTHON% setup.py install --single-version-externally-managed --record record.txt
+if errorlevel 1 exit 1
+
+cd %SCRIPTS%
+del *.exe
+del *.exe.manifest
+del pip2*
+del pip3*
+
+:: del %SP_DIR%\__pycache__\pkg_res*

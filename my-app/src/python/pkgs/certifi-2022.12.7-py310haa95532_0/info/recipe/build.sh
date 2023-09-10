@@ -1,3 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fc9cee41ee5e8a4c6f43f098b9e54469bec4740a275d05bf2039b5d1be61fc7e
-size 202
+# use bootstrapped pip to install certifi without depending on installed pip
+export PYTHONPATH=$PWD/pip_wheel:$PWD/setuptools_wheel
+$PYTHON -m pip install ./certifi/ --ignore-installed --no-deps -vv

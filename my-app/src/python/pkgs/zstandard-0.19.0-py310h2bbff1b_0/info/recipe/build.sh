@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fc90b649a1a933be9a3be2699e654aa5859492d14a02ff4d79ab2bd64619e1cc
-size 240
+#!/bin/bash
+
+# Otherwise this picks up the wrong linker on Linux (in most cases the system C++ compiler)
+if [ $(uname) == Linux ]; then
+  export LDSHARED="$CC -shared -pthread"
+fi
+python -m pip install --no-deps --ignore-installed .

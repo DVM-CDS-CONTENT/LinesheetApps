@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d132be1e107235ff7b3b66f3168ded5efbccdb39e666e7b6e5dacda74b6cf40d
-size 272
+/* Area:	ffi_call, closure_call
+   Purpose:	Test complex' passed in variable argument lists.
+   Limitations:	none.
+   PR:		none.
+   Originator:	<vogt@linux.vnet.ibm.com>.  */
+
+/* { dg-do run } */
+
+#include "complex_defs_double.inc"
+#include "cls_complex_va.inc"

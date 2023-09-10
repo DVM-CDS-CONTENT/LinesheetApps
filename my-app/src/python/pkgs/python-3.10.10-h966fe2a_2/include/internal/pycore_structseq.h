@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0195f59c45a7c5b53256032288320f73f6a5cd286aac03363f2f159e46e22478
-size 407
+#ifndef Py_INTERNAL_STRUCTSEQ_H
+#define Py_INTERNAL_STRUCTSEQ_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef Py_BUILD_CORE
+#  error "this header requires Py_BUILD_CORE define"
+#endif
+
+
+PyAPI_FUNC(int) _PyStructSequence_InitType(
+    PyTypeObject *type,
+    PyStructSequence_Desc *desc,
+    unsigned long tp_flags);
+
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_INTERNAL_STRUCTSEQ_H */

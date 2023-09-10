@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7fa42b92364ffeee382267ad77e9008db6d1687e57c8b8118d4264aaf6c0dd74
-size 789
+#ifndef Py_CPYTHON_BYTEARRAYOBJECT_H
+#  error "this header file must not be included directly"
+#endif
+
+/* Object layout */
+typedef struct {
+    PyObject_VAR_HEAD
+    Py_ssize_t ob_alloc;   /* How many bytes allocated in ob_bytes */
+    char *ob_bytes;        /* Physical backing buffer */
+    char *ob_start;        /* Logical start inside ob_bytes */
+    Py_ssize_t ob_exports; /* How many buffer exports */
+} PyByteArrayObject;
+
+/* Macros, trading safety for speed */
+#define PyByteArray_AS_STRING(self) \
+    (assert(PyByteArray_Check(self)), \
+     Py_SIZE(self) ? ((PyByteArrayObject *)(self))->ob_start : _PyByteArray_empty_string)
+#define PyByteArray_GET_SIZE(self) (assert(PyByteArray_Check(self)), Py_SIZE(self))
+
+PyAPI_DATA(char) _PyByteArray_empty_string[];

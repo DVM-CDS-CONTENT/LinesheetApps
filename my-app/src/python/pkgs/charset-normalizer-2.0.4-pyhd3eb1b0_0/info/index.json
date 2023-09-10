@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3cf06ae3d39a50d6890778d7f6d54fb3477e5e7eb385db721f46541c9a893ddf
-size 287
+{
+  "arch": null,
+  "build": "pyhd3eb1b0_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.5"
+  ],
+  "license": "MIT",
+  "name": "charset-normalizer",
+  "noarch": "python",
+  "platform": null,
+  "subdir": "noarch",
+  "timestamp": 1630003259346,
+  "version": "2.0.4"
+}

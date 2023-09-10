@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:30844e90e1514aa7c6e0eb7760b18ff9dea2698a4d1ddd3f259c05b063934b02
-size 180
+Library/bin/bzip2.dll
+Library/bin/libbz2.dll
+Library/include/bzlib.h
+Library/lib/bzip2.lib
+Library/lib/bzip2_static.lib
+Library/lib/libbz2.lib
+Library/lib/libbz2_static.lib

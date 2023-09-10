@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c77e5ef1ff4bfc6e4249b4613dae7f8949125fb2b3f87116ce377e422c29591e
-size 775
+#! /usr/bin/env python3
+
+# Find symbolic links and show where they point to.
+# Arguments are directories to search; default is current directory.
+# No recursion.
+# (This is a totally different program from "findsymlinks.py"!)
+
+import sys, os
+
+def lll(dirname):
+    for name in os.listdir(dirname):
+        if name not in (os.curdir, os.pardir):
+            full = os.path.join(dirname, name)
+            if os.path.islink(full):
+                print(name, '->', os.readlink(full))
+def main(args):
+    if not args: args = [os.curdir]
+    first = 1
+    for arg in args:
+        if len(args) > 1:
+            if not first: print()
+            first = 0
+            print(arg + ':')
+        lll(arg)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

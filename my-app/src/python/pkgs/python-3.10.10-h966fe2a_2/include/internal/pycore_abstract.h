@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c4b94325982689c7053672a0abfe8b6c549c5458e4d07d864bf2a90fcd0674da
-size 501
+#ifndef Py_INTERNAL_ABSTRACT_H
+#define Py_INTERNAL_ABSTRACT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef Py_BUILD_CORE
+#  error "this header requires Py_BUILD_CORE define"
+#endif
+
+// Fast inlined version of PyIndex_Check()
+static inline int
+_PyIndex_Check(PyObject *obj)
+{
+    PyNumberMethods *tp_as_number = Py_TYPE(obj)->tp_as_number;
+    return (tp_as_number != NULL && tp_as_number->nb_index != NULL);
+}
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_INTERNAL_ABSTRACT_H */

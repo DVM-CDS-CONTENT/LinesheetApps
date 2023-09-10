@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f5383274973d649a08905679c1ee127b66f4d08ded73440680df701208a2874
-size 202
+
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from tqdm.cli import main
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

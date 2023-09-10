@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:90e35f9372d7b8d8477944a9a9677629dd9bf516858f8634e883a7a99e0683f1
-size 288
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "PUBLIC-DOMAIN",
+  "name": "win_inet_pton",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1642658494153,
+  "version": "1.1.0"
+}

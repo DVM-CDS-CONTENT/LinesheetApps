@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:162350f66250df4d0eb9831311ae292e8af516b2ac0b9d49f4b53394f64a6f71
-size 858
+
+/* Interface to execute compiled code */
+
+#ifndef Py_EVAL_H
+#define Py_EVAL_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+PyAPI_FUNC(PyObject *) PyEval_EvalCode(PyObject *, PyObject *, PyObject *);
+
+PyAPI_FUNC(PyObject *) PyEval_EvalCodeEx(PyObject *co,
+                                         PyObject *globals,
+                                         PyObject *locals,
+                                         PyObject *const *args, int argc,
+                                         PyObject *const *kwds, int kwdc,
+                                         PyObject *const *defs, int defc,
+                                         PyObject *kwdefs, PyObject *closure);
+
+#ifndef Py_LIMITED_API
+PyAPI_FUNC(PyObject *) _PyEval_CallTracing(PyObject *func, PyObject *args);
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_EVAL_H */

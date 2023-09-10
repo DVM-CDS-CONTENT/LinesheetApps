@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:486e6091379af060cd50e5509dc51c08ee88e1904dc7a7068b632e3c4deef8f3
-size 395
+# This file is dual licensed under the terms of the Apache License, Version
+# 2.0, and the BSD License. See the LICENSE file in the root of this repository
+# for complete details.
+
+
+from ..utils import WycheproofTest
+
+
+def test_wycheproof_test_repr():
+    wycheproof = WycheproofTest({}, {}, {"tcId": 3})
+    assert repr(wycheproof) == "<WycheproofTest({}, {}, {'tcId': 3}, tcId=3)>"

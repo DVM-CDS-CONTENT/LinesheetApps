@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:11869c6b3a71cea4c3c6569fbdbaa3d7af62037a1f011fcfc72119cce2db624c
-size 233
+{
+  "bzip2": "1.0",
+  "tk": "8.6",
+  "sqlite": "3",
+  "channel_targets": "defaults",
+  "zlib": "1.2",
+  "target_platform": "win-64",
+  "cxx_compiler": "vs2017",
+  "openssl": "1.1.1",
+  "xz": "5",
+  "c_compiler": "vs2017"
+}

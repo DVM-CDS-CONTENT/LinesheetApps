@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:67592e44e91b0e03b9fbd75b90f5c1f694cad2aa909826a004cc7a0c95e98f0c
-size 16
+["conda", "pip"]

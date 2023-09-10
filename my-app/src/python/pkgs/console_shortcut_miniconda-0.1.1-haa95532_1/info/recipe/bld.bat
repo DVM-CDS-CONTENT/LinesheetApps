@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:efc816d9909fe34d3d3faffcbd36a6d2d70cfe241711b5c2e3a2fafff75b5724
-size 252
+set MENU_DIR=%PREFIX%\Menu
+IF NOT EXIST (%MENU_DIR%) mkdir %MENU_DIR%
+
+copy %RECIPE_DIR%\Iconleak-Atrous-Console.ico %MENU_DIR%
+if errorlevel 1 exit 1
+
+copy %RECIPE_DIR%\menu-windows.json %MENU_DIR%\console_shortcut.json
+if errorlevel 1 exit 1

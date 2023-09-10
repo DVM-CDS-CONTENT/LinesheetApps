@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:77584582b2744e08278cd0f6f5405ab06a3a99fa44e2743a0f0acd7ea1dca483
-size 569
+package:
+  name: powershell_shortcut_miniconda
+  version: 0.0.1
+
+build:
+  number: 1
+  skip: True  # [not win]
+
+app:
+  entry:
+    start powershell.exe -ExecutionPolicy ByPass -NoExit -Command  "& '{CONDA_ROOT_PREFIX}\\shell\\condabin\\conda-hook.ps1' ; conda activate '{CONDA_PREFIX}'"
+  summary: Anaconda Powershell Prompt
+  type: desk
+
+requirements:
+  run:
+    - python
+  run_constrained:
+    - anaconda-navigator >=1.9.8
+
+about:
+  license: BSD-3-Clause
+  license_family: BSD
+  summary: Powershell shortcut creator for Windows (using menuinst)

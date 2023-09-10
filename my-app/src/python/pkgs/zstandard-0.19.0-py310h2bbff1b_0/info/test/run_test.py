@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:344420b0ae089eade1c82e1372151e06f23c5797dae2a025d8f7e9baa9615257
-size 578
+#  tests for zstandard-0.19.0-py310h2bbff1b_0 (this is a generated file);
+print('===== testing package: zstandard-0.19.0-py310h2bbff1b_0 =====');
+print('running run_test.py');
+#  --- run_test.py (begin) ---
+import zstandard as zstd
+
+data = b'foo'
+
+compress = zstd.ZstdCompressor(write_checksum=True, write_content_size=True).compress
+decompress = zstd.ZstdDecompressor().decompress
+
+assert decompress(compress(data)) == data
+#  --- run_test.py (end) ---
+
+print('===== zstandard-0.19.0-py310h2bbff1b_0 OK =====');
+print("import: 'zstandard'")
+import zstandard
+

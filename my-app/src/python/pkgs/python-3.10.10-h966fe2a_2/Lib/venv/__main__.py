@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8996339f7f40ee973ac404f514792180f26cb2afba22afce53f82b842c487fe0
-size 155
+import sys
+from . import main
+
+rc = 1
+try:
+    main()
+    rc = 0
+except Exception as e:
+    print('Error: %s' % e, file=sys.stderr)
+sys.exit(rc)

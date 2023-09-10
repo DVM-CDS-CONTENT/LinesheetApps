@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2d043bf666245d950a2679de0b09a41f77f45f7543b9d0dfc8309973c34e8cdd
-size 430
+
+
+
+
+sqlite3 --version
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\bin\sqlite3.dll exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\lib\sqlite3.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\include\sqlite3.h exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%\\Library\include\sqlite3ext.h exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

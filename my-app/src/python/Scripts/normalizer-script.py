@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:16d869d52c619d7e07e4d7d6f3ebe09bf83ec75311bb0d4e1629531482767c94
-size 237
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from charset_normalizer.cli.normalizer import cli_detect
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(cli_detect())

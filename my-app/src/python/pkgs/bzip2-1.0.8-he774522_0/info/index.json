@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6b52c51dbf5c1da4edada777dedeea17bc54c6943e4ac7ccfcfe39902cc2e77b
-size 299
+{
+  "arch": "x86_64", 
+  "build": "he774522_0", 
+  "build_number": 0, 
+  "depends": [
+    "vc >=14.1,<15.0a0"
+  ], 
+  "license": "bzip2", 
+  "license_family": "BSD", 
+  "name": "bzip2", 
+  "platform": "win", 
+  "subdir": "win-64", 
+  "timestamp": 1563219293348, 
+  "version": "1.0.8"
+}

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:352d18153d0d25ccc2b44e7eb6bcfa52556b4eccfb9c46472cc38ae437571f72
-size 23
+["pip", "python <3.10"]

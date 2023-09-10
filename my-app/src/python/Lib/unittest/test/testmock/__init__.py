@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7f23831918073dacb0bcb4fed102c6c30a4ed6cb84f202a5abafc7360ebff042
-size 482
+import os
+import sys
+import unittest
+
+
+here = os.path.dirname(__file__)
+loader = unittest.defaultTestLoader
+
+def load_tests(*args):
+    suite = unittest.TestSuite()
+    for fn in os.listdir(here):
+        if fn.startswith("test") and fn.endswith(".py"):
+            modname = "unittest.test.testmock." + fn[:-3]
+            __import__(modname)
+            module = sys.modules[modname]
+            suite.addTest(loader.loadTestsFromModule(module))
+    return suite

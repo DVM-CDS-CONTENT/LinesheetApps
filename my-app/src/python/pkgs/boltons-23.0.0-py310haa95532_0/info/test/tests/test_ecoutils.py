@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eb59451f2552a6c0a1b6887ba242621bff1463fb51dbc26f1feaead420b1b93a
-size 287
+
+import sys
+from boltons import ecoutils
+
+
+def test_basic():
+    # basic sanity test
+    prof = ecoutils.get_profile()
+
+    assert prof['python']['bin'] == sys.executable
+
+
+def test_scrub():
+    prof = ecoutils.get_profile(scrub=True)
+
+    assert prof['username'] == '-'

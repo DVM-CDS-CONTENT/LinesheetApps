@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ac1e5ba10fb084cdbce778a8c5d8b4fc56791b6f0c2d2c23c51a251f4505b6e7
-size 846
+#  tests for certifi-2022.12.7-py310haa95532_0 (this is a generated file);
+print('===== testing package: certifi-2022.12.7-py310haa95532_0 =====');
+print('running run_test.py');
+#  --- run_test.py (begin) ---
+import certifi
+import pip
+
+
+def certifi_tests():
+    """
+    Tests to validate certifi pkg
+    """
+
+
+if hasattr(pip, 'main'):
+    pip.main(['install', "pem"])
+else:
+    pip._internal.main(['install', "pem"])
+certificate = certifi.where()
+assert certificate[-10::] == "cacert.pem", "Unable to find the certificate file"
+import pem
+certs = pem.parse_file(certificate)
+cert_key = str(certs[0])
+assert cert_key != None, "Failed to find the valid certificate "
+
+
+certifi_tests()#  --- run_test.py (end) ---
+
+print('===== certifi-2022.12.7-py310haa95532_0 OK =====');
+print("import: 'certifi'")
+import certifi
+

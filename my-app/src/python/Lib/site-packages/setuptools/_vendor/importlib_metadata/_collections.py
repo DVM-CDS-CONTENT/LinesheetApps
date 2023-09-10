@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4281b8da21c38b837c93e93916d6bbc0a01f7e023c7d39251e3b80250f7d575e
-size 773
+import collections
+
+
+# from jaraco.collections 3.3
+class FreezableDefaultDict(collections.defaultdict):
+    """
+    Often it is desirable to prevent the mutation of
+    a default dict after its initial construction, such
+    as to prevent mutation during iteration.
+
+    >>> dd = FreezableDefaultDict(list)
+    >>> dd[0].append('1')
+    >>> dd.freeze()
+    >>> dd[1]
+    []
+    >>> len(dd)
+    1
+    """
+
+    def __missing__(self, key):
+        return getattr(self, '_frozen', super().__missing__)(key)
+
+    def freeze(self):
+        self._frozen = lambda key: self.default_factory()
+
+
+class Pair(collections.namedtuple('Pair', 'name value')):
+    @classmethod
+    def parse(cls, text):
+        return cls(*map(str.strip, text.split("=", 1)))

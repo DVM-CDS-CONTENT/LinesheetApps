@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6ff2fb771339b93c7ac3b64a915be8ae1c02eccd23fce48a755058ca9d170e01
-size 284
+if {[package vsatisfies [package provide Tcl] 9.0-]} { 
+package ifneeded sqlite3 3.36.0 [list load [file join $dir tcl9sqlite3360t.dll] [string totitle sqlite3]] 
+} else { 
+package ifneeded sqlite3 3.36.0 [list load [file join $dir sqlite3360t.dll] [string totitle sqlite3]] 
+} 

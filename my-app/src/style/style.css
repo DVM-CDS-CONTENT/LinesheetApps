@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8b4ef6d34402dab4adc761a3e2231121892ff44ef4a72995d42435efb06bc3f5
-size 415
+
+    @font-face {
+    font-family: 'CPNRegular';
+    src: url('../font/CPN-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'CPNBold';
+    src: url('../font/CPN-Bold.ttf');
+  }
+  @font-face {
+    font-family: 'CPNBoldCondensed';
+    src: url('../font/CPN-BoldCondensed.ttf');
+  }
+body {
+    font-family: 'CPNRegular';
+    background-color: #ffffff;
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+}
+

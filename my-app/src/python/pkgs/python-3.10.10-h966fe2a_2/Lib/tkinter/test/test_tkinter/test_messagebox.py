@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bbcb7096321fdf0befaa8d0a4ae9021e630b8a2e6b13e53fa96fdc0e1114d324
-size 1161
+import unittest
+import tkinter
+from test.support import requires, swap_attr
+from tkinter.test.support import AbstractDefaultRootTest
+from tkinter.commondialog import Dialog
+from tkinter.messagebox import showinfo
+
+requires('gui')
+
+
+class DefaultRootTest(AbstractDefaultRootTest, unittest.TestCase):
+
+    def test_showinfo(self):
+        def test_callback(dialog, master):
+            nonlocal ismapped
+            master.update()
+            ismapped = master.winfo_ismapped()
+            raise ZeroDivisionError
+
+        with swap_attr(Dialog, '_test_callback', test_callback):
+            ismapped = None
+            self.assertRaises(ZeroDivisionError, showinfo, "Spam", "Egg Information")
+            self.assertEqual(ismapped, False)
+
+            root = tkinter.Tk()
+            ismapped = None
+            self.assertRaises(ZeroDivisionError, showinfo, "Spam", "Egg Information")
+            self.assertEqual(ismapped, True)
+            root.destroy()
+
+            tkinter.NoDefaultRoot()
+            self.assertRaises(RuntimeError, showinfo, "Spam", "Egg Information")
+
+
+if __name__ == "__main__":
+    unittest.main()

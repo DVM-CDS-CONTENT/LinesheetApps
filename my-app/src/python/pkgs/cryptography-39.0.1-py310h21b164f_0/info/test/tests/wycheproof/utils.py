@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ca7854b32a93f715728bb2fa03c9b5cfc934be484c51f7fe84a4ce675b10b0d
-size 532
+from ..utils import load_wycheproof_tests
+
+
+def wycheproof_tests(*paths):
+    def wrapper(func):
+        def run_wycheproof(backend, subtests, pytestconfig):
+            wycheproof_root = pytestconfig.getoption(
+                "--wycheproof-root", skip=True
+            )
+            for path in paths:
+                for test in load_wycheproof_tests(wycheproof_root, path):
+                    with subtests.test():
+                        func(backend, test)
+
+        return run_wycheproof
+
+    return wrapper

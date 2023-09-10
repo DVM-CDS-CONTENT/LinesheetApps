@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6c9357f1828b539d9bbd6bb472beefd78ab65d2314822993d4a704a2e7d4ae23
-size 260
+set MENU_DIR=%PREFIX%\Menu
+IF NOT EXIST (%MENU_DIR%) mkdir %MENU_DIR%
+
+copy %RECIPE_DIR%\Iconleak-Atrous-PSConsole.ico %MENU_DIR%
+if errorlevel 1 exit 1
+
+copy %RECIPE_DIR%\menu-windows-ps.json %MENU_DIR%\powershell_shortcut.json
+if errorlevel 1 exit 1

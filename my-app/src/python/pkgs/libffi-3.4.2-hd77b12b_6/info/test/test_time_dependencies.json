@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e637bf5fc808b1aa3cda820c26f8a38e6ed4d16b8b0c8d2b1c83ecaf079f30e7
-size 51
+["m2-grep", "vs2017_win-64", "cmake", "llvm-tools"]

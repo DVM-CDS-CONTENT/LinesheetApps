@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:49b53e348068b064700798b38a214bc5bb0aebad6189f65e91f229f30c304575
-size 384
+# https://martinopilia.com/posts/2018/09/15/building-python-extension.html
+cmake_minimum_required(VERSION 3.10)
+enable_language(C)
+project(mymath)
+
+option(PY_VER, "Python version to use")
+
+find_package(PythonInterp ${PY_VER} REQUIRED)
+#             PATHS $ENV{CONDA_PREFIX})
+# This goes after, since it uses PythonInterp as hint
+find_package(PythonLibs ${PY_VER} REQUIRED)

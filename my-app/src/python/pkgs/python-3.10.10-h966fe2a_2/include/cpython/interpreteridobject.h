@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:07d04990ae07fbefcdf0db99adfd8c1781eae324a10ce946a837482aa588a679
-size 398
+#ifndef Py_CPYTHON_INTERPRETERIDOBJECT_H
+#  error "this header file must not be included directly"
+#endif
+
+/* Interpreter ID Object */
+
+PyAPI_DATA(PyTypeObject) _PyInterpreterID_Type;
+
+PyAPI_FUNC(PyObject *) _PyInterpreterID_New(int64_t);
+PyAPI_FUNC(PyObject *) _PyInterpreterState_GetIDObject(PyInterpreterState *);
+PyAPI_FUNC(PyInterpreterState *) _PyInterpreterID_LookUp(PyObject *);

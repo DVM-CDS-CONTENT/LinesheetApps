@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:95ab1ef23ea223a9e39398e166d5751ba9e3b3ecefc29621fecee244f859a832
-size 258
+print("import: 'tlz'")
+import tlz
+
+print("import: 'toolz'")
+import toolz
+
+print("import: 'toolz.curried'")
+import toolz.curried
+
+print("import: 'toolz.functoolz'")
+import toolz.functoolz
+
+print("import: 'toolz.sandbox'")
+import toolz.sandbox
+

@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7c87067b2948d04866a9ace56b235a7e758ce9d2aceddc9ca1c2812c67386af0
-size 263
+#!/bin/bash
+
+$PYTHON setup.py install --single-version-externally-managed --record record.txt
+
+cd $PREFIX/bin
+rm -f pip2* pip3*
+rm -f $SP_DIR/__pycache__/pkg_res*
+# Remove all bundled .exe files courtesy of distlib.
+rm -f $SP_DIR/pip/_vendor/distlib/*.exe

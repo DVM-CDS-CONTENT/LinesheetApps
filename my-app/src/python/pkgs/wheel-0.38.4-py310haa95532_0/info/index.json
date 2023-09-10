@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de51626d1cbed6b3397eb857e011b9fe6ba15a2bb0ca079e839c74f69ea29106
-size 299
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "name": "wheel",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1676622138427,
+  "version": "0.38.4"
+}

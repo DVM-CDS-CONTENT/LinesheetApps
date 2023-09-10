@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ce27bca42e3e581f3c49f77c3d95f69138f8230d694c037ef54142e3b045f37a
-size 220
+
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from conda_package_handling.cli import main
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7a30cd499da0b2c9d9e8313d8a1e30fe49a8df4534dd718efa997197ea90ee2c
-size 305
+"""Fix incompatible imports and module references that must be fixed after
+fix_imports."""
+from . import fix_imports
+
+
+MAPPING = {
+            'whichdb': 'dbm',
+            'anydbm': 'dbm',
+          }
+
+
+class FixImports2(fix_imports.FixImports):
+
+    run_order = 7
+
+    mapping = MAPPING

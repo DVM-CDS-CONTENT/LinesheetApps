@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4a92cda58297277ffe72963311aefc680f321d50440e4cdd199a36f3472e5211
-size 81
+{
+  "noarch": {
+    "type": "generic"
+  },
+  "package_metadata_version": 1
+}

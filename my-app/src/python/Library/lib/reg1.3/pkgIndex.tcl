@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1bd0fc8cba2bb1cdd5e5cfcc614b0ef4c8cf4698904d1e48c0f103519c5579e0
-size 367
+if {![package vsatisfies [package provide Tcl] 8.5]} return
+if {[info sharedlibextension] != ".dll"} return
+if {[::tcl::pkgconfig get debug]} {
+    package ifneeded registry 1.3.5 \
+            [list load [file join $dir tclreg13g.dll] Registry]
+} else {
+    package ifneeded registry 1.3.5 \
+            [list load [file join $dir tclreg13.dll] Registry]
+}

@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d011c6893755b0cfc723c797d7345d7116bf5ac9253dfa386703472012087e06
-size 528
+
+
+
+
+if not exist %PREFIX%/Library/include/zlib.h exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%/Library/lib/z.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%/Library/lib/zdll.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%/Library/lib/zlib.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%/Library/lib/zlibstatic.lib exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+if not exist %PREFIX%/Library/bin/zlib.dll exit 1
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:66e3f95a357efec3a896a24b5b05ffb3a83a5b58d3ac09e9c727b18a9adb7327
-size 549
+# Index file to load the TDBC MySQL package.
+
+if {![package vsatisfies [package provide Tcl] 8.6-]} {
+    return
+}
+if {[package vsatisfies [package provide Tcl] 9.0-]} {
+    package ifneeded tdbc::mysql 1.1.3 \
+	    "[list source [file join $dir tdbcmysql.tcl]]\;\
+	    [list load [file join $dir tcl9tdbcmysql113t.dll] [string totitle tdbcmysql]]"
+} else {
+    package ifneeded tdbc::mysql 1.1.3 \
+	    "[list source [file join $dir tdbcmysql.tcl]]\;\
+	    [list load [file join $dir tdbcmysql113t.dll] [string totitle tdbcmysql]]"
+}

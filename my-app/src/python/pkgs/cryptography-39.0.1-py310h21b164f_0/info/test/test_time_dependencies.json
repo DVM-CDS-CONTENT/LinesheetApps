@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d42656074dd9d358a37a5cdf0ca3b0966f4d55e9cb1331562b95bba06784a656
-size 175
+["pytest-subtests", "hypothesis >=1.11.4,!=3.79.2", "pytz", "pytest-benchmark", "pytest >=6.2.0", "cryptography-vectors 39.0.1.*", "iso8601", "pretend", "pip", "pytest-xdist"]

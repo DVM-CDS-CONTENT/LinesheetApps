@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c37971e1746d987f9299f1b8e2e94e120266cef2c6e4fe844e0e6187d15456d7
-size 488
+/* Limited C API of PyFrame API
+ *
+ * Include "frameobject.h" to get the PyFrameObject structure.
+ */
+
+#ifndef Py_PYFRAME_H
+#define Py_PYFRAME_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct _frame PyFrameObject;
+
+/* Return the line of code the frame is currently executing. */
+PyAPI_FUNC(int) PyFrame_GetLineNumber(PyFrameObject *);
+
+PyAPI_FUNC(PyCodeObject *) PyFrame_GetCode(PyFrameObject *frame);
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_PYFRAME_H */

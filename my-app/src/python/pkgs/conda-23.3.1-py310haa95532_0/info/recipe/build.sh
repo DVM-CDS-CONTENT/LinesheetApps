@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5347a7c34d8d6abba481b9431ee084c4452cccc7b13c0815a682dfc5ace145e2
-size 402
+#!/bin/bash
+
+echo $PKG_VERSION > conda/.version
+$PYTHON setup.py install --single-version-externally-managed --record record.txt
+if [[ ! $(uname) =~ MINGW* ]]; then
+  rm -rf "$SP_DIR/conda/shell/*.exe"
+fi
+$PYTHON -m conda init --install
+if [[ $(uname) =~ MINGW* ]]; then
+  sed -i "s|CONDA_EXE=.*|CONDA_EXE=\'${PREFIXW//\\/\\\\}\\\\Scripts\\\\conda.exe\'|g" $PREFIX/etc/profile.d/conda.sh
+fi

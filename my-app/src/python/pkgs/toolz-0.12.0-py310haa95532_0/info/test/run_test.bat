@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:db0633fd10f9686c30c85599cbe97ddfda382fcff46c1be60154c10f6007fd91
-size 137
+
+
+
+
+pip check
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+pytest --doctest-modules --pyargs toolz
+IF %ERRORLEVEL% NEQ 0 exit /B 1
+exit /B 0

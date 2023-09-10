@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6d363e96cb50ad4aa199497535f526ff0d2d7591a738916d8635072d45e6ff0f
-size 98
+{
+  "update_version": "5",
+  "cl_version": "19.27.29111",
+  "runtime_version": "14.27.29016"
+}

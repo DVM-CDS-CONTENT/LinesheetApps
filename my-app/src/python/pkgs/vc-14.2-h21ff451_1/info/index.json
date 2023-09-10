@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5843a60ad9d0ff65b69fad1117b69b962f560de425a6d5cd407608ba43c420c2
-size 351
+{
+  "arch": "x86_64",
+  "build": "h21ff451_1",
+  "build_number": 1,
+  "depends": [
+    "vs2015_runtime >=14.27.29016"
+  ],
+  "license": "Modified BSD License (3-clause)",
+  "license_family": "BSD",
+  "name": "vc",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1605602889180,
+  "track_features": "vc14",
+  "version": "14.2"
+}

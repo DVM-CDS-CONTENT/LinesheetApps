@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:80b0425e14bcbc3c5c49b0b4d282f777513a5e825d0bcd55a5a9998d4c4d8920
-size 167
+"""
+IDLE main entry point
+
+Run IDLE as python -m idlelib
+"""
+import idlelib.pyshell
+idlelib.pyshell.main()
+# This file does not work for 2.7; See issue 24212.

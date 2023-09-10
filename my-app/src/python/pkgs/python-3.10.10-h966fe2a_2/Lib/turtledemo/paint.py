@@ -1,3 +1,54 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d23a637c397c9ac0d7a91a4812e42ba362b7cdfde9c7e9d13b7c37b799931741
-size 1345
+#!/usr/bin/env python3
+"""       turtle-example-suite:
+
+            tdemo_paint.py
+
+A simple  event-driven paint program
+
+- left mouse button moves turtle
+- middle mouse button changes color
+- right mouse button toggles between pen up
+(no line drawn when the turtle moves) and
+pen down (line is drawn). If pen up follows
+at least two pen-down moves, the polygon that
+includes the starting point is filled.
+ -------------------------------------------
+ Play around by clicking into the canvas
+ using all three mouse buttons.
+ -------------------------------------------
+          To exit press STOP button
+ -------------------------------------------
+"""
+from turtle import *
+
+def switchupdown(x=0, y=0):
+    if pen()["pendown"]:
+        end_fill()
+        up()
+    else:
+        down()
+        begin_fill()
+
+def changecolor(x=0, y=0):
+    global colors
+    colors = colors[1:]+colors[:1]
+    color(colors[0])
+
+def main():
+    global colors
+    shape("circle")
+    resizemode("user")
+    shapesize(.5)
+    width(3)
+    colors=["red", "green", "blue", "yellow"]
+    color(colors[0])
+    switchupdown()
+    onscreenclick(goto,1)
+    onscreenclick(changecolor,2)
+    onscreenclick(switchupdown,3)
+    return "EVENTLOOP"
+
+if __name__ == "__main__":
+    msg = main()
+    print(msg)
+    mainloop()

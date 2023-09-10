@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ad449177f69d3150373892859aff90a1882982e9aba313b919711b7f38370def
-size 163
+"""
+Enough Mach-O to make your head spin.
+
+See the relevant header files in /usr/include/mach-o
+
+And also Apple's documentation.
+"""
+
+__version__ = '1.0'

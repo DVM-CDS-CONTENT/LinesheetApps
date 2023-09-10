@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c2c8a1cdd73b21878a625a34b857e11f0ffe928c87d8e8c5b722f03a45f5334f
-size 96
+{
+  "target_platform": "win-64",
+  "c_compiler": "vs2017",
+  "channel_targets": "defaults"
+}

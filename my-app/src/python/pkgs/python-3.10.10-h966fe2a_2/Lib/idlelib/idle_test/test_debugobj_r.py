@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:264859e8deff2f9cf3f81045142a09d3bf925f350dd48db5ba69368faf2f29f3
-size 567
+"Test debugobj_r, coverage 56%."
+
+from idlelib import debugobj_r
+import unittest
+
+
+class WrappedObjectTreeItemTest(unittest.TestCase):
+
+    def test_getattr(self):
+        ti = debugobj_r.WrappedObjectTreeItem(list)
+        self.assertEqual(ti.append, list.append)
+
+class StubObjectTreeItemTest(unittest.TestCase):
+
+    def test_init(self):
+        ti = debugobj_r.StubObjectTreeItem('socket', 1111)
+        self.assertEqual(ti.sockio, 'socket')
+        self.assertEqual(ti.oid, 1111)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

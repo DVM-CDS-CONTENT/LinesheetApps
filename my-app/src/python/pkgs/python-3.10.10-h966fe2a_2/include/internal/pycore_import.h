@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dd89264ed0a089ae6cf4ad2870397f03c528f9ec18f404c42ab18fb5f6a5cb9e
-size 363
+#ifndef Py_LIMITED_API
+#ifndef Py_INTERNAL_IMPORT_H
+#define Py_INTERNAL_IMPORT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef HAVE_FORK
+extern PyStatus _PyImport_ReInitLock(void);
+#endif
+extern PyObject* _PyImport_BootstrapImp(PyThreadState *tstate);
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_INTERNAL_IMPORT_H */
+#endif /* !Py_LIMITED_API */

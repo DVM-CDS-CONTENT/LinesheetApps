@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9f37d588a84c074c67581168d660d7bf7b79feedbd72c94ebe6241d47c78697d
-size 453
+{
+  "paths": [
+    {
+      "_path": "Library/ssl/cacert.pem",
+      "path_type": "hardlink",
+      "sha256": "fb1ecd641d0a02c01bc9036d513cb658bbda62a75e246bedbc01764560a639f0",
+      "size_in_bytes": 216583
+    },
+    {
+      "_path": "Library/ssl/cert.pem",
+      "path_type": "hardlink",
+      "sha256": "fb1ecd641d0a02c01bc9036d513cb658bbda62a75e246bedbc01764560a639f0",
+      "size_in_bytes": 216583
+    }
+  ],
+  "paths_version": 1
+}

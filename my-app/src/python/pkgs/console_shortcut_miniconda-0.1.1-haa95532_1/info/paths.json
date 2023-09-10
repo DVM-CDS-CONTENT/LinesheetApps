@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ef9951d7bef6e02c04cdae8be1560779d195ea687d90052f58d01575264aa891
-size 466
+{
+  "paths": [
+    {
+      "_path": "Menu/Iconleak-Atrous-Console.ico",
+      "path_type": "hardlink",
+      "sha256": "92183372a2d388578c5c7b9d72c7b4c1aaccd9078ec44fd12b500777026a3395",
+      "size_in_bytes": 432254
+    },
+    {
+      "_path": "Menu/console_shortcut.json",
+      "path_type": "hardlink",
+      "sha256": "22830f535392792adf8b4d8ff9cde057a06978151167af1baee5508d4fa5e801",
+      "size_in_bytes": 375
+    }
+  ],
+  "paths_version": 1
+}

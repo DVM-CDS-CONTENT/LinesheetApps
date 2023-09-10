@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:06ebc4d5d019bf56d6eb72b2791cf908900dd7e90156b23dd89b21425a25e422
-size 554
+import unittest
+from ctypes import *
+
+class X(Structure):
+    _fields_ = [("foo", c_int)]
+
+class TestCase(unittest.TestCase):
+    def test_simple(self):
+        self.assertRaises(TypeError,
+                          delattr, c_int(42), "value")
+
+    def test_chararray(self):
+        self.assertRaises(TypeError,
+                          delattr, (c_char * 5)(), "value")
+
+    def test_struct(self):
+        self.assertRaises(TypeError,
+                          delattr, X(), "foo")
+
+if __name__ == "__main__":
+    unittest.main()

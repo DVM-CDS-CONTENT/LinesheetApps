@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:04884bb6893226c1c76453f70a4b778f8aab1e30d303926319d026cda94aabd0
-size 285
+prefix=../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+toolexeclibdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libffi
+Description: Library supporting Foreign Function Interfaces
+Version: 3.4.2
+Libs: -L${exec_prefix}/lib -lffi
+Cflags: -I${prefix}/include

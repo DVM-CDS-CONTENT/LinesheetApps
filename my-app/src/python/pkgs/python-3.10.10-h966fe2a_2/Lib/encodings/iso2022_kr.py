@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fd9efd7094361f6557d00857e332d7229e922597336a0714fb0fa2402c954029
-size 1092
+#
+# iso2022_kr.py: Python Unicode Codec for ISO2022_KR
+#
+# Written by Hye-Shik Chang <perky@FreeBSD.org>
+#
+
+import _codecs_iso2022, codecs
+import _multibytecodec as mbc
+
+codec = _codecs_iso2022.getcodec('iso2022_kr')
+
+class Codec(codecs.Codec):
+    encode = codec.encode
+    decode = codec.decode
+
+class IncrementalEncoder(mbc.MultibyteIncrementalEncoder,
+                         codecs.IncrementalEncoder):
+    codec = codec
+
+class IncrementalDecoder(mbc.MultibyteIncrementalDecoder,
+                         codecs.IncrementalDecoder):
+    codec = codec
+
+class StreamReader(Codec, mbc.MultibyteStreamReader, codecs.StreamReader):
+    codec = codec
+
+class StreamWriter(Codec, mbc.MultibyteStreamWriter, codecs.StreamWriter):
+    codec = codec
+
+def getregentry():
+    return codecs.CodecInfo(
+        name='iso2022_kr',
+        encode=Codec().encode,
+        decode=Codec().decode,
+        incrementalencoder=IncrementalEncoder,
+        incrementaldecoder=IncrementalDecoder,
+        streamreader=StreamReader,
+        streamwriter=StreamWriter,
+    )

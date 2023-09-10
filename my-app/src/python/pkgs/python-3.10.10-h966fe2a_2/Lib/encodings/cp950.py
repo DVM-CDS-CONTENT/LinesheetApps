@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8fd6e86dfb38006e753b3b0301aa4b377c64c25f4ec9e6333fc99c3f06e90917
-size 1062
+#
+# cp950.py: Python Unicode Codec for CP950
+#
+# Written by Hye-Shik Chang <perky@FreeBSD.org>
+#
+
+import _codecs_tw, codecs
+import _multibytecodec as mbc
+
+codec = _codecs_tw.getcodec('cp950')
+
+class Codec(codecs.Codec):
+    encode = codec.encode
+    decode = codec.decode
+
+class IncrementalEncoder(mbc.MultibyteIncrementalEncoder,
+                         codecs.IncrementalEncoder):
+    codec = codec
+
+class IncrementalDecoder(mbc.MultibyteIncrementalDecoder,
+                         codecs.IncrementalDecoder):
+    codec = codec
+
+class StreamReader(Codec, mbc.MultibyteStreamReader, codecs.StreamReader):
+    codec = codec
+
+class StreamWriter(Codec, mbc.MultibyteStreamWriter, codecs.StreamWriter):
+    codec = codec
+
+def getregentry():
+    return codecs.CodecInfo(
+        name='cp950',
+        encode=Codec().encode,
+        decode=Codec().decode,
+        incrementalencoder=IncrementalEncoder,
+        incrementaldecoder=IncrementalDecoder,
+        streamreader=StreamReader,
+        streamwriter=StreamWriter,
+    )

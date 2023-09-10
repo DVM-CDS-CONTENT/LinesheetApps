@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dc680a0e34dce73756f0e3b5cbb23dd819022be7e10f80e55289a5eab9ed7c2e
-size 1100
+#
+# iso2022_jp_2.py: Python Unicode Codec for ISO2022_JP_2
+#
+# Written by Hye-Shik Chang <perky@FreeBSD.org>
+#
+
+import _codecs_iso2022, codecs
+import _multibytecodec as mbc
+
+codec = _codecs_iso2022.getcodec('iso2022_jp_2')
+
+class Codec(codecs.Codec):
+    encode = codec.encode
+    decode = codec.decode
+
+class IncrementalEncoder(mbc.MultibyteIncrementalEncoder,
+                         codecs.IncrementalEncoder):
+    codec = codec
+
+class IncrementalDecoder(mbc.MultibyteIncrementalDecoder,
+                         codecs.IncrementalDecoder):
+    codec = codec
+
+class StreamReader(Codec, mbc.MultibyteStreamReader, codecs.StreamReader):
+    codec = codec
+
+class StreamWriter(Codec, mbc.MultibyteStreamWriter, codecs.StreamWriter):
+    codec = codec
+
+def getregentry():
+    return codecs.CodecInfo(
+        name='iso2022_jp_2',
+        encode=Codec().encode,
+        decode=Codec().decode,
+        incrementalencoder=IncrementalEncoder,
+        incrementaldecoder=IncrementalDecoder,
+        streamreader=StreamReader,
+        streamwriter=StreamWriter,
+    )

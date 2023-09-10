@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:913b88e6cac1726edb9c24479aa0393b97253929f311a2bc5640cc68059fb089
-size 299
+{
+  "arch": "x86_64",
+  "build": "py310haa95532_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "name": "pluggy",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1648042816794,
+  "version": "1.0.0"
+}
