@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6305d37d231d6d2224f606b14cd73abfd01e46912d05e1b1be1d633fcd8c052f
-size 1127
+// module.exports = {
+//   packagerConfig: {
+//    icon: 'my-app/src/image/icon/app/icon.ico' // no file extension required
+//   },
+//   rebuildConfig: {},
+//   makers: [
+//     {
+//       name: '@electron-forge/maker-squirrel',
+//       config: {
+//         // An URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features).
+//         // iconUrl: 'my-app/src/image/icon/app/icon.ico',
+//         // The ICO file to use as the icon for the generated Setup.exe
+//         // setupIcon: 'my-app/src/image/icon/app/icon.ico',
+//       },
+//     },
+//     {
+//       name: '@electron-forge/maker-zip',
+//       platforms: ['darwin'],
+//     },
+//     {
+//       // Path to a single image that will act as icon for the application
+//       name: '@electron-forge/maker-deb',
+//       config: {
+//       options: {
+//        icon: 'my-app/src/image/icon/app/icon.png',
+//       },},
+//     },
+//     {
+//       name: '@electron-forge/maker-rpm',
+//       config: {},
+//     },
+//   ],
+//   publishers: [
+//     {
+//       "name": "@electron-forge/publisher-github",
+//       "config": {
+//         "repository": {
+//           "owner": "24ep",
+//           "name": "spear"
+//         }
+//       }
+//     }
+//   ],
+// };
+
