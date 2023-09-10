@@ -9,7 +9,7 @@ const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
 
 // Set the PYTHONHOME and PATH environment variables
 
-  process.env.PYTHONHOME = path.join(__dirname, '../../src/python');
+  process.env.PYTHONHOME = path.join(__dirname, '../../src/pythons');
   process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
   // process.env.PYTHONHOME = path.join(__dirname, 'python');
