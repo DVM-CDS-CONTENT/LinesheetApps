@@ -1,0 +1,60 @@
+{% set version = "1.4.19" %}
+{% set sha256 = "e8f28fabc0efb7880b5e9a500683fc02d38886bc9e61ea1a19c55434907a3f0a" %}
+
+package:
+  name: menuinst
+  version: {{ version }}
+
+source:
+  fn: menuinst-{{ version }}.tar.gz
+  url: https://github.com/conda/menuinst/archive/{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  skip: True  # [not win]
+  script:
+    - {{ PYTHON }} -m pip install . -vv
+    - copy "%SRC_DIR%\\cwp.py" "%PREFIX%\\"
+  entry_points:
+    - menuinst = menuinst.main:main
+  skip_compile_pyc:
+    - cwp.py
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - menuinst
+  requires:
+    - pip
+  commands:
+    - pip check
+    - menuinst --help
+
+about:
+  home: https://github.com/conda/menuinst
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.txt
+  summary: cross platform install of menu items
+  description: |
+    This application is used by Conda to create shortcuts on a wide variety of
+    systems.
+  dev_url: https://github.com/conda/menuinst
+  doc_url: https://github.com/conda/menuinst/wiki
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - jakirkham
+    - carlodri

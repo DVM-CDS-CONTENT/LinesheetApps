@@ -1,0 +1,24 @@
+{
+  "build": "py310haa95532_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "features": "",
+  "fn": "idna-3.4-py310haa95532_0.conda",
+  "legacy_bz2_md5": "407278e6cde931bab12b6b228233c12b",
+  "legacy_bz2_size": 116780,
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "1a432c58b06f9f5836a0bfa277a6daeb",
+  "name": "idna",
+  "sha256": "2c856a9fe1777d6ed2d465be5f45c623eaf73b67c0fbd5d3a781974b58984372",
+  "size": 99664,
+  "subdir": "win-64",
+  "timestamp": 1666125624542,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/idna-3.4-py310haa95532_0.conda",
+  "version": "3.4"
+}
