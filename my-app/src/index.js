@@ -77,14 +77,14 @@ const createWindow = () => {
   const url = `${server}/${productId}/releases`;
 
 
-  autoUpdater.setFeedURL({
-    url: url,
-    serverType: 'json',
-    provider: 'generic',
-    useMultipleRangeRequest: false
-  });
+  // autoUpdater.setFeedURL({
+  //   url: url,
+  //   serverType: 'json',
+  //   provider: 'generic',
+  //   useMultipleRangeRequest: false
+  // });
 
-  autoUpdater.checkForUpdatesAndNotify();
+  // autoUpdater.checkForUpdatesAndNotify();
 
 
   // //  autoUpdater.checkForUpdates();
@@ -97,48 +97,48 @@ const createWindow = () => {
   // }, 100000)
 
 
-  // Event listeners for auto-updater
-  autoUpdater.on('checking-for-update', function() {
-    webContents.executeJavaScript("console.log('Checking for updates...');");
-  });
+  // // Event listeners for auto-updater
+  // autoUpdater.on('checking-for-update', function() {
+  //   webContents.executeJavaScript("console.log('Checking for updates...');");
+  // });
 
-  autoUpdater.on('update-available', function(info) {
-    webContents.executeJavaScript("console.log('Update available:', '"+info.version+"');");
-  });
+  // autoUpdater.on('update-available', function(info) {
+  //   webContents.executeJavaScript("console.log('Update available:', '"+info.version+"');");
+  // });
 
 
-  autoUpdater.on('update-not-available', function() {
-    webContents.executeJavaScript("console.log('No updates available.');");
-  });
+  // autoUpdater.on('update-not-available', function() {
+  //   webContents.executeJavaScript("console.log('No updates available.');");
+  // });
 
-  autoUpdater.on('error', function(err) {
-    webContents.executeJavaScript("console.error('Error in auto-updater:, "+err+"');");
-  });
+  // autoUpdater.on('error', function(err) {
+  //   webContents.executeJavaScript("console.error('Error in auto-updater:, "+err+"');");
+  // });
 
-  autoUpdater.on('download-progress', function(progress) {
+  // autoUpdater.on('download-progress', function(progress) {
 
-    webContents.executeJavaScript("console.log('Download progress :',"+Math.floor(progress.percent)+",'% downloaded');");
-  });
+  //   webContents.executeJavaScript("console.log('Download progress :',"+Math.floor(progress.percent)+",'% downloaded');");
+  // });
 
   // autoUpdater.on('update-downloaded', function(info) {
   //   webContents.executeJavaScript("console.log('Update downloaded:', '"+info.version+"');");
   //   // Optionally, you can trigger the installation of the update here.
   // });
 
-  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail:
-      'A new version has been downloaded. Restart the application to apply the updates.',
-    }
+  // autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  //   const dialogOpts = {
+  //     type: 'info',
+  //     buttons: ['Restart', 'Later'],
+  //     title: 'Application Update',
+  //     message: process.platform === 'win32' ? releaseNotes : releaseName,
+  //     detail:
+  //     'A new version has been downloaded. Restart the application to apply the updates.',
+  //   }
 
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    })
-  });
+  //   dialog.showMessageBox(dialogOpts).then((returnValue) => {
+  //     if (returnValue.response === 0) autoUpdater.quitAndInstall()
+  //   })
+  // });
 
 
 }
