@@ -9,11 +9,11 @@ const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
 
 // Set the PYTHONHOME and PATH environment variables
 
-  process.env.PYTHONHOME = path.join(__dirname, '../../src/pythons');
-  process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
-
-  // process.env.PYTHONHOME = path.join(__dirname, 'python');
+  // process.env.PYTHONHOME = path.join(__dirname, '../../src/pythons');
   // process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
+
+  process.env.PYTHONHOME = path.join(__dirname, 'pythons');
+  process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 // const { autoUpdater, AppUpdater } = require("electron-updater");
 process.env.GITHUB_TOKEN = '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';
