@@ -291,7 +291,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
     family_setting = pd.read_csv(family_setting_query)
     # family_setting = attribute_original
-    family_setting = family_setting[['linesheet_code' ,'bath_body','fragrance','hair_care','personal_care','health_care','makeup','nails', 'nails_tools','makeup_tools','skincare','gadgets','auto__motorcycle_supplies', 'computers', 'television', 'console_gaming', 'desk_phone', 'mobile__tablets', 'gaming', 'fashion_accessory', 'watches', 'gift_card', 'hampers', 'small_appliances', 'fans__air_purifiers', 'home_equipment__supplies', 'large_appliances', 'tv_accessories', 'home_decoration', 'furniture', 'bedding', 'books', 'hobby', 'cooking_dining', 'grocery', 'stationery', 'pet_equipment__supplies', 'toolings', 'clothing', 'shoes', 'swimwear', 'underwear', 'baby_feeding', 'kids', 'toys', 'sports_accessory', 'sports_equipments', 'camping__equipments', 'luggages', 'travel_accessories']]
+    family_setting = family_setting[['linesheet_code', 'auto_motorcycle_supplies', 'baby_feeding', 'bath_body', 'bedding', 'books', 'camping_equipments', 'clothing', 'computers', 'console_gaming', 'cooking_dining', 'desk_phone', 'fans_air_purifiers', 'fashion_accessory', 'fragrance', 'furniture', 'gadgets', 'gaming', 'gift_card', 'groceries', 'hair_care', 'health_care', 'home_decoration', 'home_equipment_supplies', 'hobby', 'luggages', 'large_appliances', 'makeup', 'makeup_tools', 'mobile_tablets', 'nails', 'nails_tools', 'personal_care', 'pet_equipment_supplies', 'skincare', 'small_appliances', 'sports_accessory', 'sports_equipments', 'stationery', 'swimwear', 'television', 'toolings', 'toys', 'travel_accessories', 'underwear', 'watches']]
+
     family_setting = family_setting.fillna("")
     family_setting = family_setting.astype(str)
 
