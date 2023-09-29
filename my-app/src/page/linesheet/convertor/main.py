@@ -430,6 +430,7 @@ else:
     ws_template = move_positioning_template(ws_template)
 
     ws_model = ws_model.rename(columns={'catalogue_number_for_group': 'catalog_no'})
+    ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
 
 
     ws_template = ws_template.drop('family_variant', axis=1)

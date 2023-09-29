@@ -204,11 +204,8 @@ label.form-check-label{
             </small>
             <div class="row mt-3">
                 <div class="col-6">
-                    <div class="form-check form-switch m-2 mb-4">
-                        <input class="form-check-input" type="checkbox" role="switch" id="product_online">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Enable Product</label>
-                        <small class="form-check-label" for="flexSwitchCheckDefault">Set status of product as default</small>
-                    </div>
+
+
                     <!-- <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" type="checkbox" role="switch" id="allow_cc">
                         <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Allow CC</label>
@@ -293,6 +290,19 @@ label.form-check-label{
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="sheet_name" aria-label="Default select example" value="IM FORM">
+
+                        </div>
+                    </div>
+                    <div class="row ms-2 me-2 mt-3">
+                        <div class="col">
+                            <label class="form-check-label header w-100 fw-bold" for="flexSwitchCheckDefault">Enabled product</label>
+                            <small class=" w-100" for="flexSwitchCheckDefault">Select default status of product</small>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example" id="product_online">
+                                <option value="Enabled">Enabled</option>
+                                <option value="Disabled">Disabled</option>
+                            </select>
 
                         </div>
                     </div>
@@ -425,7 +435,7 @@ label.form-check-label{
         fs.writeFileSync(filePath, jsonString);
 
         //get data from elements
-        var product_online = document.getElementById("product_online").checked;
+        var product_online = document.getElementById("product_online").value;
         var enable_on_channel = document.getElementById("enable_on_channel").checked;
 
         // var allow_cc = document.getElementById("allow_cc").checked;

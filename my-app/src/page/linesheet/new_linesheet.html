@@ -188,6 +188,7 @@
                         configOptions.forEach(option => {
                             let optionList = '';
 
+                            // new PythonShell(path.join(__dirname, 'src/page/linesheet/config/new_linesheet_config.py'), { args: option.args })
                             new PythonShell(path.join(__dirname, '../../src/page/linesheet/config/new_linesheet_config.py'), { args: option.args })
                             // new PythonShell(`src/../../src/page/linesheet/config/new_linesheet_config.py`, { args: option.args })
                             .on('error', err => {
@@ -202,25 +203,34 @@
                                 optionList += message;
                                 if (optionList) {
                                     document.getElementById(option.id).innerHTML = optionList;
-                                    runSlimSelect(option.slim_id);
+
+                                        runSlimSelect(option.slim_id);
+
                                 }
                             });
                         });
+
+
                         function runSlimSelect(select_id) {
-                            new SlimSelect({
-                                select: select_id,
-                                settings: {
-                                    showSearch: true,
-                                    closeOnSelect: false,
-                                    allowDeselectOption: true,
-                                },
-                                events: {
-                                    afterChange: (newVal) => {
-                                        input = select_id.replace('_show', '');
-                                        document.querySelector(input).value = newVal.map(val => val.value).join(',');
+
+                                // Initialize Slim Select inside the modal's shown.bs.modal event handler
+                                new SlimSelect({
+                                    select: select_id,
+                                    settings: {
+                                        showSearch: true,
+                                        closeOnSelect: false,
+                                        allowDeselectOption: true,
+                                    },
+                                    events: {
+                                        afterChange: (newVal) => {
+                                            input = select_id.replace('_show', '');
+                                            document.querySelector(input).value = newVal.map(val => val.value).join(',');
+                                        }
                                     }
-                                }
-                            });
+                                });
+
+
+
                         }
                         function get_folder_linesheetlist(){
                             var folder_list_linesheetList=''
@@ -533,6 +543,12 @@ function removeFolder(folderPath) {
     }
   });
 }
+
+// $('#create_new_model').on('shown.bs.modal', function () {
+//     runSlimSelect("template_options");
+// });
+
+
 
 // Usage
 

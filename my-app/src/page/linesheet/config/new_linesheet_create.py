@@ -148,7 +148,7 @@ def add_dropdown(workbook, sheet_name, column, start_row, end_row, options):
     elif options =="class":
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(DEPT_SUBDEPT_MAPPING!$F$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-2)),DEPT_SUBDEPT_MAPPING!$F:$F,0)-1,2,COUNTIF(DEPT_SUBDEPT_MAPPING!$F:$F,@INDIRECT(ADDRESS(ROW(), COLUMN()-2))),1)", allow_blank=True)
     elif options =="sub_class":
-        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(DEPT_SUBDEPT_MAPPING!$H$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-2)),DEPT_SUBDEPT_MAPPING!$H:$H,0)-1,2,COUNTIF(DEPT_SUBDEPT_MAPPING!$H:$H,@INDIRECT(ADDRESS(ROW(), COLUMN()-2))),1)", allow_blank=True)
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(DEPT_SUBDEPT_MAPPING!$H$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-2)),DEPT_SUBDEPT_MAPPING!$H:$H,0)-1,2,COUNTIFs(DEPT_SUBDEPT_MAPPING!$H:$H,@INDIRECT(ADDRESS(ROW(), COLUMN()-2)),DEPT_SUBDEPT_MAPPING!$F:$F,@INDIRECT(ADDRESS(ROW(), COLUMN()-4))),1)", allow_blank=True)
     elif options =="size":
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(JDA_SIZE_MAPPING!$A$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-2)),JDA_SIZE_MAPPING!$A:$A,0)-1,1,COUNTIF(JDA_SIZE_MAPPING!$A:$A,@INDIRECT(ADDRESS(ROW(), COLUMN()-2))),1)", allow_blank=True)
     elif options =="color_group":
@@ -291,7 +291,34 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
     family_setting = pd.read_csv(family_setting_query)
     # family_setting = attribute_original
-    family_setting = family_setting[['linesheet_code', 'auto_motorcycle_supplies', 'baby_feeding', 'bath_body', 'bedding', 'books', 'camping_equipments', 'clothing', 'computers', 'console_gaming', 'cooking_dining', 'desk_phone', 'fans_air_purifiers', 'fashion_accessory', 'fragrance', 'furniture', 'gadgets', 'gaming', 'gift_card', 'groceries', 'hair_care', 'health_care', 'home_decoration', 'home_equipment_supplies', 'hobby', 'luggages', 'large_appliances', 'makeup', 'makeup_tools', 'mobile_tablets', 'nails', 'nails_tools', 'personal_care', 'pet_equipment_supplies', 'skincare', 'small_appliances', 'sports_accessory', 'sports_equipments', 'stationery', 'swimwear', 'television', 'toolings', 'toys', 'travel_accessories', 'underwear', 'watches']]
+    columns_to_drop = ['id',
+                        'information_type',
+                        'status',
+                        'enhancement',
+                        'specific_brand',
+                        'field_label',
+                        'field_type',
+                        'both_language',
+                        'scopable',
+                        'description',
+                        'tool_tips',
+                        'session',
+                        'sub_session',
+                        'merge_group',
+                        'sale_channel',
+                        'formula',
+                        'pim_code',
+                        'pim_code_hard_header',
+                        'convertor_function',
+                        'linesheet_code_unit',
+                        'label_desc_en',
+                        'label_desc_th',
+                        'value_desc_format',
+                        'sort_bullet_point',
+                        'grouping_common']
+
+    family_setting = family_setting.drop(columns_to_drop, axis=1)
+    # family_setting = family_setting[['linesheet_code', 'auto__motorcycle_supplies', 'baby_feeding', 'bath_body', 'bedding', 'books', 'camping_equipments', 'clothing', 'computers', 'console_gaming', 'cooking_dining', 'desk_phone', 'fans_air_purifiers', 'fashion_accessory', 'fragrance', 'furniture', 'gadgets', 'gaming', 'gift_card', 'groceries', 'hair_care', 'health_care', 'home_decoration', 'home_equipment_supplies', 'hobby', 'luggages', 'large_appliances', 'makeup', 'makeup_tools', 'mobile_tablets', 'nails', 'nails_tools', 'personal_care', 'pet_equipment_supplies', 'skincare', 'small_appliances', 'sports_accessory', 'sports_equipments', 'stationery', 'swimwear', 'television', 'toolings', 'toys', 'travel_accessories', 'underwear', 'watches']]
 
     family_setting = family_setting.fillna("")
     family_setting = family_setting.astype(str)
@@ -588,7 +615,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
         if formula[col-1]!=""  and formula[col-1]!=None:
            add_formula(workbook,'IM_FORM', col, 13, int(sku)+13, formula[col-1])
 
-####### convert to number
+####### convert to number/ text
 
     for sheet_name in workbook.sheetnames:
         sheet = workbook[sheet_name]
@@ -596,8 +623,38 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
             for cell in column:
                 try:
                     cell.value = float(cell.value)
+                    # cell.value = str(cell.value)
                 except (ValueError, TypeError):
                     pass
+
+        # Iterate through all cells in the sheet and set their value as text (str)
+        if sheet_name == 'IM_FORM':
+            sheet = workbook[sheet_name]
+            target_column_name = 'size_range'  # Replace with the name of the specific column you want to format as text
+
+            # Find the index of the target column by searching for the column name in row 1
+            target_column_index = None
+            for cell in sheet[1]:
+                if cell.value == target_column_name:
+                    target_column_index = cell.column
+
+            if target_column_index:
+                for row in sheet.iter_rows(min_row=2):
+                    cell = row[target_column_index - 1]  # Adjust the index to 0-based
+                    if cell.value is None:
+                        cell.value = ''  # Replace None with an empty string
+                    try:
+                        cell.number_format = '@'  # Set the cell format to text
+                    except (ValueError, TypeError):
+                        pass
+
+
+####### make everything as string
+# Check if the sheet exists in the workbook
+
+
+
+
 
 ####### create condition formatting for color
 
