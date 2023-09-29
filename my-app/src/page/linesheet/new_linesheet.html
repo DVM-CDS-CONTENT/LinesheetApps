@@ -369,7 +369,6 @@
                             jsonData.filter(row => row['ibc'] !== '');
                             // Find the columns to delete
                             var columnsToDelete = Object.keys(jsonData[0]).filter(key => key.startsWith('__EMPTY'));
-
                             return jsonData;
                         }
                         function read_json_xlsm(filePath) {
