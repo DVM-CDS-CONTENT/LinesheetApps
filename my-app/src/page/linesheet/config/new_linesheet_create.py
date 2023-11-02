@@ -155,6 +155,14 @@ def add_dropdown(workbook, sheet_name, column, start_row, end_row, options):
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,1,0,COUNTA(COLOR_MAPPING!$C:$C)-1,1)", allow_blank=True)
     elif options =="color_shade":
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
+    elif options =="color_group_dial":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,1,0,COUNTA(COLOR_MAPPING!$C:$C)-1,1)", allow_blank=True)
+    elif options =="color_shade_dial":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
+    elif options =="color_group_band":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,1,0,COUNTA(COLOR_MAPPING!$C:$C)-1,1)", allow_blank=True)
+    elif options =="color_shade_band":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
     else:
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+options, allow_blank=True)
     # Add the DataValidation object to the sheet
@@ -243,7 +251,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # attribute = pd.read_sql_query(query, engine)
     # attribute = attribute.drop_duplicates(subset=['linesheet_code'])
 
-    attribute_setting = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    attribute_setting = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1407377747')
     attribute = pd.read_csv(attribute_setting)
     attribute = attribute[attribute['status']=='Actived']
     attribute_original=attribute
@@ -265,7 +273,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # attribute_options = attribute_options[['linesheet_code','input_option']]
     # attribute_options = attribute_options.drop_duplicates()
 
-    attribute_options_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    attribute_options_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1335398590')
     attribute_options = pd.read_csv(attribute_options_query)
     attribute_options["code_lookup"] = attribute_options['linesheet_code']+attribute_options['input_option']
     attribute_options["label_lookup"] = attribute_options['linesheet_code']+attribute_options['option_en']
@@ -277,18 +285,18 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # - get categories
     # query = "SELECT label_th FROM im_form.categories_setting where deepen_level = 1 and family in ('"+filter_template_cat_sql +"')"
     # categories_setting = pd.read_sql_query(query, engine)
-    categories_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
+    categories_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1850526451')
     categories_setting = pd.read_csv(categories_setting_query)
     categories_setting=categories_setting[categories_setting['family'].isin(selected_template_list)]
     categories_setting=categories_setting[categories_setting['deepen_level']==1]
-    categories_setting=categories_setting[['label_th']]
+    categories_setting=categories_setting[['label_en']]
     categories_setting = categories_setting.fillna("")
 
     # - get categories family template
     # query = "SELECT linesheet_code ,bath_body, fragrance, hair_care, personal_care, health_care, makeup, nails, nails_tools, makeup_tools, skincare, gadgets, auto__motorcycle_supplies, computers, television, console_gaming, desk_phone, mobile__tablets, gaming, fashion_accessory, watches, gift_card, hampers, small_appliances, fans__air_purifiers, home_equipment__supplies, large_appliances, tv_accessories, home_decoration, furniture, bedding, books, hobby, cooking_dining, grocery, stationery, pet_equipment__supplies, toolings, clothing, shoes, swimwear, underwear, baby_feeding, kids, toys, sports_accessory, sports_equipments, camping__equipments, luggages, travel_accessories FROM im_form.attribute_setting;"
     # family_setting= pd.read_sql_query(query, engine)
 
-    family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1407377747')
     family_setting = pd.read_csv(family_setting_query)
     # family_setting = attribute_original
     columns_to_drop = ['id',
@@ -328,33 +336,33 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # categories_family_setting= pd.read_sql_query(query, engine)
 
 
-    categories_family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
+    categories_family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1850526451')
     categories_family_setting = pd.read_csv(categories_family_setting_query)
     categories_family_setting = categories_family_setting[categories_family_setting['deepen_level']==1]
-    categories_family_setting = categories_family_setting[['label_th','family']]
+    categories_family_setting = categories_family_setting[['label_en','family']]
     categories_family_setting = categories_family_setting.fillna("")
 
 
     # - get dept_subdept
     # query = "SELECT * FROM im_form.dept_subdept_mapping;"
     # dept_subdept_mapping = pd.read_sql_query(query, engine)
-    dept_subdept_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=134541435')
+    dept_subdept_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=134541435')
     dept_subdept_mapping = pd.read_csv(dept_subdept_mapping_query)
     dept_subdept_mapping=dept_subdept_mapping.fillna("None")
 
-    jda_size_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit?pli=1#gid=62908308')
+    jda_size_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=62908308')
     jda_size_mapping = pd.read_csv(jda_size_mapping_query)
     jda_size_mapping = jda_size_mapping.fillna("None")
 
 
-    color_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=542155325')
+    color_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=542155325')
     color_mapping = pd.read_csv(color_mapping_query)
     color_mapping = color_mapping.fillna("None")
 
     # - Merge categories to options
     categories_setting['linesheet_code'] = 'online_categories'
     # - Rename the column headers
-    categories_setting = categories_setting.rename(columns={'label_th': 'input_option'})
+    categories_setting = categories_setting.rename(columns={'label_en': 'input_option'})
     attribute_options = pd.concat([attribute_options, categories_setting], axis=0)
 
     # - Close the connection
@@ -484,7 +492,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # Reset index and rename index column
     templates_df = templates_df.reset_index().rename(columns={'index': 'family'})
     categories_family_mapping = pd.merge(categories_family_setting, templates_df, on='family', how='left')
-    categories_family_mapping.rename(columns={'label_th': 'categories'}, inplace=True)
+    categories_family_mapping.rename(columns={'label_en': 'categories'}, inplace=True)
 
     for r in dataframe_to_rows(categories_family_mapping, index=False, header=True):
         ws_family_template.append(r)
@@ -647,6 +655,102 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
                         cell.number_format = '@'  # Set the cell format to text
                     except (ValueError, TypeError):
                         pass
+
+
+    # for sheet_name in workbook.sheetnames:
+    #     sheet = workbook[sheet_name]
+    #     for column in sheet.iter_cols(min_row=2):
+    #         for cell in column:
+    #             try:
+    #                 cell.value = str(cell.value) if cell.value is not None else ''  # Convert None to an empty string
+    #             except (ValueError, TypeError):
+    #                 pass
+
+    #     # Iterate through all cells in the sheet and set their value as text (str)
+    #     if sheet_name == 'IM_FORM':
+    #         sheet = workbook[sheet_name]
+    #         target_columns = ['size_range', 'pop_grade', 'season_code_value']  # Add the names of the specific columns you want to format as text
+
+    #         # Find the indices of the target columns by searching for the column names in row 1
+    #         target_column_indices = {}
+    #         for cell in sheet[1]:
+    #             if cell.value in target_columns:
+    #                 target_column_indices[cell.value] = cell.column
+
+    #         for target_column_name, target_column_index in target_column_indices.items():
+    #             if target_column_index:
+    #                 for row in sheet.iter_rows(min_row=2):
+    #                     cell = row[target_column_index - 1]  # Adjust the index to 0-based
+    #                     cell.value = cell.value if cell.value is not None else ''  # Replace None with an empty string
+    #                     try:
+    #                         cell.number_format = '@'  # Set the cell format to text
+    #                     except (ValueError, TypeError):
+    #                         pass
+
+
+
+
+    # for sheet_name in workbook.sheetnames:
+    #     sheet = workbook[sheet_name]
+    #     for column in sheet.iter_cols(min_row=2):
+    #         for cell in column:
+    #             try:
+    #                 cell.value = str(cell.value) if cell.value is not None else ''  # Convert None to an empty string
+    #             except (ValueError, TypeError):
+    #                 pass
+
+    #     # Iterate through all cells in the sheet and set their value as text (str)
+    #     if sheet_name == 'IM_FORM':
+    #         sheet = workbook[sheet_name]
+    #         target_columns = ['size_range', 'pop_grade', 'season_code_value', 'size_description']  # Add the names of the specific columns you want to format as text
+
+    #         # Find the indices of the target columns by searching for the column names in row 1
+    #         target_column_indices = {}
+    #         for cell in sheet[1]:
+    #             if cell.value in target_columns:
+    #                 target_column_indices[cell.value] = cell.column
+
+    #         for target_column_name, target_column_index in target_column_indices.items():
+    #             if target_column_index:
+    #                 for row in sheet.iter_rows(min_row=2):
+    #                     cell = row[target_column_index - 1]  # Adjust the index to 0-based
+    #                     cell.value = cell.value if cell.value is not None else ''  # Replace None with an empty string
+    #                     try:
+    #                         cell.number_format = '@'  # Set the cell format to text
+    #                     except (ValueError, TypeError):
+    #                         pass
+
+
+    # for sheet_name in workbook.sheetnames:
+    #     sheet = workbook[sheet_name]
+    #     for column in sheet.iter_cols(min_row=2):
+    #         for cell in column:
+    #             try:
+    #                 cell.value = str(cell.value) if cell.value is not None else ''  # Convert None to an empty string
+    #             except (ValueError, TypeError):
+    #                 pass
+
+    #     # Iterate through all cells in the sheet and set their value as text (str)
+    #     if sheet_name == 'IM_FORM':
+    #         sheet = workbook[sheet_name]
+    #         target_columns = ['size_range', 'pop_grade', 'season_code_value', 'size_description', 'dept_name']  # Add the names of the specific columns you want to format as text
+
+    #         # Find the indices of the target columns by searching for the column names in row 1
+    #         target_column_indices = {}
+    #         for cell in sheet[1]:
+    #             if cell.value in target_columns:
+    #                 target_column_indices[cell.value] = cell.column
+
+    #         for target_column_name, target_column_index in target_column_indices.items():
+    #             if target_column_index:
+    #                 for row in sheet.iter_rows(min_row=2):
+    #                     cell = row[target_column_index - 1]  # Adjust the index to 0-based
+    #                     cell.value = cell.value if cell.value is not None else ''  # Replace None with an empty string
+    #                     try:
+    #                         cell.number_format = '@'  # Set the cell format to text
+    #                     except (ValueError, TypeError):
+    #                         pass
+
 
 
 ####### make everything as string

@@ -851,7 +851,7 @@
         get_categories_mapping_table((results) => {
             // Use the results here or assign them to a variable
             var table_categories_mapping = results;
-            const matchingFamily = Object.values(table_categories_mapping).find(item => item.label_th === categories_label);
+            const matchingFamily = Object.values(table_categories_mapping).find(item => item.label_en === categories_label);
             // console.log(matchingFamily?.['family'])
             if (matchingFamily) {
                 family =  matchingFamily?.['family'];

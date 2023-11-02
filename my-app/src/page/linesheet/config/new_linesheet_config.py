@@ -27,7 +27,7 @@ def get_family():
     # query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
     # attribute = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1407377747')
     attribute = pd.read_csv(url)
 
     columns = attribute.columns.tolist()
@@ -50,7 +50,7 @@ def get_input(attribute, type):
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1335398590')
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -105,7 +105,7 @@ def get_multi_select_input_two_grid(attribute, input_type,default_option_str,row
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1335398590')
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -156,7 +156,7 @@ def get_single_select_input_two_grid(attribute, input_type,default_option_str,ro
     # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1335398590')
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -199,7 +199,7 @@ def get_family_input_two_grid(attribute, input_type,default_option_str,row):
     # query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
     # attribute_fam = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1407377747')
     attribute_fam = pd.read_csv(url)
 
     columns = attribute_fam.columns.tolist()
@@ -235,7 +235,7 @@ def get_single_select_input_cell_by_cell_two_grid(attribute, input_type,default_
     # # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     # query = f'SELECT input_option FROM u749625779_cdscontent.pim_attr_convert_option_lu where  linesheet_code =  "{attribute}"'
     # attribute_option = pd.read_sql(query, engine)
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1335398590')
     attribute_option = pd.read_csv(url)
 
 

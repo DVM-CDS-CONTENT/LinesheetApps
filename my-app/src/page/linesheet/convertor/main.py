@@ -166,7 +166,7 @@ configurable_ao_fame = pd.concat([query_configurable_ao, cloned_df_ao], ignore_i
 query = 'SELECT linesheet_code,input_option,option_code,option_th,option_en FROM u749625779_cdscontent.pim_attr_convert_option_lu'
 mapping_option_value = pd.read_sql(query, cnx)
 
-query = 'SELECT label_th, full_categories_code , family , size_value_template , product_name_template_th  ,product_name_template_en,description_block_template FROM im_form.categories_setting;'
+query = 'SELECT label_en, full_categories_code , family , size_value_template , product_name_template_th  ,product_name_template_en,description_block_template FROM im_form.categories_setting;'
 categories_mapping = pd.read_sql(query, cnx)
 
 query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where one_hr  = "Yes";'
