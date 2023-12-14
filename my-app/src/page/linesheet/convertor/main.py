@@ -136,7 +136,6 @@ cloned_df_ao['linesheet_code_with_local'] = cloned_df_ao['linesheet_code']
 
 
 # add localable
-
 query_configurable_ao.loc[query_configurable_ao['both_language']==1,'linesheet_code_with_local']= query_configurable_ao['linesheet_code']+en_identity_linesheet
 cloned_df_ao.loc[cloned_df_ao['both_language']==1,'linesheet_code_with_local']= cloned_df_ao['linesheet_code']+th_identity_linesheet
 
@@ -144,13 +143,10 @@ query_configurable_ao.loc[query_configurable_ao['both_language']==1,'pim_code']=
 cloned_df_ao.loc[cloned_df_ao['both_language']==1,'pim_code']= cloned_df_ao['pim_code']+th_identity
 
 # add scopable
-
-
 query_configurable_ao.loc[query_configurable_ao['scopable']==1,'pim_code']= query_configurable_ao['pim_code']+channel
 cloned_df_ao.loc[cloned_df_ao['scopable']==1,'pim_code']= cloned_df_ao['pim_code']+channel
 
 # hard_code_column name
-
 query_configurable_ao.loc[query_configurable_ao['pim_code_hard_header'].notnull(),'pim_code']= query_configurable_ao['pim_code_hard_header']
 cloned_df_ao.loc[cloned_df_ao['pim_code_hard_header'].notnull(),'pim_code']= cloned_df_ao['pim_code_hard_header']
 

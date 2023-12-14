@@ -5,6 +5,10 @@ from sqlalchemy import create_engine
 import pandas as pd
 import re
 
+
+
+
+
 # This function will convert the url to a download link
 def convert_gsheets_url(u):
     try:
@@ -19,6 +23,19 @@ def convert_gsheets_url(u):
         u += '&gid={}'.format(worksheet_id)
     return u
 
+index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1370721427"
+url = convert_gsheets_url(index_source)
+index = pd.read_csv(url)
+
+attribute_setting_url = index[index['sheet_name'] == 'attribute_setting']['url'].values[0]
+attribute_option_url = index[index['sheet_name'] == 'attribute_option']['url'].values[0]
+categories_mapping_urlt = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
+shipping_mapping_url = index[index['sheet_name'] == 'shipping_mapping']['url'].values[0]
+color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[0]
+dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
+jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
+datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
+
 
 def get_family():
 
@@ -27,7 +44,7 @@ def get_family():
     # query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
     # attribute = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    url = convert_gsheets_url(attribute_setting_url)
     attribute = pd.read_csv(url)
 
     columns = attribute.columns.tolist()
@@ -50,7 +67,7 @@ def get_input(attribute, type):
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url(attribute_option_url)
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -105,7 +122,7 @@ def get_multi_select_input_two_grid(attribute, input_type,default_option_str,row
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url(attribute_option_url)
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -156,7 +173,7 @@ def get_single_select_input_two_grid(attribute, input_type,default_option_str,ro
     # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     # query = f'SELECT * FROM u749625779_cdscontent.job_attribute_option where attribute_table="add_new_job" and attribute_code = "{attribute}"'
     # input_value = pd.read_sql(query, engine)
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url(attribute_option_url)
     input_value = pd.read_csv(url)
 
     input_value = input_value[input_value['linesheet_code']==attribute]
@@ -199,7 +216,7 @@ def get_family_input_two_grid(attribute, input_type,default_option_str,row):
     # query = 'SELECT * FROM im_form.attribute_setting order by session,sub_session,id'
     # attribute_fam = pd.read_sql(query, engine)
 
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    url = convert_gsheets_url(attribute_setting_url)
     attribute_fam = pd.read_csv(url)
 
     columns = attribute_fam.columns.tolist()
@@ -235,7 +252,7 @@ def get_single_select_input_cell_by_cell_two_grid(attribute, input_type,default_
     # # cnx = mysql.connector.connect(user='data_studio', password='a417528639', host='156.67.217.3', database='im_form')
     # query = f'SELECT input_option FROM u749625779_cdscontent.pim_attr_convert_option_lu where  linesheet_code =  "{attribute}"'
     # attribute_option = pd.read_sql(query, engine)
-    url = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
+    url = convert_gsheets_url(attribute_option_url)
     attribute_option = pd.read_csv(url)
 
 
