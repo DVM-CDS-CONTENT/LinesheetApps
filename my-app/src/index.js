@@ -10,10 +10,10 @@ const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
 // Set the PYTHONHOME and PATH environment variables
 
   process.env.PYTHONHOME = path.join(__dirname, '../../src/pythons');
-  process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
+  // process.env.PYTHONHOME = path.join(__dirname, 'pythons');
 
-  // process.env.PYTHONHOME = path.join(__dirname, 'python');
   // process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
+  process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 // const { autoUpdater, AppUpdater } = require("electron-updater");
 process.env.GITHUB_TOKEN = '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';
@@ -178,13 +178,13 @@ app.on('ready', async  () => {
         console.error(`Error reading file ${fileFullPath}`, err);
         return;
       }
-      if(filePath=='page/nav/welcome_nav.html'){
+      if(filePath=='page/nav/internal_nav.html'){
         event.sender.send('nav-loaded', data);
       }
       if(filePath=='page/installer_py.html'){
         event.sender.send('page-loaded', data);
       }
-      if(filePath=='page/prompt_role.html'){
+      if(filePath=='page/welcome/partner_welcome.html'){
         event.sender.send('page-loaded', data);
       }
       if(filePath=='page/footers.html'){

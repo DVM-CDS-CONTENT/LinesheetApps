@@ -6,7 +6,7 @@ folder_list = [f for f in os.listdir(folder_path) if os.path.isdir(os.path.join(
 
 i = 0
 for asset in folder_list :
-    if asset!='out' and asset!='src' and asset!='node_modules':
+    if asset!='out' and asset!='src' and asset!='node_modules' and asset!='locales' and asset!='resources':
         i = i + 1
 
         folder_path_os = os.path.abspath(asset)

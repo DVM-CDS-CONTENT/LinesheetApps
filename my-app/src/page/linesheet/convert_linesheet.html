@@ -129,15 +129,15 @@ label.form-check-label{
 
 </style>
 
-<!--
+
 <div id="nav_choose_file">
     <div class="nav_input">
         <div class="box_input p-3 shadow-sm border-bottom bg-white">
-            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="handleFileChange()"/>
+            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="uploadfilelinesheettoconvert()"/>
         </div>
     </div>
 
-</div> -->
+</div>
 <div class="row h-100">
     <div class="col-7 border-end">
         <div class="bg-canvas ps-5 ">
@@ -166,32 +166,32 @@ label.form-check-label{
             <div class="mt-3 row ps-2" style="height: 60px;">
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix"  class="form-label">Prefix</label>
+                    <label for="parent_prefix"  class="form-label">Prefix</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_prefix" value="GR">
                 </div>
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix" class="form-label">BU</label>
+                    <label for="parent_bu" class="form-label">BU</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_bu" value="CDS">
                 </div>
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix" class="form-label">User ID</label>
+                    <label for="parent_us_id" class="form-label">User ID</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_us_id">
                 </div>
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix" class="form-label">Year</label>
+                    <label for="parent_year" class="form-label">Year</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_year">
                 </div>
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix" class="form-label">Month</label>
+                    <label for="parent_month" class="form-label">Month</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_month">
                 </div>
 
                 <div class="col-input-parent-convert">
-                    <label for="prefix" class="form-label">Running</label>
+                    <label for="parent_running" class="form-label">Running</label>
                     <input type="text" onchange="summary_parent_sku_range()" class="input-parent-convert" id="parent_running">
                 </div>
             </div>
@@ -219,7 +219,7 @@ label.form-check-label{
                     </div> -->
                     <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" checked type="checkbox" role="switch" id="new">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">New</label>
+                        <label class="form-check-label header fw-bold" for="new">New</label>
                         <small class="form-check-label" for="flexSwitchCheckDefault">Mark product is new, new badge will show on product card PLP and PDP</small>
                     </div>
                     <!-- <div class="form-check form-switch m-2 mb-4">
@@ -230,23 +230,23 @@ label.form-check-label{
                     </div> -->
                     <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" type="checkbox" role="switch" id="allow_installment">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Allow installment</label>
+                        <label class="form-check-label header fw-bold" for="allow_installment">Allow installment</label>
                         <small class="form-check-label" for="flexSwitchCheckDefault">Allow product to show installment badge</small>
 
                     </div>
                     <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" checked type="checkbox" role="switch" id="enable_on_channel">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Enabled on Chanel CDS </label>
+                        <label class="form-check-label header fw-bold" for="enable_on_channel">Enabled on Chanel CDS </label>
                         <small class="form-check-label" for="flexSwitchCheckDefault">Set status enabled on channel of product default as enabled on CDS</small>
                     </div>
                     <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" checked type="checkbox" role="switch" id="can_return">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Can Return</label>
+                        <label class="form-check-label header fw-bold" for="can_return">Can Return</label>
                         <small class="form-check-label" for="flexSwitchCheckDefault">Allow product to return after sale</small>
                     </div>
                     <div class="form-check form-switch m-2 mb-4">
                         <input class="form-check-input" checked type="checkbox" role="switch" id="can_exchange">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Can Exchange</label>
+                        <label class="form-check-label header fw-bold" for="can_exchange">Can Exchange</label>
                         <small class="form-check-label" for="flexSwitchCheckDefault">Allow product to exchange after sale</small>
                         <small class="form-check-label warning" for="flexSwitchCheckDefault"><ion-icon name="warning-outline"></ion-icon>Except MKP prduct</small>
                     </div>
@@ -388,6 +388,11 @@ label.form-check-label{
     function revealFileInExplorer(filePath) {
     var url = 'file://' + filePath;
     window.open(url, '_blank');
+    }
+
+    function uploadfilelinesheettoconvert(){
+        var filePaths = Array.from(document.getElementById('linesheet_input').files).map(file => URL.createObjectURL(file));
+        sessionStorage.setItem('linesheet_file_path', filePath);
     }
 
     function handleFileChange() {

@@ -29,7 +29,7 @@ index = pd.read_csv(url)
 
 attribute_setting_url = index[index['sheet_name'] == 'attribute_setting']['url'].values[0]
 attribute_option_url = index[index['sheet_name'] == 'attribute_option']['url'].values[0]
-categories_mapping_urlt = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
+categories_mapping_url = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
 shipping_mapping_url = index[index['sheet_name'] == 'shipping_mapping']['url'].values[0]
 color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[0]
 dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]

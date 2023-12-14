@@ -243,9 +243,27 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # attribute = pd.read_sql_query(query, engine)
     # attribute = attribute.drop_duplicates(subset=['linesheet_code'])
 
-    attribute_setting = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
-    attribute = pd.read_csv(attribute_setting)
+    #get source of mapping
+    #UAT
+    index_source = "https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1054033513"
+    # #PROD
+    # index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1370721427"
+    url = convert_gsheets_url(index_source)
+    index = pd.read_csv(url)
+
+    attribute_setting_url = index[index['sheet_name'] == 'attribute_setting']['url'].values[0]
+    attribute_option_url = index[index['sheet_name'] == 'attribute_option']['url'].values[0]
+    categories_mapping_url = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
+    shipping_mapping_url = index[index['sheet_name'] == 'shipping_mapping']['url'].values[0]
+    color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[0]
+    dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
+    jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
+    datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
+
+    attribute_setting = convert_gsheets_url(attribute_setting_url)
+    attribute = pd.read_csv(attribute_setting, dtype='str')
     attribute = attribute[attribute['status']=='Actived']
+    attribute = attribute.fillna("")
     attribute_original=attribute
 
     attribute['sale_channel'] = attribute['sale_channel'].str.split(',')
@@ -265,8 +283,9 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # attribute_options = attribute_options[['linesheet_code','input_option']]
     # attribute_options = attribute_options.drop_duplicates()
 
-    attribute_options_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
-    attribute_options = pd.read_csv(attribute_options_query)
+    attribute_options_query = convert_gsheets_url(attribute_option_url)
+    attribute_options = pd.read_csv(attribute_options_query, dtype='str')
+    attribute_options = attribute_options.fillna("")
     attribute_options["code_lookup"] = attribute_options['linesheet_code']+attribute_options['input_option']
     attribute_options["label_lookup"] = attribute_options['linesheet_code']+attribute_options['option_en']
     lookup_sheet = attribute_options[['linesheet_code','code_lookup','label_lookup','input_option','option_en']]
@@ -277,8 +296,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # - get categories
     # query = "SELECT label_th FROM im_form.categories_setting where deepen_level = 1 and family in ('"+filter_template_cat_sql +"')"
     # categories_setting = pd.read_sql_query(query, engine)
-    categories_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
-    categories_setting = pd.read_csv(categories_setting_query)
+    categories_setting_query = convert_gsheets_url(categories_mapping_url)
+    categories_setting = pd.read_csv(categories_setting_query, dtype='str')
     categories_setting=categories_setting[categories_setting['family'].isin(selected_template_list)]
     categories_setting=categories_setting[categories_setting['deepen_level']==1]
     categories_setting=categories_setting[['label_th']]
@@ -288,8 +307,9 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # query = "SELECT linesheet_code ,bath_body, fragrance, hair_care, personal_care, health_care, makeup, nails, nails_tools, makeup_tools, skincare, gadgets, auto__motorcycle_supplies, computers, television, console_gaming, desk_phone, mobile__tablets, gaming, fashion_accessory, watches, gift_card, hampers, small_appliances, fans__air_purifiers, home_equipment__supplies, large_appliances, tv_accessories, home_decoration, furniture, bedding, books, hobby, cooking_dining, grocery, stationery, pet_equipment__supplies, toolings, clothing, shoes, swimwear, underwear, baby_feeding, kids, toys, sports_accessory, sports_equipments, camping__equipments, luggages, travel_accessories FROM im_form.attribute_setting;"
     # family_setting= pd.read_sql_query(query, engine)
 
-    family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
-    family_setting = pd.read_csv(family_setting_query)
+    family_setting_query = convert_gsheets_url(attribute_setting_url)
+    family_setting = pd.read_csv(family_setting_query , dtype='str')
+    family_setting = family_setting.fillna("")
     # family_setting = attribute_original
     columns_to_drop = ['id',
                         'information_type',
@@ -328,8 +348,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # categories_family_setting= pd.read_sql_query(query, engine)
 
 
-    categories_family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
-    categories_family_setting = pd.read_csv(categories_family_setting_query)
+    categories_family_setting_query = convert_gsheets_url(categories_mapping_url)
+    categories_family_setting = pd.read_csv(categories_family_setting_query, dtype='str')
     categories_family_setting = categories_family_setting[categories_family_setting['deepen_level']==1]
     categories_family_setting = categories_family_setting[['label_th','family']]
     categories_family_setting = categories_family_setting.fillna("")
@@ -338,17 +358,17 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # - get dept_subdept
     # query = "SELECT * FROM im_form.dept_subdept_mapping;"
     # dept_subdept_mapping = pd.read_sql_query(query, engine)
-    dept_subdept_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=134541435')
-    dept_subdept_mapping = pd.read_csv(dept_subdept_mapping_query)
+    dept_subdept_mapping_query = convert_gsheets_url(dept_subdept_mappping_url)
+    dept_subdept_mapping = pd.read_csv(dept_subdept_mapping_query, dtype='str')
     dept_subdept_mapping=dept_subdept_mapping.fillna("None")
 
-    jda_size_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit?pli=1#gid=62908308')
-    jda_size_mapping = pd.read_csv(jda_size_mapping_query)
+    jda_size_mapping_query = convert_gsheets_url(jda_size_mapping_url)
+    jda_size_mapping = pd.read_csv(jda_size_mapping_query, dtype='str')
     jda_size_mapping = jda_size_mapping.fillna("None")
 
 
-    color_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=542155325')
-    color_mapping = pd.read_csv(color_mapping_query)
+    color_mapping_query = convert_gsheets_url(color_mapping_url)
+    color_mapping = pd.read_csv(color_mapping_query, dtype='str')
     color_mapping = color_mapping.fillna("None")
 
     # - Merge categories to options

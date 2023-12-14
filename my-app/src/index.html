@@ -52,12 +52,12 @@
     const $ = require('jquery');
 
     $(function(){
-      ipcRenderer.send('load-file', 'page/nav/welcome_nav.html');
+      ipcRenderer.send('load-file', 'page/nav/internal_nav.html');
       ipcRenderer.on('nav-loaded', (event, data) => {
         $('#nav').html(data);
       });
 
-      ipcRenderer.send('load-file', 'page/prompt_role.html');
+      ipcRenderer.send('load-file', 'page/welcome/partner_welcome.html');
       // ipcRenderer.send('load-file', 'page/installer_py.html');
       ipcRenderer.on('page-loaded', (event, data) => {
         $('#page').html(data);
