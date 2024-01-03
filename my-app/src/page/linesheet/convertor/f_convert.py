@@ -13,6 +13,10 @@ def boolean_convertor(linesheet,linesheet_code,my_dict):
         return boolean_yes
     elif linesheet[linesheet_code].strip()=='No':
         return boolean_no
+    elif linesheet[linesheet_code].strip()=='ใช้':
+        return boolean_no
+    elif linesheet[linesheet_code].strip()=='ไม่':
+        return boolean_no
     elif linesheet[linesheet_code].strip()=='':
         return ''
     else:
