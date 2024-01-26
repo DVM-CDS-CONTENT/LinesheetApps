@@ -1,0 +1,199 @@
+<style>
+    @font-face {
+        font-family: 'CPNRegular';
+        src: url('./font/CPN-Regular.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBold';
+        src: url('./font/CPN-Bold.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBoldCondensed';
+        src: url('./font/CPN-BoldCondensed.ttf');
+    }
+    /* .SizeGuideFrameDiv body{
+        font-family: 'CPNBold';
+        text-align: -webkit-center;
+        margin-top: 10%;
+    } */
+    .SizeGuideFrameDiv {
+        background: white;
+    }
+    .SizeGuideFrameDiv .chart_name{
+        font-family: 'CPNBoldCondensed';
+        font-weight: 500;
+        font-size: 17.5pt;
+        text-align: center;
+    }
+    .SizeGuideFrameDiv table{
+        border-collapse: collapse;
+    margin-top: 20px;
+    width: initial;
+    margin: 16px;
+    min-height: 443px;
+    }
+    /* thead{
+        border-bottom:5px solid #343434;
+        border-top:5px solid #343434;
+    } */
+    .SizeGuideFrameDiv thead{
+        font-family: 'CPNBoldCondensed';
+    }
+    .SizeGuideFrameDiv .line_header_bottom{
+        height:15px;
+        border-bottom: #343434 solid 3.5px;
+    }
+    .SizeGuideFrameDiv .line_header_top{
+        height:15px;
+        border-top: #343434 solid 3.5px;
+    }
+
+    .SizeGuideFrameDiv .line_bottom{
+        height:14.2px;
+        border-top: #343434 solid 14.2px;
+    }
+    .SizeGuideFrameDiv .border_header{
+        height: 90%;
+        border-left: 0.5pt #343434 solid;
+        /* padding:10px 25px; */
+        line-height: 15px;
+        overflow-wrap: anywhere;
+    }
+    .SizeGuideFrameDiv .border_header_start{
+        height: 90%;
+        /* padding:0px 30px; */
+        /* overflow-wrap: anywhere; */
+        line-height: 15px;
+        /* min-width: 120px */
+    }
+    .SizeGuideFrameDiv tr td{
+        padding:10px;
+        border-bottom:1px solid #343434;
+        text-align-last: center;
+        font-size: 13pt;
+        font-family: 'CPNRegular';
+        height: 36.5px;
+    }
+    .SizeGuideFrameDiv tr th{
+        padding:10px;
+        text-align-last: center;
+        height: 20px;
+        font-size: 9pt;
+    }
+    .SizeGuideFrameDiv .col{
+        font-family: 'CPNBold';
+        font-size: 12pt;
+    }
+    .SizeGuideFrameDiv .input_size{
+        width: 100%;
+        height: 100%;
+        border: 0px;
+        font-family: 'CPNRegular';
+        font-size: 13pt;
+        background: transparent;
+        min-height: 60px;
+    }
+    .SizeGuideFrameDiv .input_size_bold{
+        width: 100%;
+        height: 100%;
+        border: 0px;
+        font-family: 'CPNBold';
+        font-size: 13pt;
+        background: transparent;
+        min-height: 60px;
+    }
+
+
+    .SizeGuideFrameDiv .unit{
+        position: absolute;
+        font-size: 5pt;
+        align-self: center;
+        font-family: 'CPNBold';
+        z-index: 1;
+        margin-top: -15px;
+        margin-left: 8px;
+        width: fit-content;
+    }
+    .SizeGuideFrameDiv .unit_bt {
+        position: static;
+        font-size: 5pt;
+        align-self: center;
+        font-family: 'CPNBold';
+        margin-top: 0%;
+        top: 10px!important;
+        padding: 0px;
+        display: block;
+        height: 0px;
+    }
+
+    .SizeGuideFrameDiv .container{
+        text-align: -webkit-center;
+        width: 443px;
+        background: white;
+    }
+    .SizeGuideFrameDiv .small, small {
+    font-size: .575em;
+    color: #adb5bd;
+}
+.SizeGuideFrameDiv .input_first_column{
+    width: 100%;
+    border: 0px;
+
+}
+
+</style>
+
+<div class="SizeGuideFrameDiv">
+<div class="container">
+    <span class='chart_name' id="sg_chart_name">Boy T-Shirt</span>
+    <table>
+        <thead>
+            <tr class="line_header_top">
+                <tr id="sg_columns">
+                    <th class="border_header_start"><input class="input_first_column" id="first_column" type="text" value="SIZE"></th>
+                    <th class="border_header">US</th>
+                    <th class="border_header">UK</th>
+                    <th class="border_header">EU</th>
+                    <th class="border_header">IT</th>
+                </tr>
+                <tr class="line_header_bottom"></tr >
+            </thead>
+        </span>
+        <tbody style="border-top:1px solid #343434;" id="sg_row">
+            <tr style="margin:5px">
+                <td><input class="input_size_bold" type="text" value="S"></td>
+                <td><span class="unit_bt" id="unit_bt">IN</span><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                </tr>
+                <tr>
+                    <td><input class="input_size_bold" type="text" value="M"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                </tr>
+                <tr>
+                    <td><input class="input_size_bold" type="text" value="L"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                </tr>
+                <tr>
+                    <td><input class="input_size_bold" type="text" value="XL"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                    <td><input class="input_size" type="text" value="00"></td>
+                </tr>
+                <tr class="line_bottom"></tr >
+            </tbody>
+        </table>
+        <!-- measurement image -->
+        <img id="measurement_image" src="./image/measurement/boy_t_shirt_en/boy_t_shirt_en-2.jpg" width="100%" style="background: white;" >
+
+    </div>
+</div>
+

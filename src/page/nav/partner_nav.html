@@ -1,0 +1,77 @@
+<style>
+  .navbar{
+    background:#121212;
+  }
+  .app_name{
+    color: #ebebeb;
+  }
+  .version_name{
+    color: #868686;
+    font-size:small;
+  }
+
+</style>
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-fSMvR55bJroevMF4E8/S4wp4+wvZVy/It+AMOwYHbwkOvLilJTH9aTK5NUGOGBW/8Z/5vmAxEkgdCMCw08mJ0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+    <style>
+      /* Custom styles for the menu bar */
+
+      .menu-item {
+        color: #fff;
+      }
+    </style>
+   <!-- Bootstrap JS -->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js" integrity="sha512-wN/sVNjKvVCZ8R/7t9XpXXOo7yitMcKdbWimClLv+KG/i0uE7ZrQrk8Wgs7V9z++TgT3gq3lFIBa2x7/VmxTWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <!-- <script defer  type="text/javascript" src="./appFunction.js"></script> -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark p-0 shadow fixed-top" style="-webkit-app-region: drag;background:#262626;height: 28px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img  src="./image/icon/app/nav.ico" width="15px" height="15px" style="vertical-align: baseline;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="-webkit-app-region: none;">
+
+          <li class="nav-item dropdown" >
+            <a class="nav-link"  id="navbarDarkDropdownMenuLink-linesheet-convert" role="button" data-bs-toggle="dropdown" aria-expanded="false">File</a>
+            <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;" aria-labelledby="navbarDarkDropdownMenuLink-linesheet-convert">
+              <!-- <li><a class="dropdown-item"  onclick="load_page('page/linesheet/drop_linesheet.html')">Drop Linesheet</a></li> -->
+              <li><a class="dropdown-item" onclick="load_page('page/linesheet/new_linesheet.html')">New linesheet</a></li>
+              <!-- <hr class="mt-1 mb-1">
+              <li><h6 class="dropdown-header" style="font-size:10px">Enrichments</h6></li>
+              <li><a class="dropdown-item"  onclick="load_page('page/linesheet/convertor.html')">Load Linesheet </a></li> -->
+            </ul>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link"  id="navbarDarkDropdownMenuLink-SizeGuide" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
+            <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;" aria-labelledby="navbarDarkDropdownMenuLink-SizeGuide">
+              <li><a class="dropdown-item" onclick="load_page('page/tools/product_dimension_generate.html')">Product dimensions guide Generator</a></li>
+              <li><a class="dropdown-item" onclick="load_page('page/tools/size_guide_generator.html')">Size guide Generator</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" >
+            <a class="nav-link"  id="navbarDarkDropdownMenuLink-help" role="button" data-bs-toggle="dropdown" aria-expanded="false">Help</a>
+            <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;" aria-labelledby="navbarDarkDropdownMenuLink-help">
+              <li><a class="dropdown-item" onclick="load_page('page/prompt_role.html');$('#nav').load('page/nav/welcome_nav.html');">Welcome</a></li>
+              <!-- <li><a class="dropdown-item disabled" >Check for update</a></li> -->
+              <!-- <li><a class="dropdown-item" target="_blank" href="https://cds-content.notion.site/Guidebook-7e9b86704e864da49e48a89c12e6f92d">GuideBook</a></li> -->
+              <li><a class="dropdown-item" target="_blank" href="https://docs.cdse-commercecontent.com/spear">Guidebook</a></li>
+              <!-- <li><a class="dropdown-item" disabled href="https://www.central.co.th/th/information/about-us">License</a></li> -->
+              <hr class="mt-1 mb-1">
+              <li><a class="dropdown-item" target="_blank" href="https://www.central.co.th/th/information/about-us">About US</a></li>
+            </ul>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+

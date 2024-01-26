@@ -1,0 +1,27 @@
+{
+  "build": "py310h2bbff1b_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.10,<3.11.0a0",
+    "ruamel.yaml.clib >=0.2.6",
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "features": "",
+  "fn": "ruamel.yaml-0.17.21-py310h2bbff1b_0.conda",
+  "legacy_bz2_md5": "a0206afa9154fcf60abdcf14459287e1",
+  "legacy_bz2_size": 175464,
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "853f4239cb16c5b621b8d1505e8883c6",
+  "name": "ruamel.yaml",
+  "sha256": "8f239d4dc243de6598821038ab9eab53bbd794c579ffb3f802e90e278a50e46d",
+  "size": 180864,
+  "subdir": "win-64",
+  "timestamp": 1666304672008,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/ruamel.yaml-0.17.21-py310h2bbff1b_0.conda",
+  "version": "0.17.21"
+}

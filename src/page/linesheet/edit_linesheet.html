@@ -1,0 +1,1031 @@
+<style>
+    @font-face {
+        font-family: 'CPNRegular';
+        src: url('./font/CPN-Regular.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBold';
+        src: url('./font/CPN-Bold.ttf');
+    }
+    @font-face {
+        font-family: 'CPNBoldCondensed';
+        src: url('./font/CPN-BoldCondensed.ttf');
+    }
+    body {
+        background: #C5C6D6;
+    }
+    input.model_selection {
+        border-radius: 5px;
+        border: 1px solid #e3e3e3;
+        width: 100%;
+        padding: 3px 5px;
+        margin: 5px 0px 0px;
+    }
+    .product-list {
+        height: 100%;
+    }
+    .clean_page {
+        font-family: 'CPNRegular';
+        font-size: 15px;
+        font-weight: 500;
+        color: #0c1f3e;
+    }
+    .nav_input {
+        height: 40px;
+        left: 0px;
+        top: 76px;
+        background: #FFFFFF;
+        border: 1px solid rgba(233, 233, 233, 0.88);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+    }
+    .box_input {
+        justify-self: start;
+    }
+    .head_card_file {
+        text-align: left;
+        border: 0x solid #D1D5DB;
+        border-radius: 5px 5px 0 0;
+        background-color: #EEEEEE;
+        padding: 1px;
+    }
+    .card_file {
+        text-align: left;
+        border: 0px solid #D1D5DB;
+        border-radius: 0 0 5px 5px;
+        background-color: #ffffff;
+        padding: 1px;
+        justify-content: center;
+    }
+    .head_group_name {
+        text-align: left;
+        border: 0x solid #D1D5DB;
+        border-radius: 5px 5px 0 0;
+        background-color: #EEEEEE;
+        padding: 2%;
+    }
+    input.form-control {
+        height: 26px;
+    }
+    label {
+        height: 26px;
+    }
+    .btn-convert {
+        display: inline-flex;
+        height: 40px;
+        padding: 0;
+        background-color: black;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: 'CPNBold';
+        cursor: pointer;
+    }
+    .btn-convert:hover {
+        background-color: black;
+    }
+    .btn-convert:active {
+        background-color: #0c1f3e;
+    }
+    .btn_text,
+    .btn_icon {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 30px;
+        color: #FFFFFF;
+        height: 100%;
+    }
+    .nav-pills .nav-link.active {
+        background-color: black;
+    }
+    .nav-pills .nav-link:not(.active) {
+        border-color: black;
+    }
+    .line {
+        border: none;
+        height: 1px;
+        background-color: #717171;
+        margin: 10px 0;
+    }
+</style>
+<style>
+    .ss-main .ss-values .ss-value {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        background-color: #e0dbdb;
+        border-radius: var(--ss-border-radius);
+        animation-name: ss-valueIn;
+        animation-duration: var(--ss-animation-timing);
+        animation-timing-function: ease-out;
+        animation-fill-mode: both;
+        margin: 3px;
+        padding:3px;
+    }
+    .ss-main .ss-values .ss-max {
+        display: flex;
+        user-select: none;
+        align-items: center;
+        width: fit-content;
+        font-size: 12px;
+        color: var(--ss-bg-color);
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        background-color: #e0dbdb;
+        border-radius: var(--ss-border-radius);
+    }
+    .ss-main .ss-values .ss-value .ss-value-text {
+        font-size: 12px;
+        color: #000000;
+        line-height: 1;
+        padding: var(--ss-spacing-s) var(--ss-spacing-m);
+        font-weight: 500;
+    }
+    .ss-main .ss-values .ss-value .ss-value-delete {
+        display: inline-grid;
+    }
+    .ss-main.ss-disabled {
+    background-color: #eeeeee;
+    cursor: not-allowed;
+    }
+</style>
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+
+
+<div class="clean_page">
+    <!-- <div class="nav_input col p-2 ">
+        <div class="box_input">
+            <input type="file" id="myFile" />
+        </div>
+    </div> -->
+    <div class="container-fluid">
+ <!-- Modal -->
+ <div class="modal fade" id="enrich_prompt" tabindex="-1" aria-labelledby="enrich_prompttLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centere modal-xl" style="margin-top:20%">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="body_model">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        <div class=" row mb-3">
+            <div class="col-3 shadow-sm bg-white">
+                <div class="container pb-2 mt-3 mb-4 shadow rounded">
+                    <div class="row head_card_file">
+                        <div class="col-6 p-1">
+                            <span style="padding-left: 15px;">File information's</span>
+                        </div>
+                        <div class="col-6 p-1 text-end">
+                            <span style="padding-right: 15px;" class="name_file" id="file_name"></span>
+                            </div>
+                        </div>
+                        <div class="row card_file p-3">
+                            <div id="brand_slot"></div>
+                            <div id="sku_slot"></div>
+                            <div id="sale_channel_slot"></div>
+                            <div id="production_type_slot"></div>
+                            <div id="stock_source_slot"></div>
+                            <div id="template_slot"></div>
+                            <!-- <div class="row">
+                                <div class="col-md-4 offset-md-8 text-end p-2" style="font-size: 12px;" id="other_information">
+                                    <a href="#">Other information</a>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="container">
+                                <div class="row border-bottom m-0 ">
+                                    <div class="col p-0 bold fw-bold text-secondary">
+                                        <span class="bold">Model</span>
+                                    </div>
+                                </div>
+                                <div class="row card_file">
+                                    <div class="row p-1">
+                                        <div class="col p-1">
+                                            <div id="model_list">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="container" style="padding-right: 8px; padding-left: 0;">
+                                <div class="row border-bottom m-0 ">
+                                    <div class="col p-0 bold fw-bold text-secondary">
+                                        <span>Product</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <!-- <span
+                                            style="font-size: 12px; color: #898989; text-align: left;">all
+                                            SKU selected</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="row card_file">
+                                        <div class="row p-0 pt-3">
+                                            <div class="col">
+                                                <div id="ibc_list">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9" style="background-color: #EFF0F6; height: 100%; ">
+                        <div class="container">
+                            <nav aria-label="breadcrumb"
+                            style="--bs-breadcrumb-divider: '>'; padding-top: 10px; font-size: 12px; font-weight: bold;">
+                            <ol class="breadcrumb breadcrumb-chevron p-2">
+                                <li class="breadcrumb-item">
+                                    <a class="link-body-emphasis fw-bold text-decoration-none"
+                                    href="#" style="color: #0c1f3e;">Import</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <a class="link-body-emphasis fw-bold text-decoration-none"
+                                    href="#" style="color: #0c1f3e;">Linesheet
+                                    validate</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a class="link-body-emphasis fw-bold text-decoration-none"
+                                    href="#" style="color: #A6192E;">Cleaning</a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <div class="container">
+                                <div class="row"
+                                style="align-items: center; justify-content: end;">
+                                <div class="col-2"
+                                style=" font-size: 12px ; text-align: left;">
+                                <small>Convert to</small>
+                            </div>
+                            <div class="col-2 text-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    style="font-size: 12px; font-family: CPNBold; ">
+                                    <small>PIM tempate</small>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item"
+                                        href="#">Action</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8" style="display: inline-flex;">
+                            <div class="col-2">
+                                <svg class="bd-placeholder-img"
+                                width="80" height="80"
+                                xmlns="http://www.w3.org/2000/svg"
+                                role="img"
+                                aria-label="Placeholder: Thumbnail"
+                                focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%"
+                                height="100%"
+                                fill="#E2E2E2">
+                            </rect>
+                        </svg>
+                    </div>
+                    <div class="col-10"
+                    style="text-align: left; padding-left: 40px;">
+                    <span id="ibc" style="font-family: CPNBold;">ibc number</span><br>
+                    <span id="product_name_th">product name</span><br>
+                    <span id="family">family</span>
+                </div>
+            </div>
+            <div class="col-4 ">
+                <button type="button" class="btn-convert w-100 h-75" onclick="load_page(path.join(__dirname, 'page/linesheet/convert_linesheet.html'));">
+                    <span class="btn_text w-75">Convert</span>
+                    <span class="btn_icon">
+                        <ion-icon name="play-forward-outline"></ion-icon>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <strong style="font-size: 24px; text-align: left;">Variant</strong>
+            <div class="col-7" style="text-align: left;">
+                <small>Variant attribute is information that use identity</small>
+            </div>
+            <div class="col-3"></div>
+            <hr class="line">
+        </div>
+        <div class="row">
+            <div id="variant_attribute_list">
+            </div>
+        </div>
+        <div class="row pt-4">
+            <strong
+            style="font-size: 24px; text-align: left;">Common</strong>
+            <div class="col-6" style="text-align: left;">
+                <small>Common attribute is information that use
+                    for all product in same body</small>
+                </div>
+                <div class="col-3"
+                style="display: flex; align-items: center; margin-bottom: 10px; font-family: 'CPNBold'; color:#EF4444;">
+                <ion-icon name="warning-outline"
+                style="font-size: 16px;"></ion-icon>
+                <!-- <small style="margin-left: 5px;">1 Require
+                    attribute is missing</small> -->
+                </div>
+                <div class="col-3"
+                style="display: flex; align-items: center; margin-bottom: 10px; font-family: 'CPNBold'; color:#000000;">
+                <!-- <ion-icon name="add-outline"
+                    style="font-size: 16px;"></ion-icon>
+                    <small style="margin-left: 5px;">Filters</small>
+                    <span  class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill" style="text-align: center;">Show all</span> -->
+                </div>
+                <hr class="line">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="common_attribute_list">
+        </div>
+    </div>
+</div>
+</div>
+<!-- <div class="col-2" style="background-color: #ffffff; height:100vh; font-size: 12px;  ">
+    <ul class="nav nav-pills mb-3 p-2" id="pills-tab" role="tablist"
+    style="color: black; justify-content: left;">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-home" type="button" role="tab"
+        aria-controls="pills-home" aria-selected="true">Translate</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-profile" type="button" role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false">Cleaning</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-contact" type="button" role="tab"
+        aria-controls="pills-contact"
+        aria-selected="false">Generate</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-disabled" type="button" role="tab"
+        aria-controls="pills-disabled"
+        aria-selected="false">Validate</button>
+    </li>
+</ul> -->
+<!-- <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+    aria-labelledby="pills-home-tab" tabindex="0">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <small>Common</small><br>
+                    <strong class="card-title">Translate
+                        description EN to TH</strong>
+                        <p class="card-text">This function will
+                            replace any text in product
+                            name to proper case
+                        </p>
+                        <div class="row">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-6">
+                                <a href="#"
+                                class="btn btn-primary"
+                                style="background-color: #000000; font-size: 12px;">Apply</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+    aria-labelledby="pills-profile-tab" tabindex="0">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title
+                        treatment</h5>
+                        <p class="card-text">With supporting
+                            text below as a natural
+                            lead-in to additional content.
+                        </p>
+                        <a href="#" class="btn btn-primary"
+                        style="background-color: #000000; ">Go
+                        somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm ">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title
+                            treatment</h5>
+                            <p class="card-text">With supporting
+                                text below as a natural
+                                lead-in to additional content.
+                            </p>
+                            <a href="#" class="btn btn-primary"
+                            style="background-color: #000000;">Go
+                            somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+        aria-labelledby="pills-contact-tab" tabindex="0">...</div>
+        <div class="tab-pane fade" id="pills-disabled" role="tabpanel"
+        aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
+    </div> -->
+</div>
+</div>
+</div>
+<script>
+    var mysql = require('mysql');
+    var { promisify } = require('util');
+    function runSlimSelect(select_id) {
+        new SlimSelect({
+            select: select_id,
+            settings: {
+                closeOnSelect: false,
+                allowDeselectOption: true,
+            },
+            events: {
+                afterChange: (newVal) => {
+                    input = select_id.replace('_show', '');
+                    document.querySelector(input).value = newVal.map(val => val.value).join(',');
+                }
+            }
+        });
+    }
+
+
+
+    var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+    var LOOKUP_SHEET = convertExcelToJson(linesheet_file_path, 'LOOKUP_SHEET');
+    var ATT_OPTION = convertExcelToJson(linesheet_file_path, 'ATT_OPTION');
+    var IM_FORM = convertExcelToJson(linesheet_file_path, 'IM_FORM');
+    var IN_LINK_DATA = convertExcelToJsonTransposed(linesheet_file_path,'IN_LINK_DATA');
+
+
+    function get_linesheet_group_model() {
+
+        const uniqueCatalogueNumbers = new Set(
+            IM_FORM
+        .filter(item => item.ibc !== undefined)
+        .map(item => item.catalogue_number_for_group)
+        );
+        const liElements = Array.from(uniqueCatalogueNumbers)
+        .map(catalogueNumber => `<input placeholder="No catalog" readonly style="font-size: 13px;"  onclick="get_linesheet_group_ibc('${catalogueNumber}')" class="model_selection" value="${catalogueNumber}">`)
+        .join('');
+        document.getElementById("model_list").innerHTML = liElements;
+    }
+    function get_linesheet_group_ibc(catalogue_number_for_group){
+        var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+        linesheet_info = convertExcelToJson(linesheet_file_path,'IM_FORM');
+        // console.log(linesheet_info);
+        const liElements = linesheet_info
+        .filter(item => item.ibc !== undefined && item.catalogue_number_for_group == catalogue_number_for_group )
+        .map(item => `
+
+        <div class="p-3 rounded shadow mb-2 onclick="get_product_all_information('${item.ibc}')"">
+        <div class="card-body" onclick="get_product_all_information('${item.ibc}')">
+            <div class="text-secondary mb-1" style="font-size:12px">IBC : ${item.ibc}</div>
+            <strong class="card-subtitle mb-1 text-muted bold " style="font-size:13px">${item.product_name_th}</strong>
+                <ul class="list-group list-group-horizontal border-0">
+                <li class="list-group-item rounded-0 border-0 p-0 m-0">
+                    <input type="color" style="font-size: 13px;border-radius: 15px!important;width: 20px;height: 20px;" class="rounded-0 m-0 ps-0  border-0" id="${item.ibc}_color_hex" value="${item.color_hex}"></li>
+                <li class="list-group-item border-0 p-0 ps-2" style="font-size:12px">${item.color_shade}</li>
+                <li class="list-group-item border-0 p-0 ps-2" style="font-size:12px">${item.size}</li>
+                </ul>
+            </div>
+        </div>
+
+
+        `)
+        .join('');
+        document.getElementById("ibc_list").innerHTML=liElements
+    }
+    get_linesheet_group_model();
+
+
+    function translate(text,language,element_id){
+        const data = JSON.stringify({
+            language: language,
+            text: text
+        });
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener('readystatechange', function () {
+            if (this.readyState === this.DONE) {
+                const response = JSON.parse(this.responseText);
+                const result = response.result;
+                console.log(result)
+                document.getElementById(element_id).value = result; // Output the result to the console
+                // You can use the 'result' variable for further processing or display on your page
+            }
+            });
+
+            xhr.open('POST', 'https://translator82.p.rapidapi.com/api/translate');
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.setRequestHeader('X-RapidAPI-Key', '65fd8abd73mshaef403ff4f9da0fp19e2ecjsnf410b3a5b157');
+            xhr.setRequestHeader('X-RapidAPI-Host', 'translator82.p.rapidapi.com');
+
+            xhr.send(data);
+    }
+    function  show_enrich_prompt(prompt,sku,attribute_code){
+        if(prompt=='ask_for_apply'){
+            body = `<strong>Scope of apply to ${attribute_code}</strong>
+                    <hr>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn btn-primary" type="button" onclick="show_enrich_prompt_detail('one_sku','${sku}','${attribute_code}')">Apply to this sku</button>
+                        <button class="btn btn-primary" type="button" onclick="show_enrich_prompt_detail('group','${sku}','${attribute_code}')">Apply to all sku in this group</button>
+                        <button class="btn btn-primary" type="button">All sku in linesheet</button>
+                    </div> `;
+            document.getElementById("body_model").innerHTML=body
+
+        }
+    }
+
+    function  show_enrich_prompt_detail(type,sku,attribute_code){
+            body_table = ` <strong class="p-1 ps-3 pe-3 mb-3 bg-light rounded">Enrich : ${attribute_code}</strong>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Current product name</th>
+                            <th scope="col">Auto Translate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table_enrich">
+
+                        </tbody>
+                        </table>
+                    <button type="button" class="btn btn-primary">Accept</button>`;
+            document.getElementById("body_model").innerHTML= body_table;
+        if(type=='one_sku'){
+            body = `
+                    <tr>
+                    <th style="vertical-align: middle;" scope="row">${sku}</th>
+                    <td style="vertical-align: middle;">${get_ls_info_cell_by_cell(sku,'product_name_th')}</td>
+                    <td style="vertical-align: middle;"><input type="text" class="form-control h-100 rounded" id="text_changed_${sku}" ></td>
+                    </tr>
+                   `;
+            document.getElementById("table_enrich").innerHTML= body;
+            translate(get_ls_info_cell_by_cell(sku,'product_name_en' ), "th",`text_changed_${sku}`)
+
+        }
+        else if(type=='group'){
+
+                var catalogue_number_for_group = get_ls_info_cell_by_cell(sku,'catalogue_number_for_group')
+                var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+                linesheet_info = convertExcelToJson(linesheet_file_path,'IM_FORM');
+                // console.log(linesheet_info);
+                const liElements = linesheet_info
+                .filter(item => item.ibc !== undefined && item.catalogue_number_for_group == catalogue_number_for_group )
+                .map(item => `
+
+                <tr>
+                    <th style="vertical-align: middle;" scope="row">${item.ibc}</th>
+                    <td style="vertical-align: middle;">${item.product_name_th}</td>
+                    <td style="vertical-align: middle;"><input type="text" class="form-control h-100 rounded" id="text_changed_${item.ibc}" ></td>
+                </tr>
+
+                `)
+                .join('');
+                document.getElementById("table_enrich").innerHTML= liElements;
+                for (const item of liElements) {
+                    console.log(item.product_name_en)
+                    translate(item.product_name_en, "th",`text_changed_${item.ibc}`)
+                }
+
+        }
+
+
+
+    }
+    function super_function(attribute_code,TargetIBC){
+
+        if(attribute_code=='product_name_th'){
+            func=  ` <div class="col-sm-1 p-0">
+                <div class="dropdown">
+                <button class="btn btn-sm btn-light shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ion-icon name="color-wand-outline"></ion-icon>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" onclick="show_enrich_prompt('ask_for_apply','${TargetIBC}','${attribute_code}')" data-bs-toggle="modal" data-bs-target="#enrich_prompt" >Translate from product name EN field</a></li>
+                    <li><a class="dropdown-item" href="#">Generate new product name</a></li>
+                </ul>
+                </div>
+            </div>`
+        }else if(attribute_code=='product_name_en'){
+
+            func=  ` <div class="col-sm-1 p-0">
+                <div class="dropdown">
+                <button class="btn btn-sm btn-light shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ion-icon name="color-wand-outline"></ion-icon>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Translate from product name TH field</a></li>
+                    <li><a class="dropdown-item" href="#">Generate new product name</a></li>
+                </ul>
+                </div>
+            </div>`
+        }else if(attribute_code=='short_description_th'){
+
+            func=  ` <div class="col-sm-1 p-0">
+                <div class="dropdown">
+                <button class="btn btn-sm btn-light shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ion-icon name="color-wand-outline"></ion-icon>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Translate from short description EN field</a></li>
+                    <li><a class="dropdown-item" href="#">Generate new short description</a></li>
+                </ul>
+                </div>
+            </div>`
+        }else if(attribute_code=='short_description_en'){
+
+            func=  ` <div class="col-sm-1 p-0">
+                <div class="dropdown">
+                <button class="btn btn-sm btn-light shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ion-icon name="color-wand-outline"></ion-icon>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Translate from short description TH field</a></li>
+                    <li><a class="dropdown-item" href="#">Generate new short description</a></li>
+                </ul>
+                </div>
+            </div>`
+        }else if(attribute_code=='color_hex'){
+
+            func=  ` <div class="col-sm-1 p-0">
+                        <div class="dropdown">
+                        <button class="btn btn-sm btn-light shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ion-icon name="color-wand-outline"></ion-icon>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Generate from color shade</a></li>
+                        </ul>
+                        </div>
+                    </div>`
+
+        }else{
+            func='';
+        }
+
+        return func
+
+    }
+
+
+    function get_product_all_information(TargetIBC) {
+        Notiflix.Loading.standard('loading ...');
+        const getColumnHTML = (items) =>
+        items
+        .map(({ linesheet_code, field_type, required }) => {
+            const value = get_ls_info_cell_by_cell(TargetIBC, linesheet_code);
+            const invalidClass = required && !value ? ' is-invalid' : '';
+            const requiredAttribute = required ? ' required' : '';
+            const invalidMessage = required && !value ? '<small class="invalid-feedback">This field is required.</small>' : '';
+            console.log(`send->${linesheet_code} : ${field_type}`);
+            if (value == 'undefined') {
+                invalidMessage = 'not found column in linesheet';
+            }
+            switch (field_type) {
+                case 'Simple Select':
+                case 'Multiple Select':
+                if (field_type === 'Multiple Select') {
+                    select_type = 'Multiple';
+                }else{
+                    select_type = '';
+                }
+                if (linesheet_code == 'online_categories') {
+                    var options = get_cate_option_linesheet('online_categories', value);
+                }else{
+                    var options = get_att_option_linesheet(linesheet_code, value);
+                }
+                return `<div class="col mt-3 row">
+                    <label for="${linesheet_code}" class=" fw-bold text-secondary col-sm-4 col-form-label">${linesheet_code}${required ? ' *' : ''}</label>
+                    <div class="col-sm-7">
+                        <input type="hidden" id="${linesheet_code}" value="${value}" class="form-control" placeholder="">
+                        <select ${select_type} style="font-size:13px" id="${linesheet_code}_show" name="${linesheet_code}_show" class=" form-select ${invalidClass}"  onchange="updateExcelCellValue('IM_FORM', getColumnNumber('IM_FORM', '${linesheet_code}'), getRowNumberWithMatchingValue('IM_FORM', getColumnNumber('IM_FORM', 'ibc'), '${TargetIBC}'), '${linesheet_code}') ">
+                            <option value=""></option>
+                            ${options}
+                        </select>
+                        ${invalidMessage}
+                    </div>
+                </div>
+                `;
+                runSlimSelect("#"+linesheet_code+"_show")
+                case 'Free Text':
+                case 'Number only':
+                case 'Formula':
+                case 'link':
+                case 'Boolean':
+                const inputType = field_type === 'Free Text' ? 'text': field_type === 'Boolean' ? 'text' : field_type === 'Number only' ? 'number' : field_type === 'Formula' ? 'text" disabled' : field_type === 'link' ? 'link" disabled' : '';
+                return `<div class="col mt-3 row">
+                    <label for="${linesheet_code}" class=" fw-bold text-secondary col-sm-4 col-form-label">${linesheet_code}${required ? ' *' : ''}</label>
+                    <div class="col-sm-7 ps-2 pe-2">
+                        <input type="${inputType}" id="${linesheet_code}" name="${linesheet_code}" style="font-size:13px" class="p-3  form-control ${invalidClass}" value="${value}"${requiredAttribute}  onchange="updateExcelCellValue('IM_FORM', getColumnNumber('IM_FORM', '${linesheet_code}'), getRowNumberWithMatchingValue('IM_FORM', getColumnNumber('IM_FORM', 'ibc'), '${TargetIBC}'), '${linesheet_code}') ">
+                        ${invalidMessage}
+                    </div>
+                    ${super_function(linesheet_code,TargetIBC)}
+                </div>`;
+                case 'Free Textarea':
+                    return `<div class="col mt-3 row">
+                        <label for="${linesheet_code}" class=" fw-bold text-secondary col-sm-4 col-form-label">${linesheet_code}${required ? ' *' : ''}</label>
+                        <div class="col-sm-7">
+                            <textarea class="form-control" style="font-size:13px;height: 170px" class="p-3 form-control ${invalidClass}" placeholder="Leave a comment here" id="${linesheet_code}" ${requiredAttribute}  onchange="updateExcelCellValue('IM_FORM', getColumnNumber('IM_FORM', '${linesheet_code}'), getRowNumberWithMatchingValue('IM_FORM', getColumnNumber('IM_FORM', 'ibc'), '${TargetIBC}'), '${linesheet_code}') ">${value}</textarea>
+                            ${invalidMessage}
+                        </div>
+                        ${super_function(linesheet_code,TargetIBC)}
+                    </div>`;
+                break;
+                default:
+                // Handle any other field_type cases here
+                return `<div class="col mt-3 row">
+                    <label for="${linesheet_code}" class=" fw-bold text-secondary col-sm-4 col-form-label">${linesheet_code}${required ? ' *' : ''}</label>
+                    <div class="col-sm-7">
+                        <input type="${inputType}" id="${linesheet_code}" name="${linesheet_code}" class="p-3  form-control ${invalidClass}" value="${value}"${requiredAttribute}  onchange="updateExcelCellValue('IM_FORM', getColumnNumber('IM_FORM', '${linesheet_code}'), getRowNumberWithMatchingValue('IM_FORM', getColumnNumber('IM_FORM', 'ibc'), '${TargetIBC}'), '${linesheet_code}') ">
+                        ${invalidMessage}
+                    </div>
+                    ${super_function(linesheet_code,TargetIBC)}
+                </div>`;
+                break;
+            }
+        })
+        .join('');
+        const ibc = get_ls_info_cell_by_cell(TargetIBC, 'ibc');
+        const product_name_th = get_ls_info_cell_by_cell(TargetIBC, 'product_name_th');
+        const family = lookup_label_cate_to_family(TargetIBC);
+        set_value_in_to_elements(ibc, 'ibc');
+        set_value_in_to_elements(product_name_th, 'product_name_th');
+        set_value_in_to_elements(family, 'family');
+        const getBootstrapColumns = (results, targetElement) => {
+            const { length } = results;
+            const halfLength = Math.ceil(length / 2);
+            const column1 = results.slice(0, halfLength);
+            const column2 = results.slice(halfLength);
+            const bootstrapColumns = `
+            <div class="container">
+                <div class="row">
+                    <div class="col">${getColumnHTML(column1)}</div>
+                    <div class="col">${getColumnHTML(column2)}</div>
+                </div>
+            </div>
+            `;
+            set_value_in_to_elements(bootstrapColumns, targetElement);
+        };
+        //get common session
+        get_attribute(family, 'variant', (results) => {
+            getBootstrapColumns(results, 'variant_attribute_list');
+        });
+        //get common session
+        get_attribute(family, 'common', (results) => {
+            getBootstrapColumns(results, 'common_attribute_list');
+        });
+        Notiflix.Loading.remove();
+    }
+    function get_attribute(family,type, callback) {
+        // const mysql = require('mysql');
+        const connection = mysql.createConnection({
+            host: '156.67.217.3',
+            user: 'data_studio',
+            password: 'a417528639',
+            database: 'im_form'
+        });
+        connection.connect();
+        const query =
+        'SELECT linesheet_code, field_label, both_language, field_type ,CASE WHEN ' +
+        family +
+        ' = "R" THEN true ELSE false END AS required FROM attribute_setting WHERE ' +
+        family +
+        ' IN ("R","O") and status = "Actived" AND grouping_common = "'+type+'"';
+        connection.query(query, (error, results) => {
+            if (error) throw error;
+            // Duplicate rows with _en and _th suffixes if both_language is "yes"
+            const modifiedResults = [];
+            results.forEach((item) => {
+                if (item.both_language == true) {
+                    const newItemEn = { ...item, linesheet_code: item.linesheet_code + '_en' };
+                    const newItemTh = { ...item, linesheet_code: item.linesheet_code + '_th' };
+                    modifiedResults.push(newItemEn, newItemTh);
+                } else {
+                    modifiedResults.push(item);
+                }
+            });
+            connection.end();
+            // Return modified results
+            callback(modifiedResults);
+            // return modifiedResults
+        });
+    }
+    function lookup_label_cate_to_family(TargetIBC){
+        var categories_label =  get_ls_info_cell_by_cell(TargetIBC,'online_categories');
+        console.log(categories_label)
+        get_categories_mapping_table((results) => {
+            // Use the results here or assign them to a variable
+            var table_categories_mapping = results;
+            const matchingFamily = Object.values(table_categories_mapping).find(item => item.label_th === categories_label);
+            // console.log(matchingFamily?.['family'])
+            if (matchingFamily) {
+                family =  matchingFamily?.['family'];
+            } else {
+                family =  'No matching family found.';
+            }
+        });
+        console.log(family)
+        return family
+    }
+    function get_categories_mapping_table(callback){
+        const connection = mysql.createConnection({
+            host: '156.67.217.3',
+            user: 'data_studio',
+            password: 'a417528639',
+            database: 'im_form'
+        });
+        connection.connect();
+        optionsHTML ='';
+        const query = 'SELECT * FROM categories_setting';
+        connection.query(query, (error, results) => {
+            if (error) throw error;
+            // return results
+            connection.end();
+            callback(results);
+        });
+    }
+
+    function get_ls_info_cell_by_cell(TargetIBC,propertyName ) {
+        const linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+        const data_value = IM_FORM.find(item => item.ibc == TargetIBC);
+        return data_value?.[propertyName]
+    }
+
+    function get_att_option_linesheet(linesheet_code, selected_option) {
+        const selectedOptions = selected_option ? selected_option.split(',') : [];
+        const options = LOOKUP_SHEET
+        .filter(result => result?.['linesheet_code'] == linesheet_code)
+        .map(result => {
+            const isSelected = selectedOptions.includes(result['input_option']) ? 'selected' : '';
+            return `<option value="${result?.['input_option']}" ${isSelected}>${result?.['input_option']}</option>`;
+        });
+        return options.join('');
+    }
+
+    function get_cate_option_linesheet(linesheet_code, selected_option) {
+        const selectedOptions = selected_option ? selected_option.split(',') : [];
+
+        const options = ATT_OPTION
+        .filter(result => result?.['online_categories'] != '')
+        .map(result => {
+            const isSelected = selectedOptions.includes(result?.['online_categories']) ? 'selected' : '';
+            return `<option value="${result?.['online_categories']}" ${isSelected}>${result?.['online_categories']}</option>`;
+        });
+        return options.join('');
+    }
+    function set_value_in_to_elements(value,targetElementId){
+        const targetElement = document.getElementById(targetElementId);
+        if (targetElement) {
+            targetElement[targetElement.tagName === 'INPUT' ? 'value' : 'innerHTML'] =value || (targetElement.tagName === 'INPUT' ? '' : 'Data not found');
+        }
+    }
+    var configOptions = [
+    { id: 'brand', args: ['get_text_input_two_grid', 'brand', 'free_text',get_linesheet_information('brand'),'2'], variableName: 'brandList'  , slim_id:'#brand_show' },
+    { id: 'launch_date', args: ['get_text_input_two_grid', 'launch_date', 'free_text',get_linesheet_information('launch_date'),'7'], variableName: 'launch_dateList'  , slim_id:'#launch_date_show' },
+    { id: 'sku', args: ['get_text_input_two_grid', 'sku', 'free_text',get_linesheet_information('sku'),'3'], variableName: 'skuList'  , slim_id:'#sku_show' },
+    { id: 'sale_channel', args: ['get_multi_select_input_two_grid', 'sale_channel', 'multiple',get_linesheet_information('sale_channel'),'6'], variableName: 'SaleChannelList' , slim_id:'#sale_channel_show'  },
+    { id: 'stock_source', args: ['get_multi_select_input_two_grid', 'stock_source', 'multiple',get_linesheet_information('stock_source'),'4'], variableName: 'stockSourceList' , slim_id:'#stock_source_show'  },
+    { id: 'production_type', args: ['get_single_select_input_two_grid', 'production_type', 'single',get_linesheet_information('production_type'),'8'], variableName: 'ProductionTypeList' , slim_id:'#production_type_show'  },
+    { id: 'template', args: ['get_family_input_two_grid', 'template', 'multiple',get_linesheet_information('template'),'5'], variableName: 'templateList' , slim_id:'#template_show'  }
+    ];
+    configOptions.forEach(option => {
+        let optionList = '';
+        new PythonShell(path.join(__dirname,`../src/page/linesheet/config/new_linesheet_config.py`), { args: option.args })
+        .on('error', err => {
+            console.error('An error occurred while running the Python script:', err);
+            // handle the error here
+        })
+        .on('stderr', message => {
+            console.error('Received error message:', message);
+        })
+        .on('message', message => {
+            optionList += message;
+            if (optionList) {
+                document.getElementById(option.id+"_slot").innerHTML = optionList;
+                runSlimSelect(option.slim_id);
+            }
+        });
+    });
+    var XLSX = require('xlsx');
+    var fs = require('fs');
+    function updateExcelCellValue(sheetName, columnNumber, rowNumber, element_id) {
+    try {
+        var newValue = document.getElementById(element_id).value;
+        const linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+        // Read the Excel file
+        const workbook = XLSX.readFile(linesheet_file_path);
+        // Select the specified sheet
+        const sheet = workbook.Sheets[sheetName];
+        // Convert column number to letter
+        const columnName = XLSX.utils.encode_col(columnNumber);
+        // Generate the cell reference based on the column number and row number
+        const cellReference = columnName + rowNumber;
+        console.log(sheetName + ":" + cellReference + ":" + element_id + ":" + newValue);
+        // Check if the cell exists
+        if (!sheet.hasOwnProperty(cellReference)) {
+            sheet[cellReference] = { t: 's', v: newValue };
+        } else {
+            // Preserve the existing style properties
+            const existingCell = sheet[cellReference];
+            sheet[cellReference] = {
+                t: existingCell.t,
+                v: newValue,
+                s: existingCell.s,
+                w: newValue,
+            };
+        }
+        // Save the modified Excel file
+        XLSX.writeFile(workbook, linesheet_file_path);
+        // Save the changes
+        Notiflix.Notify.success(element_id + ' updated successfully.');
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
+}
+
+
+
+
+
+
+
+    function getColumnNumber(sheet_name, columnName) {
+        // Read the Excel file
+        const linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+        const workbook = XLSX.readFile(linesheet_file_path);
+            // Select the specified sheet
+        const sheet = workbook.Sheets[sheet_name];
+        const range = XLSX.utils.decode_range(sheet['!ref']);
+        const colCount = range.e.c + 1;
+
+        for (let colIndex = 0; colIndex < colCount; colIndex++) {
+            const cellAddress = XLSX.utils.encode_cell({ c: colIndex, r: 0 });
+            const cellValue = sheet[cellAddress]?.v;
+
+            if (cellValue === columnName) {
+            return colIndex + 1; // Adding 1 to convert from zero-based index to one-based index
+            }
+        }
+
+        return -1; // Column not found
+        }
+
+    function getRowNumberWithMatchingValue(sheet_name, columnNumber, searchValue) {
+        // Read the Excel file
+        const linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
+        const workbook = XLSX.readFile(linesheet_file_path);
+            // Select the specified sheet
+        const sheet = workbook.Sheets[sheet_name];
+        const range = XLSX.utils.decode_range(sheet['!ref']);
+        const rowCount = range.e.r + 1;
+
+        for (let rowIndex = 1; rowIndex < rowCount; rowIndex++) {
+            const cellAddress = XLSX.utils.encode_cell({ c: columnNumber - 1, r: rowIndex });
+            const cellValue = sheet[cellAddress]?.v;
+
+            if (cellValue == searchValue) {
+            return rowIndex + 1; // Adding 1 to convert from zero-based index to one-based index
+            }
+        }
+
+        return -1; // Row not found
+    }
+
+
+
+</script>
