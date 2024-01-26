@@ -256,17 +256,26 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     attribute = attribute.drop_duplicates(subset=['linesheet_code'])
     attribute = attribute.fillna("")
 
+    # - get  store
+    datapump_store_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1594843645')
+    datapump_store = pd.read_csv(datapump_store_query)
+    datapump_store['linesheet_code']='store_stock'
+    datapump_store['input_option']=datapump_store['system_label']
+    datapump_store = datapump_store[['linesheet_code','input_option']]
+
     # - get dropdown
-
-
     attribute_options_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
     attribute_options = pd.read_csv(attribute_options_query)
     attribute_options["code_lookup"] = attribute_options['linesheet_code']+attribute_options['input_option']
     attribute_options["label_lookup"] = attribute_options['linesheet_code']+attribute_options['option_en']
     lookup_sheet = attribute_options[['linesheet_code','code_lookup','label_lookup','input_option','option_en']]
     attribute_options = attribute_options[['linesheet_code','input_option']]
+    attribute_options = pd.concat([attribute_options, datapump_store], ignore_index=True)
     attribute_options = attribute_options.drop_duplicates()
     attribute_options = attribute_options.fillna("")
+
+
+
 
     # - get categories
 
@@ -336,6 +345,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     codes = attribute['linesheet_code'].values.tolist()
     labels = attribute['field_label'].values.tolist()
     indicators = attribute['column_indication'].values.tolist()
+    owner_field = attribute['owner_field'].values.tolist()
     comment = attribute['tool_tips'].values.tolist()
     group_header = attribute['session'].values.tolist()
     group_sub_header = attribute['sub_session'].values.tolist()
@@ -353,6 +363,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
             labels[i+1] = labels[i+1]+' [Thai]'
             indicators.insert(i,indicators[i])
             comment.insert(i,comment[i])
+            owner_field.insert(i,owner_field[i])
             group_header.insert(i,group_header[i])
             group_sub_header.insert(i,group_sub_header[i])
             merge_group.insert(i,merge_group[i])
@@ -383,6 +394,17 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_family_template = workbook.create_sheet("FAMILY_TEMPLATE")
     ws_jda_size_mapping_sheet=workbook.create_sheet("JDA_SIZE_MAPPING")
     ws_color_mapping_sheet=workbook.create_sheet("COLOR_MAPPING")
+    ws_datapump_store_sheet=workbook.create_sheet("DATAPUMP_STORE_MAPPING")
+
+    # Hide the sheet
+    ws_att_option.sheet_state = 'hidden'
+    ws_inlink_data.sheet_state = 'hidden'
+    ws_lookup_sheet.sheet_state = 'hidden'
+    ws_depsubdept_mapping_sheet.sheet_state = 'hidden'
+    ws_family_template.sheet_state = 'hidden'
+    ws_jda_size_mapping_sheet.sheet_state = 'hidden'
+    ws_color_mapping_sheet.sheet_state = 'hidden'
+    ws_datapump_store_sheet.sheet_state = 'hidden'
 
 # #### General information's
 # - Add version information
@@ -410,6 +432,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     from openpyxl.utils.dataframe import dataframe_to_rows
     for r in dataframe_to_rows(color_mapping, index=False, header=True):
         ws_color_mapping_sheet.append(r)
+
+# Add datapump store mapping
+    from openpyxl.utils.dataframe import dataframe_to_rows
+    for r in dataframe_to_rows(datapump_store, index=False, header=True):
+        ws_datapump_store_sheet.append(r)
+
 
 # Add family template sheet
 
@@ -467,9 +495,10 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     row_field_type=9
     row_session=10
     row_sub_session=11
-    row_owner_badge=12
+    row_owner_field=12
     row_mandatory_badge=13
     row_header=14
+    row_begin_form=15
 
 
 # ##### Add a Table information's
@@ -545,7 +574,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     add_column(1,'C91818','B41010',codes,False,False,comment,'script',False)
     add_column(row_header,'434343','E5E5E5',labels,True,True,comment,'script',True)
     add_column(row_mandatory_badge,'F73434','BFCAD0',indicators,False,True,comment,'script',False)
-    add_column(row_field_type,'DA9694','B41010',fill_type,False,False,comment,'script',False)
+    add_column(row_field_type,'D9D9D9','B41010',fill_type,False,False,comment,'script',False)
+    add_column(row_owner_field,'434343','BFCAD0',owner_field,False,True,comment,'script',False)
 
     # Get the length of the list
     latest_column = len(codes)
@@ -564,6 +594,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
         elif field_type=='Free Text':
             bg_color='14C671'
         elif field_type=='Simple Select':
+            bg_color='A7A121'
+        elif field_type=='Boolean':
             bg_color='A7A121'
         elif field_type=='Multiple Select':
             bg_color='CD7515'
@@ -597,12 +629,20 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
             # Update the list of attribute in the sheet
             add_list_of_attribute(workbook, "ATT_OPTION", option_lists,column_code)
             # add data validation and create a dropdown
-            add_dropdown(workbook,'IM_FORM', col, 13, int(sku)+13, column_code)
+            add_dropdown(workbook,'IM_FORM', col, row_begin_form, int(sku)+row_begin_form, column_code)
             option_lists.clear()
     #add formula
     for col in range(start_col, latest_column + 1):
         if formula[col-1]!=""  and formula[col-1]!=None:
-           add_formula(workbook,'IM_FORM', col, 13, int(sku)+13, formula[col-1])
+           add_formula(workbook,'IM_FORM', col, row_begin_form, int(sku)+row_begin_form, formula[col-1])
+
+##a dd dropdown for store stock
+    option_frame = attribute_options[attribute_options['linesheet_code']=='store_stock']
+    option_lists = option_frame['input_option'].values.tolist()
+    add_list_of_attribute(workbook, "ATT_OPTION", option_lists,'store_stock')
+    add_dropdown(workbook,'IM_FORM', 3, 6, 6, 'store_stock')
+    option_lists.clear()
+
 
 ####### convert to number
 

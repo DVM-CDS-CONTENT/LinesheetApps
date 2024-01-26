@@ -274,11 +274,15 @@
                         function generate_linesheet(){
                             Notiflix.Loading.standard('Generating ...');
                             brand = document.getElementById("brand").value
-                            template = document.getElementById("template").value
+                            // template = document.getElementById("template").value
+                            template = [...document.querySelectorAll("#template option:checked")].map(option => option.value).join(',');
                             sku = document.getElementById("sku").value
                             launch_date = document.getElementById("launch_date").value
-                            stock_source = document.getElementById("stock_source").value
-                            sale_channel = document.getElementById("sale_channel").value
+                            // stock_source = document.getElementById("stock_source").value
+                            stock_source = [...document.querySelectorAll("#stock_source option:checked")].map(option => option.value).join(',');
+                            // sale_channel = document.getElementById("sale_channel").value
+                            sale_channel = [...document.querySelectorAll("#sale_channel option:checked")].map(option => option.value).join(',');
+
                             production_type = document.getElementById("production_type").value
                             contact_person=document.getElementById("contact_person").value
                             // call python
