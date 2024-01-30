@@ -29,13 +29,50 @@ Exitsub:
         Dim lUsed  As Integer
         If Target.Count > 1 Then GoTo exitHandler
         On Error Resume Next
-        Set rngDV = Cells.SpecialCells(xlCellTypeAllValidation)
+        Set rngDV = Cells.SpecialCells(xlCellTypeAllValidation) ' Include C6 in the validation range
         On Error GoTo exitHandler
         If rngDV Is Nothing Then GoTo exitHandler
-        If Intersect(Target, rngDV) Is Nothing Then
+        If Intersect(Target, rngDV) Is Nothing And Target.Address <> "$C$6" Then
            'do nothing
         Else
-            If Target.Validation.Type = 3 Then 'Is list validation
+           Application.EnableEvents = False
+            If Target.Address = "$C$6" Then
+                ' Code for multi-select in C6
+                ' You can customize this part based on your requirements
+                ' For example, you can use a MsgBox to prompt the user for multiple values
+
+                newVal = Target.value
+                Debug.Print "newVal " & newVal
+                Application.Undo
+                oldVal = Cells(6, 3).value
+                Target.value = newVal
+                Target.Locked = True
+                Debug.Print "oldVal " & oldVal
+               If oldVal = "" Then
+                    'do nothing
+                  Else
+                      If newVal = "" Then
+                      'do nothing
+                      Else
+                          lUsed = InStr(1, oldVal, newVal)
+                          If lUsed > 0 Then
+                              If Right(oldVal, Len(newVal)) = newVal Then
+                                  Target.value = Left(oldVal, Len(oldVal) - Len(newVal) - 2)
+                              Else
+                                  Target.value = Replace(oldVal, newVal & ", ", "")
+                              End If
+                          Else
+                              Target.value = oldVal _
+                                  & ", " & newVal
+                              '      NOTE: you can use a line break,
+                              '      instead of a comma
+                              '      Target.Value = oldVal _
+                              '        & Chr(10) & newVal
+                          End If
+                      End If
+                  End If
+
+            ElseIf Target.Validation.Type = 3 Then 'Is list validation
               Application.EnableEvents = False
               newVal = Target.value
               Application.Undo
@@ -109,8 +146,9 @@ exitHandler:
 
     If categoryColIndex = 0 Then
         Debug.Print "Column 'online_categories' not found in IM_FORM sheet."
-        Exit Sub ' Exit if "online_categories" header not found
-    End If
+        'Call HighlightEmptyCellUnderRequire
+        'Exit Sub ' Exit if "online_categories" header not found
+    Else
 
     Debug.Print "Column 'online_categories' found at index: " & categoryColIndex
     Dim selectedRow As Long
@@ -196,6 +234,7 @@ exitHandler:
         End If
 Skiptonextcategories:
     Next categoryCell
+ End If
 
 Application.EnableEvents = True ' Re-enable events
 
@@ -262,6 +301,125 @@ Application.EnableEvents = True ' Re-enable events
             lookupAtb = "N/A"
         End If
     End Function
+
+Sub HighlightEmptyCellUnderRequire()
+    Debug.Print "call sub"
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    Dim targetColumn As Long
+
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets("IM_FORM") ' Replace "YourSheetName" with the actual name of your sheet
+
+    ' Find the target column (assuming "IBC" is in the first row)
+    On Error Resume Next
+    IBCcolumn = ws.Rows(1).Find("ibc").Column
+    On Error GoTo 0
+
+    ' Check if the target column is found
+    If IBCcolumn = 0 Then
+        MsgBox "Column 'IBC' not found!", vbExclamation
+        Exit Sub
+    End If
+
+    ' Find the last row with data in the target column
+    lastRow = ws.Cells(ws.Rows.Count, IBCcolumn).End(xlUp).Row
+    lastColumn = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
+
+
+    ' Loop through each row starting from row 2 (assuming headers are in row 1)
+    For i = 2 To lastRow
+        For ColCheck = 1 To lastColumn
+            ' Check if the value in column A contains "Require" (case-insensitive)
+            If InStr(1, UCase(ws.Cells(i, ColCheck).value), "Require", vbTextCompare) > 0 Then
+                ' Check if the cell under the "IBC" column is empty
+                For j = i To lastRow
+                    If Not IsEmpty(ws.Cells(j + 2, IBCcolumn).value) Then
+                        ' Highlight the cell under the "IBC" column in red
+                        If IsEmpty(ws.Cells(j + 2, ColCheck).value) Then
+                            ws.Cells(j + 2, ColCheck).Interior.Color = RGB(255, 143, 143)
+                        Else
+                            ws.Cells(j + 2, ColCheck).Interior.Color = xlNone
+                        End If
+                    End If
+                Next j
+            End If
+        Next ColCheck
+    Next i
+End Sub
+Sub HighlightedCellsInfo()
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim cell As Range
+    Dim lastRow As Long
+    Dim currentRow As Long
+    Dim highlightedCells As String
+
+    ' Set the worksheet and range to be checked
+    Set ws = ThisWorkbook.Sheets("IM_FORM") ' Change "Sheet1" to your actual sheet name
+    Set rng = ws.UsedRange ' You can modify the range as needed
+
+    ' Initialize variables
+    lastRow = rng.Rows.Count
+    currentRow = 0
+    highlightedCells = ""
+
+    ' Loop through each cell in the specified range
+    For Each cell In rng
+        ' Check if the cell's interior color is RGB(255, 143, 143)
+        If cell.Interior.Color = RGB(255, 143, 143) Then
+            ' Check if the cell is in the same row as the previous one
+            If cell.Row <> currentRow Then
+                ' If not the first row, add a new line
+                If currentRow <> 0 Then
+                    highlightedCells = highlightedCells & vbCrLf
+                End If
+                ' Record the row and column information
+                highlightedCells = highlightedCells & "Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column)&"______"
+            Else
+                ' If the cell is in the same row, append the column information
+                highlightedCells = highlightedCells & ", " & ColumnToLetter(cell.Column)
+            End If
+
+            ' Update the current row
+            currentRow = cell.Row
+        End If
+    Next cell
+
+    ' Display the recorded information in a message box
+    If highlightedCells <> "" Then
+        MsgBox "Highlighted Cells:" & vbCrLf & highlightedCells
+    Else
+        MsgBox "No cells with the specified color found."
+    End If
+End Sub
+
+Function ColumnToLetter(col As Integer) As String
+    Dim temp As Integer
+    Dim letter As String
+    temp = col
+    letter = ""
+    Do While temp > 0
+        letter = Chr(((temp - 1) Mod 26) + 65) & letter
+        temp = (temp - 1) \ 26
+    Loop
+    ColumnToLetter = letter
+End Function
+
+Sub RunValidation()
+    Call HighlightEmptyCellUnderRequire
+    Call HighlightedCellsInfo
+End Sub
+
+
+
+
+
+
+
+
+
 
 
 

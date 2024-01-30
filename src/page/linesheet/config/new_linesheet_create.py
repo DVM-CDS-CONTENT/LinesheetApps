@@ -6,6 +6,21 @@ import pandas as pd
 import openpyxl
 from openpyxl.styles import PatternFill
 from openpyxl.formatting.rule import FormulaRule, CellIsRule
+import openpyxl
+from openpyxl.drawing.image import Image
+from openpyxl.styles import PatternFill
+
+def create_button( worksheet, cell, text, macro_name):
+    # Add a button with a macro to the specified cell
+    button = worksheet[cell]
+    button.value = text
+
+    # Assign a macro to the button
+    worksheet.cell(row=1, column=1).hyperlink = f"#{macro_name}"
+
+    # Set the background color of the button to black
+    button.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
+
 
 def convert_hex_to_argb(hex_code):
     if hex_code!="" and hex_code!=None and hex_code!="None" and len(hex_code)==7:
@@ -479,7 +494,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_inlink_data.append(['attribute', 'value'])
     ws_inlink_data.append(['brand', brand])
     ws_inlink_data.append(['sku', sku])
-    ws_inlink_data.append(['stock_source', stock_source])
+    ws_inlink_data.append(['stock_source', "=IM_FORM!C6'"])
     ws_inlink_data.append(['template', template])
     ws_inlink_data.append(['sale_channel', sale_channel])
     ws_inlink_data.append(['launch_date', launch_date])
@@ -708,6 +723,9 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # Add the macro to the sheet
     # sheet.CodeName = "Sheet1"
     sheet.OnSheetActivate = "im_form.Worksheet_Change"
+
+    #create_button for validate macro
+    create_button(sheet,"G4", "Validate Sheet", "RunValidation")
     filename = 'linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm'
     # try:
         # wb.win32com.client.save()
