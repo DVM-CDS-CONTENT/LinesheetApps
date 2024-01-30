@@ -17,7 +17,6 @@ def create_button( worksheet, cell, text, macro_name):
 
     # Assign a macro to the button
     worksheet.cell(row=1, column=1).hyperlink = f"#{macro_name}"
-
     # Set the background color of the button to black
     button.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
 
