@@ -92,7 +92,7 @@ def family_variant(linesheet, linesheet_code, my_dict):
 
             return str(family(linesheet, 'family', my_dict))+"_"+str(variant)
         else:
-            print("Info : group_by is empty", flush=True)
+            # print("Info : group_by is empty", flush=True)
             return ''
     else:
         return ''
@@ -374,11 +374,13 @@ def description(linesheet, linesheet_code, my_dict):
     set_includes_html = convert_to_html_with_li(set_include)
     set_includes_path = '_set_include' if set_include else ''
 
+
+
     # Selected layout
     categories_mapping = my_dict['categories_mapping']
     layout_name = categories_mapping.set_index('label_th')['description_block_template'][linesheet['online_categories']]
-    layout_th = 'description_layout\\th\\' + layout_name + set_includes_path + '_th.html'
-    layout_en = 'description_layout\\en\\' + layout_name + set_includes_path + '_en.html'
+    layout_th = '\\src\\page\\linesheet\\convertor\\description_layout\\th\\' + layout_name + set_includes_path + '_th.html'
+    layout_en = '\\src\\page\\linesheet\\convertor\\description_layout\\en\\' + layout_name + set_includes_path + '_en.html'
 
     # Replace with template
     if th_identity_linesheet in linesheet_code:
@@ -399,6 +401,30 @@ def description(linesheet, linesheet_code, my_dict):
         description = description.replace("#product_information",  markdown_to_html(linesheet['product_information_en']))
         description = description.replace("#set_include", set_includes_html)
         description = description.replace("#caution", caution_en)
+
+
+    # Add size guide
+    #--Split sku to folder path
+    sku_number=sku(linesheet,linesheet_code,my_dict)
+    sku_number=sku_number.lower()
+    sku_path = '/'.join([sku_number[i:i+2] for i in range(0, len(sku_number), 2)])
+
+    #--convert product name and brand name to naming conversion
+    cleaned_brand = re.sub(r'[^a-zA-Z0-9]', '', linesheet['brand_name']).lower()
+    cleaned_name = re.sub(r'[^a-zA-Z0-9]', '', linesheet['product_name_en']).lower()
+
+    #--concatenate with full path
+    Full_link = "https://www.central.co.th/content/dam/central/catalog/products/retail/"+cleaned_brand+"-"+cleaned_name+"-"+sku_path+"/"+sku_number+"-20.jpg"
+
+    #--insert with html image tac
+
+    Html_Tag ='<p><img src="'+Full_link+'" alt="" /></p>'
+
+    # if linesheet['link_to_size_guide_images']!="":
+
+    #     description=description+"<br>"+Html_Tag
+
+    description=description+"<br>"+Html_Tag
 
     return description
 

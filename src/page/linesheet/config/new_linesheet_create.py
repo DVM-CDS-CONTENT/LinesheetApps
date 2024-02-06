@@ -7,18 +7,10 @@ import openpyxl
 from openpyxl.styles import PatternFill
 from openpyxl.formatting.rule import FormulaRule, CellIsRule
 import openpyxl
-from openpyxl.drawing.image import Image
 from openpyxl.styles import PatternFill
 
-def create_button( worksheet, cell, text, macro_name):
-    # Add a button with a macro to the specified cell
-    button = worksheet[cell]
-    button.value = text
 
-    # Assign a macro to the button
-    worksheet.cell(row=1, column=1).hyperlink = f"#{macro_name}"
-    # Set the background color of the button to black
-    button.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
+
 
 
 def convert_hex_to_argb(hex_code):
@@ -250,12 +242,26 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     selected_sale_channel_list = list(map(str,sale_channel.split(",")))
 
     # - Connect to the database
+    #get source of mapping
+    # #UAT
+    # index_source = "https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1054033513"
+    #PROD
+    index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1370721427"
+    url = convert_gsheets_url(index_source)
+    index = pd.read_csv(url)
 
-    # engine = create_engine('mysql+mysqlconnector://data_studio:a417528639@156.67.217.3/im_form')
+    attribute_setting_url = index[index['sheet_name'] == 'attribute_setting']['url'].values[0]
+    attribute_option_url = index[index['sheet_name'] == 'attribute_option']['url'].values[0]
+    categories_mapping_url = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
+    shipping_mapping_url = index[index['sheet_name'] == 'shipping_mapping']['url'].values[0]
+    color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[0]
+    dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
+    jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
+    datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
 
     # - get header linesheet
 
-    attribute_setting = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
+    attribute_setting = convert_gsheets_url(attribute_setting_url)
     attribute = pd.read_csv(attribute_setting)
     attribute = attribute[attribute['status']=='Actived']
     attribute_original=attribute
@@ -270,21 +276,22 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     attribute = attribute.drop_duplicates(subset=['linesheet_code'])
     attribute = attribute.fillna("")
 
+
     # - get  store
-    datapump_store_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1594843645')
+    datapump_store_query = convert_gsheets_url(datapump_store_mapping_url)
     datapump_store = pd.read_csv(datapump_store_query)
     datapump_store['linesheet_code']='store_stock'
     datapump_store['input_option']=datapump_store['system_label']
     datapump_store = datapump_store[['linesheet_code','input_option']]
 
     # - get dropdown
-    attribute_options_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1335398590')
-    attribute_options = pd.read_csv(attribute_options_query)
+    attribute_options_query = convert_gsheets_url(attribute_option_url)
+    attribute_options = pd.read_csv(attribute_options_query, dtype='str')
+    attribute_options = attribute_options.fillna("")
     attribute_options["code_lookup"] = attribute_options['linesheet_code']+attribute_options['input_option']
     attribute_options["label_lookup"] = attribute_options['linesheet_code']+attribute_options['option_en']
     lookup_sheet = attribute_options[['linesheet_code','code_lookup','label_lookup','input_option','option_en']]
     attribute_options = attribute_options[['linesheet_code','input_option']]
-    attribute_options = pd.concat([attribute_options, datapump_store], ignore_index=True)
     attribute_options = attribute_options.drop_duplicates()
     attribute_options = attribute_options.fillna("")
 
@@ -293,8 +300,10 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
 
     # - get categories
 
-    categories_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
-    categories_setting = pd.read_csv(categories_setting_query)
+    # query = "SELECT label_th FROM im_form.categories_setting where deepen_level = 1 and family in ('"+filter_template_cat_sql +"')"
+    # categories_setting = pd.read_sql_query(query, engine)
+    categories_setting_query = convert_gsheets_url(categories_mapping_url)
+    categories_setting = pd.read_csv(categories_setting_query, dtype='str')
     categories_setting=categories_setting[categories_setting['family'].isin(selected_template_list)]
     categories_setting=categories_setting[categories_setting['deepen_level']==1]
     categories_setting=categories_setting[['label_th']]
@@ -303,32 +312,65 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # - get categories family template
 
 
-    family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1407377747')
-    family_setting = pd.read_csv(family_setting_query)
-    family_setting = family_setting[['linesheet_code' ,'bath_body','fragrance','hair_care','personal_care','health_care','makeup','nails', 'nails_tools','makeup_tools','skincare','gadgets','auto__motorcycle_supplies', 'computers', 'television', 'console_gaming', 'desk_phone', 'mobile__tablets', 'gaming', 'fashion_accessory', 'watches', 'gift_card', 'hampers', 'small_appliances', 'fans__air_purifiers', 'home_equipment__supplies', 'large_appliances', 'tv_accessories', 'home_decoration', 'furniture', 'bedding', 'books', 'hobby', 'cooking_dining', 'grocery', 'stationery', 'pet_equipment__supplies', 'toolings', 'clothing', 'shoes', 'swimwear', 'underwear', 'baby_feeding', 'kids', 'toys', 'sports_accessory', 'sports_equipments', 'camping__equipments', 'luggages', 'travel_accessories']]
+    family_setting_query = convert_gsheets_url(attribute_setting_url)
+    family_setting = pd.read_csv(family_setting_query , dtype='str')
+    family_setting = family_setting.fillna("")
+    # family_setting = attribute_original
+    columns_to_drop = ['id',
+                        'information_type',
+                        'status',
+                        'enhancement',
+                        'specific_brand',
+                        'field_label',
+                        'field_type',
+                        'both_language',
+                        'scopable',
+                        'description',
+                        'tool_tips',
+                        'session',
+                        'sub_session',
+                        'merge_group',
+                        'sale_channel',
+                        'formula',
+                        'pim_code',
+                        'pim_code_hard_header',
+                        'convertor_function',
+                        'linesheet_code_unit',
+                        'label_desc_en',
+                        'label_desc_th',
+                        'value_desc_format',
+                        'sort_bullet_point',
+                        'grouping_common',
+                        'owner_field']
+
+    family_setting = family_setting.drop(columns_to_drop, axis=1)
+    # family_setting = family_setting[['linesheet_code', 'auto__motorcycle_supplies', 'baby_feeding', 'bath_body', 'bedding', 'books', 'camping_equipments', 'clothing', 'computers', 'console_gaming', 'cooking_dining', 'desk_phone', 'fans_air_purifiers', 'fashion_accessory', 'fragrance', 'furniture', 'gadgets', 'gaming', 'gift_card', 'groceries', 'hair_care', 'health_care', 'home_decoration', 'home_equipment_supplies', 'hobby', 'luggages', 'large_appliances', 'makeup', 'makeup_tools', 'mobile_tablets', 'nails', 'nails_tools', 'personal_care', 'pet_equipment_supplies', 'skincare', 'small_appliances', 'sports_accessory', 'sports_equipments', 'stationery', 'swimwear', 'television', 'toolings', 'toys', 'travel_accessories', 'underwear', 'watches']]
+
     family_setting = family_setting.fillna("")
     family_setting = family_setting.astype(str)
 
 
-    categories_family_setting_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1850526451')
-    categories_family_setting = pd.read_csv(categories_family_setting_query)
+    categories_family_setting_query = convert_gsheets_url(categories_mapping_url)
+    categories_family_setting = pd.read_csv(categories_family_setting_query, dtype='str')
     categories_family_setting = categories_family_setting[categories_family_setting['deepen_level']==1]
     categories_family_setting = categories_family_setting[['label_th','family']]
     categories_family_setting = categories_family_setting.fillna("")
 
 
     # - get dept_subdept
-    dept_subdept_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=134541435')
-    dept_subdept_mapping = pd.read_csv(dept_subdept_mapping_query)
+    # query = "SELECT * FROM im_form.dept_subdept_mapping;"
+    # dept_subdept_mapping = pd.read_sql_query(query, engine)
+    dept_subdept_mapping_query = convert_gsheets_url(dept_subdept_mappping_url)
+    dept_subdept_mapping = pd.read_csv(dept_subdept_mapping_query, dtype='str')
     dept_subdept_mapping=dept_subdept_mapping.fillna("None")
 
-    jda_size_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit?pli=1#gid=62908308')
-    jda_size_mapping = pd.read_csv(jda_size_mapping_query)
+    jda_size_mapping_query = convert_gsheets_url(jda_size_mapping_url)
+    jda_size_mapping = pd.read_csv(jda_size_mapping_query, dtype='str')
     jda_size_mapping = jda_size_mapping.fillna("None")
 
 
-    color_mapping_query = convert_gsheets_url('https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=542155325')
-    color_mapping = pd.read_csv(color_mapping_query)
+    color_mapping_query = convert_gsheets_url(color_mapping_url)
+    color_mapping = pd.read_csv(color_mapping_query, dtype='str')
     color_mapping = color_mapping.fillna("None")
 
     # - Merge categories to options
@@ -493,7 +535,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_inlink_data.append(['attribute', 'value'])
     ws_inlink_data.append(['brand', brand])
     ws_inlink_data.append(['sku', sku])
-    ws_inlink_data.append(['stock_source', "=IM_FORM!C6'"])
+    ws_inlink_data.append(['stock_source', "=IM_FORM!C6"])
     ws_inlink_data.append(['template', template])
     ws_inlink_data.append(['sale_channel', sale_channel])
     ws_inlink_data.append(['launch_date', launch_date])
@@ -505,6 +547,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_inlink_data.append(['check_require', 'unavailable'])
     ws_inlink_data.append(['check_list_validations', 'unavailable'])
     ws_inlink_data.append(['contact_person', contact_person])
+    ws_inlink_data.append(['msg_validate_mandatory_checking', "Not validate yet"])
+    ws_inlink_data.append(['msg_validate_type_checking', "Not validate yet"])
 # ##### identity row
     row_field_type=9
     row_session=10
@@ -543,7 +587,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     worksheet_form.cell(row=4, column=5).value = '=IN_LINK_DATA!B15'
 
     worksheet_form.cell(row=3, column=2).font = openpyxl.styles.Font(color='C00000',bold=True)
-    worksheet_form.cell(row=3, column=3).font = openpyxl.styles.Font(color='BFBFBF',bold=False)
+
+    worksheet_form.cell(row=3, column=3).font = openpyxl.styles.Font(color='C00000',bold=False)
 
     worksheet_form.cell(row=3, column=2).fill = openpyxl.styles.PatternFill(patternType='solid', fgColor='BFBFBF')
     worksheet_form.cell(row=3, column=3).fill = openpyxl.styles.PatternFill(patternType='solid', fgColor='BFBFBF')
@@ -563,6 +608,15 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     worksheet_form.cell(row=3, column=5).fill = openpyxl.styles.PatternFill(patternType='solid', fgColor='BFBFBF')
     worksheet_form.cell(row=3, column=6).fill = openpyxl.styles.PatternFill(patternType='solid', fgColor='BFBFBF')
 
+
+    #  #create_button for validate macro
+    # worksheet_form.cell(row=4, column=6).value = "Validate Information"
+    # worksheet_form.cell(row=4, column=6).font = openpyxl.styles.Font(color='FFFFFF')
+    # worksheet_form.cell(row=4, column=6).font = openpyxl.styles.Font(bold=False)
+    # worksheet_form.cell(row=4, column=6).fill = openpyxl.styles.PatternFill(bgColor="3A3838")
+    # worksheet_form.cell(row=4, column=7).fill = openpyxl.styles.PatternFill(bgColor="3A3838")
+    # worksheet_form.cell(row=4, column=8).fill = openpyxl.styles.PatternFill(bgColor="3A3838")
+    # worksheet_form.cell(row=4, column=9).fill = openpyxl.styles.PatternFill(bgColor="3A3838")
 
 # #### Convert require field to indicator
     # change indicator
@@ -723,8 +777,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # sheet.CodeName = "Sheet1"
     sheet.OnSheetActivate = "im_form.Worksheet_Change"
 
-    #create_button for validate macro
-    create_button(sheet,"G4", "Validate Sheet", "RunValidation")
+
+
+
+
+
+
     filename = 'linesheet/'+'CDS_LINESHEET_'+str(brand).upper()+'_'+str(sku)+'_SKUs_TID_'+track_id+'.xlsm'
     # try:
         # wb.win32com.client.save()

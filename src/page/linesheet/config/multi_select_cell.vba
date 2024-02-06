@@ -42,7 +42,7 @@ Exitsub:
                 ' For example, you can use a MsgBox to prompt the user for multiple values
 
                 newVal = Target.value
-                Debug.Print "newVal " & newVal
+                'Debug.Print "newVal " & newVal
                 Application.Undo
                 oldVal = Cells(6, 3).value
                 Target.value = newVal
@@ -145,7 +145,7 @@ exitHandler:
     On Error GoTo 0
 
     If categoryColIndex = 0 Then
-        Debug.Print "Column 'online_categories' not found in IM_FORM sheet."
+        'Debug.Print "Column 'online_categories' not found in IM_FORM sheet."
         'Call HighlightEmptyCellUnderRequire
         'Exit Sub ' Exit if "online_categories" header not found
     Else
@@ -158,8 +158,7 @@ exitHandler:
     Set familyCategoriesRange = familyTemplateSheet.Range(familyTemplateSheet.Cells(2, categoryColIndexSet), familyTemplateSheet.Cells(familyTemplateSheet.Cells(familyTemplateSheet.Rows.Count, categoryColIndexSet).End(xlUp).Row, categoryColIndexSet))
     Set imFormRange = imFormSheet.Range("A2", imFormSheet.Cells(imFormSheet.Cells(imFormSheet.Rows.Count, imFormSheet.Columns.Count).End(xlUp).Row, imFormSheet.Columns.Count))
 
-    Debug.Print "imFormCategoriesRange: " & imFormCategoriesRange.Address
-    Debug.Print "imFormRange: " & imFormRange.Address
+
 
     Application.EnableEvents = False ' Prevent triggering events while making changes
 
@@ -171,7 +170,7 @@ exitHandler:
         mismatch = False
         If category <> "" Then
 
-            Debug.Print "Processing category: " & category
+            ' Debug.Print "Processing category: " & category
 
             ' Find the attributes associated with the category in FAMILY_TEMPLATE
             Dim attributeColumnIndex As Long
@@ -183,7 +182,7 @@ exitHandler:
                     Exit For
                 End If
             Next i
-            Debug.Print "attributeColumnIndex: " & attributeColumnIndex
+            'Debug.Print "attributeColumnIndex: " & attributeColumnIndex
 
             ' Find the attributes associated with the category in FAMILY_TEMPLATE
             Dim categoryRow As Range
@@ -191,13 +190,13 @@ exitHandler:
 
             For j = 2 To 5
                 If categoryRow Is Nothing Then
-                   Debug.Print "skip: " & category
+                   'Debug.Print "skip: " & category
                 Else
                     If attributeColumnIndex > 0 Then
                         attributesInFamily = familyTemplateSheet.Cells(familyCategoriesRange.Find(category).Row, j).value
                     End If
 
-                    Debug.Print "attributesInFamily: " & attributesInFamily
+                    'Debug.Print "attributesInFamily: " & attributesInFamily
 
                     ' Highlight cells in the current row based on attributesInFamily
                     If attributesInFamily <> "" Then
@@ -303,7 +302,7 @@ Application.EnableEvents = True ' Re-enable events
     End Function
 
 Sub HighlightEmptyCellUnderRequire()
-    Debug.Print "call sub"
+
     Dim ws As Worksheet
     Dim lastRow As Long
     Dim i As Long
@@ -376,10 +375,10 @@ Sub HighlightedCellsInfo()
                     highlightedCells = highlightedCells & vbCrLf
                 End If
                 ' Record the row and column information
-                highlightedCells = highlightedCells & "Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column)&"______"
+                highlightedCells = highlightedCells & "Error : Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
             Else
                 ' If the cell is in the same row, append the column information
-                highlightedCells = highlightedCells & ", " & ColumnToLetter(cell.Column)
+                highlightedCells =  highlightedCells & "Error :  Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
             End If
 
             ' Update the current row
@@ -389,11 +388,186 @@ Sub HighlightedCellsInfo()
 
     ' Display the recorded information in a message box
     If highlightedCells <> "" Then
-        MsgBox "Highlighted Cells:" & vbCrLf & highlightedCells
+      ' Set the worksheet
+        Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
+        IDSlastRow = ws.Cells(InlinkDataSheet.Rows.Count, 1).End(xlUp).Row
+
+        For i = 1 To IDSlastRow
+            If InlinkDataSheet.Cells(i, 1).value = "msg_validate_mandatory_checking" Then
+                InlinkDataSheet.Cells(i, 2).value = highlightedCells
+            End If
+        Next i
+
+        MsgBox "Mandatory checking" & vbCrLf & highlightedCells
     Else
-        MsgBox "No cells with the specified color found."
+        MsgBox "Passed : No cells with the specified color found."
     End If
 End Sub
+
+
+
+
+Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink)
+    If Target.Range.Address = "$F$4" Then
+        Call HighlightEmptyCellUnderRequire
+        Call HighlightedCellsInfo
+    End If
+End Sub
+
+Sub HighlightWrongTypeValue()
+
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    Dim targetColumn As Long
+    Dim status As Integer
+
+
+    Warning_Message = ""
+
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets("IM_FORM") ' Replace "YourSheetName" with the actual name of your sheet
+
+    ' Find the target column (assuming "IBC" is in the first row)
+    On Error Resume Next
+    IBCcolumn = ws.Rows(1).Find("ibc").Column
+    On Error GoTo 0
+
+    ' Check if the target column is found
+    If IBCcolumn = 0 Then
+        MsgBox "Column 'IBC' not found!", vbExclamation
+        Exit Sub
+    End If
+
+    ' Find the last row with data in the target column
+    lastRow = ws.Cells(ws.Rows.Count, IBCcolumn).End(xlUp).Row
+    lastColumn = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
+
+
+    ' Loop through each row starting from row 2 (assuming headers are in row 1)
+    For i = 2 To lastRow
+        For ColCheck = 1 To lastColumn
+            ' Check if the value in column A contains "Require" (case-insensitive)
+            If InStr(1, UCase(ws.Cells(i, ColCheck).value), "Formula", vbTextCompare) > 0 Or _
+            InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Number only", vbTextCompare) > 0 Or _
+            InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Simple Select", vbTextCompare) > 0 Or _
+            InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Multiple Select", vbTextCompare) > 0 Or _
+            InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "link", vbTextCompare) > 0 _
+            Then
+                ' Check if the cell under the "IBC" column is empty
+                For j = i To lastRow
+                     If Not IsEmpty(ws.Cells(j + 6, IBCcolumn).value) Then
+                      'check type
+                          If Not ws.Cells(j + 6, ColCheck).value = "" Then
+                            If ws.Cells(i, ColCheck).value = "Formula" Then
+                                If Not ws.Cells(j + 6, ColCheck).HasFormula Then
+                                    Warning_Message = Warning_Message & "Value at row  " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " not a " & ws.Cells(i, ColCheck).value & " type" & vbCrLf
+                                End If
+                            ElseIf ws.Cells(i, ColCheck).value = "Number only" Then
+                                If Not IsNumeric(ws.Cells(j + 6, ColCheck).value) Then
+                                    Warning_Message = Warning_Message & "Value at row  " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " not a " & ws.Cells(i, ColCheck).value & " type" & vbCrLf
+                                End If
+                            ElseIf ws.Cells(i, ColCheck).value = "link" Then
+                                If Not CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).value) = 200 And Not CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).Hyperlinks(1).Address) = 200 Then
+                                    Warning_Message = Warning_Message & "the link at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is invalid " & vbCrLf
+                                End If
+                            ElseIf ws.Cells(i, ColCheck).value = "Simple Select" Then
+
+                                If CheckDropdownList(ws.Cells(j + 6, ColCheck).value, ws.Cells(1, ColCheck).value) = False Then
+                                    Warning_Message = Warning_Message & "the value at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is not indropdown list " & vbCrLf
+                                End If
+                            End If
+
+
+
+                      End If
+                      'end check type
+
+                    End If
+                Next j
+            End If
+        Next ColCheck
+    Next i
+    If Warning_Message <> "" Then
+
+        ' Set the worksheet
+        Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
+        IDSlastRow = ws.Cells(InlinkDataSheet.Rows.Count, 1).End(xlUp).Row
+
+        For i = 1 To lastRow
+            If InlinkDataSheet.Cells(i, 1).value = "msg_validate_type_checking" Then
+                InlinkDataSheet.Cells(i, 2).value = Warning_Message
+            End If
+        Next i
+
+
+
+        MsgBox "Type Checking: " & vbCrLf & Warning_Message
+    Else
+        MsgBox "Passed : All of value follow type of attribtue"
+    End If
+End Sub
+Function GetLinkStatus(link As String) As Integer
+    On Error Resume Next
+    Dim xmlhttp As Object: Set xmlhttp = CreateObject("MSXML2.ServerXMLHTTP")
+    xmlhttp.Open "HEAD", link, False
+    xmlhttp.send
+    GetLinkStatus = xmlhttp.status
+    On Error GoTo 0
+End Function
+
+Function CheckHyperlinkStatus(link As String) As Integer
+    CheckHyperlinkStatus = GetLinkStatus(link)
+End Function
+Function CheckDropdownList(value_in_cell As Variant, name_tag As String) As Boolean
+    Dim ws As Worksheet
+    Dim validationList As Variant
+    Dim namedRange As Range
+    Dim allowedValues() As Variant
+    Dim i As Long
+
+    ' Assuming you have a reference to the worksheet
+    ' Replace "IM_FORM" with the actual sheet name
+    Set ws = ThisWorkbook.Sheets("ATT_OPTION")
+
+    ' Check if the named range exists
+    On Error Resume Next
+    Set namedRange = ws.Range(name_tag)
+
+    On Error GoTo 0
+
+    If Not namedRange Is Nothing Then
+        ' Get the allowed values from the named range
+        validationList = namedRange.value
+
+        ' Convert the validationList to a dynamic array
+        'ReDim allowedValues(1 To UBound(validationList))
+
+
+
+        ' Check if the value is in the named range
+        CheckDropdownList = IsValueInArray(value_in_cell, validationList)
+    Else
+        ' If the named range doesn't exist, return False
+        CheckDropdownList = False
+    End If
+End Function
+Function IsValueInArray(value As Variant, arr As Variant) As Boolean
+    Dim i As Long
+
+
+    For i = 1 To UBound(arr)
+
+        If arr(i, 1) = value Then
+            IsValueInArray = True
+            GoTo ext
+        End If
+    Next i
+
+    IsValueInArray = False
+ext:
+
+End Function
 
 Function ColumnToLetter(col As Integer) As String
     Dim temp As Integer
@@ -407,10 +581,15 @@ Function ColumnToLetter(col As Integer) As String
     ColumnToLetter = letter
 End Function
 
+
 Sub RunValidation()
     Call HighlightEmptyCellUnderRequire
     Call HighlightedCellsInfo
+    Call HighlightWrongTypeValue
 End Sub
+
+
+
 
 
 

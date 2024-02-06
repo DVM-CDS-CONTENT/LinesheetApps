@@ -18,8 +18,12 @@ def get_html_value(html_file, tag, attribute=None):
     current_directory = os.getcwd()
     parent_directory = os.path.dirname(current_directory)
     # Load HTML file
-    with open(parent_directory+'\\spear\\resources\\src\\page\\linesheet\\convertor\\'+html_file, 'r', encoding='utf-8') as f:
+
+    with open(current_directory+html_file, 'r', encoding='utf-8') as f:
         html = f.read()
+
+    # with open(parent_directory+'\\spear\\resources\\src\\page\\linesheet\\convertor\\'+html_file, 'r', encoding='utf-8') as f:
+    #     html = f.read()
 
     return html
 
@@ -50,30 +54,64 @@ def lookup_label_option(linesheet, code_with_local, my_dict , language,value):
     return label
 
 
-def add_parent_column(df, parent_prefix, parent_bu, parent_pa_id, parent_year, parent_month,running):
+# def add_parent_column(df, parent_prefix, parent_bu, parent_pa_id, parent_year, parent_month,running):
+#     import pandas as pd
+
+#     # try:
+#         # create a dictionary that maps each catalog to a group number
+#     catalog_groups = {}
+#     for catalog in df['catalogue_number_for_group'].unique():
+#         if len(df[df['catalogue_number_for_group'] == catalog]) > 1 :
+#             parent_running = str(running).zfill(4)
+#             parent_month = str(parent_month).zfill(2)
+#             parent_year = str(parent_year).zfill(2)
+#             parent_id = f'{parent_prefix}{parent_bu}{parent_pa_id}{parent_year}{parent_month}{parent_running}'
+#             catalog_groups[catalog] = f'{parent_id}'
+#             running += 1
+#         else:
+#             catalog_groups[catalog] = ''
+
+def add_parent_column(df, parent_prefix, parent_bu, parent_pa_id, parent_year, parent_month, running):
     import pandas as pd
 
-    # try:
-        # create a dictionary that maps each catalog to a group number
-    catalog_groups = {}
-    for catalog in df['catalogue_number_for_group'].unique():
-        if len(df[df['catalogue_number_for_group'] == catalog]) > 1 :
-            parent_running = str(running).zfill(4)
-            parent_month = str(parent_month).zfill(2)
-            parent_year = str(parent_year).zfill(2)
-            parent_id = f'{parent_prefix}{parent_bu}{parent_pa_id}{parent_year}{parent_month}{parent_running}'
-            catalog_groups[catalog] = f'{parent_id}'
-            running += 1
-        else:
-            catalog_groups[catalog] = ''
+    try:
+        # Create a dictionary that maps each catalog to a group number
+        catalog_groups = {}
+        for catalog in df['catalogue_number_for_group'].unique():
+            if len(df[df['catalogue_number_for_group'] == catalog]) > 1:
+                parent_running = str(running).zfill(4)
+                parent_month = str(parent_month).zfill(2)
+                parent_year = str(parent_year).zfill(2)
+                parent_id = f'{parent_prefix}{parent_bu}{parent_pa_id}{parent_year}{parent_month}{parent_running}'
+                catalog_groups[catalog] = f'{parent_id}'
+                running += 1
+            else:
+                catalog_groups[catalog] = ''
 
-    # add the group column to the dataframe
-    df['parent'] = [catalog_groups[catalog] for catalog in df['catalogue_number_for_group']]
-    df.loc[(df['catalogue_number_for_group'] == ''), 'parent'] = ''
-    # except KeyError as error:
-    #     print('Error : group error ->'+str(df.columns), flush=True)
+        # Create a new DataFrame with the 'parent' column
+        parent_series = pd.Series([catalog_groups[catalog] for catalog in df['catalogue_number_for_group']], name='parent')
+        new_columns = pd.concat([df, parent_series], axis=1)
 
-    return df
+        # Update the 'parent' column for rows with an empty 'catalogue_number_for_group'
+        new_columns.loc[new_columns['catalogue_number_for_group'] == '', 'parent'] = ''
+    except KeyError as error:
+        print('Error: group error -> ' + str(df.columns), flush=True)
+        return df
+
+    return new_columns
+
+# Example usage:
+# df = add_parent_column(df, 'prefix', 'bu', 'pa_id', 'year', 'month', 1)
+
+
+
+#     # add the group column to the dataframe
+#     df['parent'] = [catalog_groups[catalog] for catalog in df['catalogue_number_for_group']]
+#     df.loc[(df['catalogue_number_for_group'] == ''), 'parent'] = ''
+#     # except KeyError as error:
+#     #     print('Error : group error ->'+str(df.columns), flush=True)
+
+#     return df
 
 
 

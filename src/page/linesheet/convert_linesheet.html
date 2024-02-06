@@ -453,8 +453,9 @@ label.form-check-label{
         //clear log
         document.getElementById('convert_logs').innerHTML="";
         document.getElementById('result_convert').innerHTML ="";
+        var_send_to_validate=[sessionStorage.getItem('linesheet_file_path')]
         var_send_to_convert = [
-                                filePath,
+                                path.join(tempDir, 'temp_spear_convert.json'),
                                 parent_prefix,
                                 parent_bu,
                                 parent_us_id,
@@ -477,8 +478,8 @@ label.form-check-label{
                                 template
                             ]
 
-
-        new PythonShell(path.join(__dirname,`../src/page/linesheet/convertor/main.py`), { args: var_send_to_convert}  )
+        // start validation using VBA on files
+        new PythonShell(path.join(__dirname,`../src/page/linesheet/convertor/vba_caller.py`), { args: var_send_to_validate}  )
         .on('error', err => {console.error('An error occurred while running the Python script:', err);})
         .on('stderr', message => {
             console.error('Received error message:', message);
@@ -496,34 +497,9 @@ label.form-check-label{
                     'Okay',
                 );
             }
-
-            // valueError: invalid literal for int() with base 10: ''
         })
         .on('close', message => {
             convert_logs = document.getElementById('convert_logs').innerHTML;
-            // if(convert_logs.includes('Error')==false){
-            //     download_bt= '<button class="fw-bold" onclick="revealFileInExplorer(filePath);">download template</button><br><button class="fw-bold">download model</button>';
-            //     document.getElementById('result_convert').innerHTML = download_bt;
-
-            // }
-
-            var currentURL = window.location.href;
-            var basePath = currentURL.substring(0, currentURL.lastIndexOf('/'));
-            var minusOnePath = basePath.substring(0, basePath.lastIndexOf('/'));
-            var minusOnePath = minusOnePath.substring(0, minusOnePath.lastIndexOf('/'));
-            var minusOnePath = minusOnePath.substring(0, minusOnePath.lastIndexOf('/'));
-
-            download_bt= `
-            <div class="dropdown">
-                <a class="btn btn-sm btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Open the template</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" onclick="revealInFileExplorer(&#39;`+minusOnePath+`/converted&#39;)">Reveal in File Explorer</a></li>
-                </ul>
-            </div>`;
-
-            document.getElementById('result_convert').innerHTML = download_bt;
-
-            Notiflix.Block.remove('.convert_running');
 
         })
         .on('message', message => {
@@ -532,7 +508,7 @@ label.form-check-label{
 
             }else if(message.includes("Warning")){
                 message_style='<li class="text-warning m-1  fw-bold"><ion-icon name="warning-outline" class="me-1"></ion-icon>'+message+'</li>'
-            }else if(message.includes("Success")){
+            }else if(message.includes("Passed")){
                 message_style='<li class="text-success m-1  fw-bold"><ion-icon name="checkmark-outline" class="me-1"></ion-icon>'+message+'</li>'
             }
             else{
@@ -541,10 +517,69 @@ label.form-check-label{
             if(message!=''){
                 document.getElementById('convert_logs').innerHTML = document.getElementById('convert_logs').innerHTML + message_style
 
+                // start convert
+                new PythonShell(path.join(__dirname,`../src/page/linesheet/convertor/main.py`), { args: var_send_to_convert}  )
+                        .on('error', err => {console.error('An error occurred while running the Python script:', err);})
+                        .on('stderr', message => {
+                            console.error('Received error message:', message);
+                            if(message.includes('Warning')==false){
+                                Notiflix.Report.warning(
+                                    'Warning',
+                                    message,
+                                    'Okay',
+                                );
+
+                            }else{
+                                Notiflix.Report.warning(
+                                    'Warning',
+                                    message,
+                                    'Okay',
+                                );
+                            }
+                        })
+                        .on('close', message => {
+                            convert_logs = document.getElementById('convert_logs').innerHTML;
+
+                            var currentURL = window.location.href;
+                            var basePath = currentURL.substring(0, currentURL.lastIndexOf('/'));
+                            var minusOnePath = basePath.substring(0, basePath.lastIndexOf('/'));
+                            var minusOnePath = minusOnePath.substring(0, minusOnePath.lastIndexOf('/'));
+                            var minusOnePath = minusOnePath.substring(0, minusOnePath.lastIndexOf('/'));
+
+                            download_bt= `
+                            <div class="dropdown">
+                                <a class="btn btn-sm btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Open the template</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" onclick="revealInFileExplorer(&#39;`+minusOnePath+`/converted&#39;)">Reveal in File Explorer</a></li>
+                                </ul>
+                            </div>`;
+
+                            document.getElementById('result_convert').innerHTML = download_bt;
+
+                            Notiflix.Block.remove('.convert_running');
+
+                        })
+                        .on('message', message => {
+                            if(message.includes("Error")){
+                                message_style='<li class="text-danger m-1 fw-bold"><ion-icon name="alert-circle-outline" class="me-1"></ion-icon>'+message+'</li>'
+
+                            }else if(message.includes("Warning")){
+                                message_style='<li class="text-warning m-1 fw-bold"><ion-icon name="warning-outline" class="me-1"></ion-icon>'+message+'</li>'
+                            }else if(message.includes("Success")){
+                                message_style='<li class="text-success m-1 fw-bold"><ion-icon name="checkmark-outline" class="me-1"></ion-icon>'+message+'</li>'
+                            }
+                            else{
+                                message_style='<li class="text-dark m-1  fw-bold"><ion-icon name="information-circle-outline" class="me-1"></ion-icon>'+message+'</li>'
+                            }
+                            if(message!=''){
+                                document.getElementById('convert_logs').innerHTML = document.getElementById('convert_logs').innerHTML + message_style
+
+                            }
+                        })
+                    ;
             }
         })
 
-        ;
 
     }
 

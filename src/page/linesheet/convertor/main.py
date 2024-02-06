@@ -6,6 +6,8 @@ import sys
 from io import StringIO
 
 import importlib
+import re
+import numpy as np
 
 
 
@@ -82,14 +84,52 @@ caution_th='สีของผลิตภัณฑ์ที่แสดงบ�
 caution_en='In terms of item color, it may be slightly different from each monitor display and specification.'
 
 # query configurable
-from sqlalchemy import create_engine
-cnx = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host='156.67.217.3', db="im_form", user='data_studio', pw='a417528639'))
+# This function will convert the url to a download link
+def convert_gsheets_url(u):
+    try:
+        worksheet_id = u.split('#gid=')[1]
+    except:
+        # Couldn't get worksheet id. Ignore it
+        worksheet_id = None
+    u = re.findall('https://docs.google.com/spreadsheets/d/.*?/',u)[0]
+    u += 'export'
+    u += '?format=csv'
+    if worksheet_id:
+        u += '&gid={}'.format(worksheet_id)
+    return u
 
-query = 'SELECT * FROM im_form.attribute_setting where status = "Actived" and convertor_function <> "" and  convertor_function <> "-"'
-query_configurable = pd.read_sql(query, cnx)
+index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit?#gid=1370721427"
+url = convert_gsheets_url(index_source)
+index = pd.read_csv(url)
+
+attribute_setting_url = index[index['sheet_name'] == 'attribute_setting']['url'].values[0]
+attribute_option_url = index[index['sheet_name'] == 'attribute_option']['url'].values[0]
+categories_mapping_url = index[index['sheet_name'] == 'categories_mapping']['url'].values[0]
+shipping_mapping_url = index[index['sheet_name'] == 'shipping_mapping']['url'].values[0]
+color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[0]
+dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
+jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
+datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
+
+
+# from sqlalchemy import create_engine
+# cnx = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host='156.67.217.3', db="im_form", user='data_studio', pw='a417528639'))
+
+# query = 'SELECT * FROM im_form.attribute_setting where status = "Actived" and convertor_function <> "" and  convertor_function <> "-"'
+# query_configurable = pd.read_sql(query, cnx)
+# original_configurable = query_configurable
+
+url = convert_gsheets_url(attribute_setting_url)
+query_configurable = pd.read_csv(url,encoding='utf-8')
+query_configurable = query_configurable.fillna("")
+query_configurable = query_configurable[query_configurable["convertor_function"]!=""]
+query_configurable = query_configurable[query_configurable["convertor_function"]!="-"]
+query_configurable = query_configurable[query_configurable["status"]=="Actived"]
 original_configurable = query_configurable
 
-tac('Finish Query configurable data')
+
+
+# tac('Finish Query configurable data')
 
 # loop configurable the add the column not include in linesheet
 product_template_list = product_template.split(",")
@@ -125,18 +165,19 @@ query_configurable.loc[query_configurable['scopable']==1,'pim_code']= query_conf
 cloned_df.loc[cloned_df['scopable']==1,'pim_code']= cloned_df['pim_code']+channel
 
 
-query_configurable.loc[query_configurable['pim_code_hard_header'].notnull(),'pim_code']= query_configurable['pim_code_hard_header']
-cloned_df.loc[cloned_df['pim_code_hard_header'].notnull(),'pim_code']= cloned_df['pim_code_hard_header']
+# query_configurable.loc[query_configurable['pim_code_hard_header'].notnull() ,'pim_code']= query_configurable['pim_code_hard_header']
+query_configurable.loc[query_configurable['pim_code_hard_header']!="" ,'pim_code']= query_configurable['pim_code_hard_header']
+# cloned_df.loc[cloned_df['pim_code_hard_header'].notnull(),'pim_code']= cloned_df['pim_code_hard_header']
+cloned_df.loc[cloned_df['pim_code_hard_header']!="",'pim_code']= cloned_df['pim_code_hard_header']
 
 
 #add new column ao
 
 query_configurable_ao['linesheet_code_with_local'] = query_configurable_ao['linesheet_code']
-cloned_df_ao['linesheet_code_with_local'] = cloned_df_ao['linesheet_code']
+cloned_df_ao['linesheet_code_with_local'] = cloned_df_ao['linesheet_code'].copy()
 
 
 # add localable
-
 query_configurable_ao.loc[query_configurable_ao['both_language']==1,'linesheet_code_with_local']= query_configurable_ao['linesheet_code']+en_identity_linesheet
 cloned_df_ao.loc[cloned_df_ao['both_language']==1,'linesheet_code_with_local']= cloned_df_ao['linesheet_code']+th_identity_linesheet
 
@@ -144,15 +185,14 @@ query_configurable_ao.loc[query_configurable_ao['both_language']==1,'pim_code']=
 cloned_df_ao.loc[cloned_df_ao['both_language']==1,'pim_code']= cloned_df_ao['pim_code']+th_identity
 
 # add scopable
-
-
 query_configurable_ao.loc[query_configurable_ao['scopable']==1,'pim_code']= query_configurable_ao['pim_code']+channel
 cloned_df_ao.loc[cloned_df_ao['scopable']==1,'pim_code']= cloned_df_ao['pim_code']+channel
 
 # hard_code_column name
-
-query_configurable_ao.loc[query_configurable_ao['pim_code_hard_header'].notnull(),'pim_code']= query_configurable_ao['pim_code_hard_header']
-cloned_df_ao.loc[cloned_df_ao['pim_code_hard_header'].notnull(),'pim_code']= cloned_df_ao['pim_code_hard_header']
+# query_configurable_ao.loc[query_configurable_ao['pim_code_hard_header'].notnull(),'pim_code']= query_configurable_ao['pim_code_hard_header']
+query_configurable_ao.loc[query_configurable_ao['pim_code_hard_header']!="",'pim_code']= query_configurable_ao['pim_code_hard_header']
+# cloned_df_ao.loc[cloned_df_ao['pim_code_hard_header'].notnull(),'pim_code']= cloned_df_ao['pim_code_hard_header']
+cloned_df_ao.loc[cloned_df_ao['pim_code_hard_header']!="",'pim_code']= cloned_df_ao['pim_code_hard_header']
 
 
 # Concatenate the original and cloned dataframes
@@ -163,20 +203,47 @@ configurable_ao_fame = pd.concat([query_configurable_ao, cloned_df_ao], ignore_i
 
 
 
-query = 'SELECT linesheet_code,input_option,option_code,option_th,option_en FROM u749625779_cdscontent.pim_attr_convert_option_lu'
-mapping_option_value = pd.read_sql(query, cnx)
+# query = 'SELECT linesheet_code,input_option,option_code,option_th,option_en FROM u749625779_cdscontent.pim_attr_convert_option_lu'
+# mapping_option_value = pd.read_sql(query, cnx)
 
-query = 'SELECT label_th, full_categories_code , family , size_value_template , product_name_template_th  ,product_name_template_en,description_block_template FROM im_form.categories_setting;'
-categories_mapping = pd.read_sql(query, cnx)
+url = convert_gsheets_url(attribute_option_url)
+mapping_option_value = pd.read_csv(url)
+mapping_option_value = mapping_option_value[['linesheet_code','input_option','option_code','option_th','option_en']]
 
-query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where one_hr  = "Yes";'
-shipping_mapping_one_hr = pd.read_sql(query, cnx)
 
-query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where tree_hr  = "Yes";'
-shipping_mapping_tree_hr = pd.read_sql(query, cnx)
 
-query = 'SELECT attribute_code,input_option,option_code,option_th,option_en,color_group_pim_code FROM im_form.color_mapping'
-color_mapping = pd.read_sql(query, cnx)
+# query = 'SELECT label_th, full_categories_code , family , size_value_template , product_name_template_th  ,product_name_template_en,description_block_template FROM im_form.categories_setting;'
+# categories_mapping = pd.read_sql(query, cnx)
+
+url = convert_gsheets_url(categories_mapping_url)
+categories_mapping = pd.read_csv(url)
+categories_mapping = categories_mapping[['label_th','full_categories_code','family','size_value_template','product_name_template_th','product_name_template_en','description_block_template']]
+
+
+# query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where one_hr  = "Yes";'
+# shipping_mapping_one_hr = pd.read_sql(query, cnx)
+
+url = convert_gsheets_url(shipping_mapping_url)
+shipping_mapping_one_hr = pd.read_csv(url)
+shipping_mapping_one_hr = shipping_mapping_one_hr[['brand_group','one_hr','tree_hr']]
+shipping_mapping_one_hr = shipping_mapping_one_hr[shipping_mapping_one_hr['one_hr']=="Yes"]
+
+# query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where tree_hr  = "Yes";'
+# shipping_mapping_tree_hr = pd.read_sql(query, cnx)
+
+url = convert_gsheets_url(shipping_mapping_url)
+shipping_mapping_tree_hr = pd.read_csv(url)
+shipping_mapping_tree_hr = shipping_mapping_tree_hr[['brand_group','one_hr','tree_hr']]
+shipping_mapping_tree_hr = shipping_mapping_tree_hr[shipping_mapping_tree_hr['tree_hr']=="Yes"]
+
+# query = 'SELECT attribute_code,input_option,option_code,option_th,option_en,color_group_pim_code FROM im_form.color_mapping'
+# color_mapping = pd.read_sql(query, cnx)
+
+url = convert_gsheets_url(color_mapping_url)
+color_mapping = pd.read_csv(url)
+color_mapping = color_mapping[['attribute_code','input_option','option_code','option_th','option_en','color_group_pim_code']]
+
+
 
 # create new excel template
 global workbook
@@ -211,7 +278,7 @@ scopable= configurable['scopable'].values.tolist()
 
 
 # print(configurable_ao,flush=True)
-tac('Finnish data transformation')
+# tac('Finnish data transformation')
 # create a dictionary where the keys are the values in the linesheet_code list
 # and the values are empty lists
 data = {code: [] for code in template_code}
@@ -236,11 +303,10 @@ import pandas as pd
 
 
 # Read JSON file path from command line argument
-file_path = sys.argv[1]
+file_path_json = sys.argv[1]
 
 # Read the JSON file into a DataFrame
-linesheet = pd.read_json(file_path)
-
+linesheet = pd.read_json(file_path_json)
 # Reset the index
 # linesheet = linesheet.set_index([pd.Index(['index_columns'])])
 
@@ -252,18 +318,10 @@ linesheet = pd.read_json(file_path)
 linesheet = linesheet.reset_index(drop=True)
 linesheet = linesheet.astype(str)
 
-tac('Reading the file..')
+# tac('Reading the file..')
+# print(linesheet)
 
-#validate
-# Load the Excel file into DataFrames
-
-family_template_df = pd.read_excel(linesheet, sheet_name='FAMILY_TEMPLATE')
-im_form_df = pd.read_excel(linesheet, sheet_name='IM_FORM')
-
-# Run the process for all rows
-process_all_rows(im_form_df, family_template_df)
-
-
+# print('Read file successfully')
 
 # linesheet = pd.read_excel('./app/convertor/CDS2301-0341 NS-18608 ANGEL BABY 31 SKUs Buyerfile.xlsm',index_col=False,dtype='string')
 original_linesheet=linesheet
@@ -380,7 +438,10 @@ original_linesheet = add_parent_column(original_linesheet, **parent_info)
 
 
 
-tac('Finish grouping')
+
+
+
+# tac('Finish grouping')
 # remove duplicates for model file
 ws_model = ws_model.drop_duplicates()
 ws_model = ws_model[ws_model['group_by-CDS']!='']
@@ -389,8 +450,19 @@ ws_model = ws_model[ws_model['group_by-CDS']!='']
 # ws_model['visibility-CDS']= 'Catalog__Search'
 # ws_template['visibility-CDS']= 'Not_Visible_Individually'
 
-ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
-ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
+
+# Before adding the 'visibility-CDS' column, create a new DataFrame with the column
+new_columns = pd.concat([ws_template, pd.Series(['Not_Visible_Individually'] * len(ws_template), name='visibility-CDS')], axis=1)
+new_columns.loc[new_columns['parent'] != '', 'visibility-CDS'] = 'Not_Visible_Individually'
+ws_template = new_columns
+
+new_columns = pd.concat([ws_template, pd.Series(['Catalog__Search'] * len(ws_template), name='visibility-CDS')], axis=1)
+new_columns.loc[new_columns['parent'] == '', 'visibility-CDS'] = 'Catalog__Search'
+ws_template = new_columns
+
+# ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
+# ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
+
 if not ws_model.empty:
     ws_model.loc[ws_model['brand_name-CDS']=='CHANEL','visibility-CDS']='Catalog__Search'
     ws_model.loc[ws_model['brand_name-CDS']!='CHANEL','visibility-CDS']='Catalog__Search'
@@ -408,7 +480,7 @@ linesheet = linesheet.astype(str)
 
 ws_template = remove_empty_columns(ws_template)
 ws_model = remove_empty_columns(ws_model)
-tac('Finish remove empty column !')
+# tac('Finish remove empty column !')
 
 
 
@@ -426,7 +498,7 @@ os.makedirs("converted" , exist_ok=True)
 # rename and positioning for parent column in model template
 # Check if the DataFrame is empty
 if ws_model.empty:
-    tac('Info : No grouping')
+    # tac('Info : No grouping')
     ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
 else:
 
@@ -439,13 +511,14 @@ else:
     ws_template = move_positioning_template(ws_template)
 
     ws_model = ws_model.rename(columns={'catalogue_number_for_group': 'catalog_no'})
+    ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
 
 
     ws_template = ws_template.drop('family_variant', axis=1)
     ws_model.to_excel("converted/model.xlsx",index=False)
 
 
-tac('Finish packing')
+# tac('Finish packing')
 
 linesheet.to_excel("converted/linesheet.xlsx" ,index=False)
 original_linesheet.to_excel("converted/original_linesheet.xlsx" ,index=False)
@@ -483,4 +556,3 @@ tac('Success : Finish Convert !')
 
 
 # print(warning+error)
-
