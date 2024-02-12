@@ -129,15 +129,15 @@ label.form-check-label{
 
 </style>
 
-<!--
+
 <div id="nav_choose_file">
     <div class="nav_input">
         <div class="box_input p-3 shadow-sm border-bottom bg-white">
-            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="handleFileChange()"/>
+            <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="DropFile()"/>
         </div>
-    </div>
+</div>
 
-</div> -->
+</div>
 <div class="row h-100">
     <div class="col-7 border-end">
         <div class="bg-canvas ps-5 ">
@@ -338,19 +338,77 @@ label.form-check-label{
     </div>
 </div>
 <script>
+
+    function convertExcelToJsonTransposedFile(filePath,sheet_name) {
+        var workbook = XLSX.readFile(filePath);
+        var worksheet = workbook.Sheets[sheet_name];
+        var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+        var headers = jsonData[0];
+        var rows = jsonData.slice(1);
+        var transposedData = rows.map(row => {
+            var rowData = {};
+            row.forEach((cellValue, index) => {
+                rowData[headers[index]] = cellValue;
+            });
+            return rowData;
+        });
+   }
+   function DropFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const fileContent = e.target.result;
+
+            // Simulate saving to a folder named 'tmp' on the client side
+            const folderName = 'tmp';
+            const fileName = file.name;
+
+            // Create a Blob with the file content
+            const blob = new Blob([fileContent], { type: 'application/octet-stream' });
+
+            // Create a download link
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+
+            // Use the simulated folder path as the download filename
+            link.download = `${folderName}/${fileName}`;
+
+            // Append the link to the body
+            document.body.appendChild(link);
+
+            // Trigger the click event to start the download
+            link.click();
+
+            // Remove the link from the DOM
+            document.body.removeChild(link);
+        };
+        reader.readAsText(file);
+    } else {
+        console.error('No file selected.');
+    }
+}
+
     var linesheet_file_path = sessionStorage.getItem('linesheet_file_path');
     var IN_LINK_DATA = convertExcelToJsonTransposed(linesheet_file_path,'IN_LINK_DATA');
 
-    document.getElementById("brand").innerHTML =  get_linesheet_information('brand');
-    document.getElementById("sku").innerHTML =  get_linesheet_information('sku')+' SKUs';
-    document.getElementById("template").innerHTML =  get_linesheet_information('template');
+    function show_variable_file(){
+        document.getElementById("brand").innerHTML =  get_linesheet_information('brand');
+        document.getElementById("sku").innerHTML =  get_linesheet_information('sku')+' SKUs';
+        document.getElementById("template").innerHTML =  get_linesheet_information('template');
+    }
+
+    show_variable_file();
+
 
 
 </script>
 
 
 <script>
-    $("#nav_choose_file").load('page/linesheet/asset/nav_choose_file.html');
+    // $("#nav_choose_file").load('page/linesheet/asset/nav_choose_file.html');
 
     function summary_parent_sku_range(){
 
