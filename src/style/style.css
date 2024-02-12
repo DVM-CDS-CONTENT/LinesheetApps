@@ -1,0 +1,20 @@
+
+    @font-face {
+    font-family: 'CPNRegular';
+    src: url('../font/CPN-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'CPNBold';
+    src: url('../font/CPN-Bold.ttf');
+  }
+  @font-face {
+    font-family: 'CPNBoldCondensed';
+    src: url('../font/CPN-BoldCondensed.ttf');
+  }
+body {
+    font-family: 'CPNRegular';
+    background-color: #ffffff;
+    font-family: 'Prompt', sans-serif;
+    font-weight: 500;
+}
+

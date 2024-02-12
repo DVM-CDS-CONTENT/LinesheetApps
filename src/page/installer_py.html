@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Your head content here -->
+</head>
+<body>
+  <!-- Your HTML content here -->
+
+  <script>
+    var https = require('https');
+    var fs = require('fs');
+    var unzipper = require('unzipper');
+    // var { ipcRenderer } = require('electron');
+    // var $ = require('jquery');
+
+    function downloadZip(url, destinationPath) {
+
+      return new Promise((resolve, reject) => {
+        console.log('Downloading Python installer...');
+        Notiflix.Loading.standard('Download patch...');
+
+        const file = fs.createWriteStream(destinationPath);
+
+        https.get(url, (response) => {
+          const totalSize = parseInt(response.headers['content-length'], 10);
+          let downloadedSize = 0;
+
+          response.on('data', (data) => {
+            file.write(data);
+            downloadedSize += data.length;
+            const progress = Math.round((downloadedSize / totalSize) * 100);
+            console.log(`Downloaded ${progress}%`);
+            Notiflix.Loading.change(`Installed ${progress}%`);
+
+          });
+
+          response.on('end', () => {
+            file.end();
+            console.log('Python installer downloaded successfully.');
+            resolve();
+          });
+
+          response.on('error', (error) => {
+            fs.unlinkSync(destinationPath);
+            reject(error);
+          });
+        });
+      });
+    }
+
+    function extractZip(zipFilePath, extractPath) {
+      return new Promise((resolve, reject) => {
+        console.log('Extracting...');
+        Notiflix.Loading.change(`Extracting.. (1-3 Mins)`);
+
+        const extractStream = unzipper.Extract({ path: extractPath });
+
+        extractStream.on('entry', (entry) => {
+          const progressInfo = {
+            totalBytes: entry.vars.uncompressedSize,
+            completedBytes: 0
+          };
+
+          entry.on('extracted', () => {
+            console.log(`Extracted: ${entry.path}`);
+          });
+
+          entry.on('data', (progress) => {
+            progressInfo.completedBytes = progress.fsProcessedBytes;
+            const progressPercent = Math.round((progressInfo.completedBytes / progressInfo.totalBytes) * 100);
+            console.log(`Extraction progress: ${progressPercent}%`);
+            Notiflix.Loading.change(`Extracted ${progressPercent}%`);
+          });
+        });
+
+        extractStream.on('close', () => {
+          console.log('Zip file extracted successfully.');
+          Notiflix.Loading.change(`Successful`);
+          resolve();
+        });
+
+        extractStream.on('error', (error) => {
+          reject(error);
+        });
+
+        fs.createReadStream(zipFilePath).pipe(extractStream);
+      });
+    }
+
+async function downloadAndExtractZip(url, destinationPath, extractPath) {
+  try {
+    await downloadZip(url, destinationPath);
+    await extractZip(destinationPath, extractPath);
+    console.log('Removing the zip file...');
+    fs.unlinkSync(destinationPath);
+    console.log('Zip file removed.');
+    console.log('Process complete.');
+    Notiflix.Loading.remove();
+    load_page('page/prompt_role.html');
+  } catch (error) {
+    fs.unlinkSync(destinationPath);
+    console.error('Error:', error);
+  }
+}
+
+
+
+const directory = 'src/python'; // Replace with the actual directory path you want to check
+
+fs.access(directory, fs.constants.F_OK, (err) => {
+  if (err) {
+    // Usage: Call the function with the URL of the zip file, destination path for download, and extract path
+    downloadAndExtractZip('https://storage.googleapis.com/spear-cds/python/python.zip', 'py.zip', 'src');
+  } else {
+    console.log('Python already exists.');
+    load_page('page/prompt_role.html');
+
+  }
+});
+
+
+  </script>
+</body>
+</html>

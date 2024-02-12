@@ -1,0 +1,16 @@
+{
+  "arch": "x86_64",
+  "build": "hd77b12b_6",
+  "build_number": 6,
+  "depends": [
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "name": "libffi",
+  "platform": "win",
+  "subdir": "win-64",
+  "timestamp": 1669126692293,
+  "version": "3.4.2"
+}

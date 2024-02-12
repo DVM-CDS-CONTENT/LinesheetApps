@@ -1,0 +1,84 @@
+<style>
+  .navbar {
+    background: #121212;
+  }
+
+  .app_name {
+    color: #ebebeb;
+  }
+
+  .version_name {
+    color: #868686;
+    font-size: small;
+  }
+</style>
+<!-- Bootstrap CSS -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-fSMvR55bJroevMF4E8/S4wp4+wvZVy/It+AMOwYHbwkOvLilJTH9aTK5NUGOGBW/8Z/5vmAxEkgdCMCw08mJ0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+<style>
+  /* Custom styles for the menu bar */
+
+  .menu-item {
+    color: #fff;
+  }
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark p-0 shadow fixed-top"
+  style="-webkit-app-region: drag;background:#262626;height: 28px;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="./image/icon/app/nav.ico" width="15px" height="15px" style="vertical-align: baseline;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="-webkit-app-region: none;">
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDarkDropdownMenuLink-linesheet-convert" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">File</a>
+          <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;"
+            aria-labelledby="navbarDarkDropdownMenuLink-linesheet-convert">
+            <li><a class="dropdown-item">Close</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/new_linesheet.html')">New linesheet</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/drop_linesheet.html')">Load linesheet</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/convert_linesheet.html')">Convert to template</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/clean_page.html')">clean</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/edit_lineheet.html')">edit</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/linesheet/validatesheet.html')">validate</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/tools/product_dimension_generate.html')">Product dimensions guide Generator</a></li>
+            <li><a class="dropdown-item" onclick="load_page('page/tools/size_guide_generator.html')">Size guide Generator</a></li>
+          </ul>
+
+        </li> -->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDarkDropdownMenuLink-help" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">Help</a>
+          <ul class="dropdown-menu dropdown-menu-dark rounded-0" style="font-size: 13px;"
+            aria-labelledby="navbarDarkDropdownMenuLink-help">
+            <li><a class="dropdown-item"
+                onclick="load_page('page/prompt_role.html');$('#nav').load('page/nav/welcome_nav.html');">Welcome</a>
+            </li>
+            <hr class="mt-1 mb-1">
+            <li><a class="dropdown-item" target="_blank" id="Guidebook" href="https://docs.cdse-commercecontent.com/spear">Guidebook</a></li>
+            <li><a class="dropdown-item" target="_blank" href="https://www.central.co.th/th/information/about-us">About
+                US</a></li>
+
+
+          </ul>
+        </li>
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- <script>
+  var element = document.querySelector('#Guidebook');
+  // Simulate a click on the element
+  element.click();
+</script> -->

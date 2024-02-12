@@ -1,0 +1,19 @@
+<div class="m-5">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Drop linesheet for convert here</label>
+        <input class="form-control" type="file" id="formFile" onchange="handleFile()">
+    </div>
+</div>
+
+<script>
+    function handleFile() {
+        const input = document.getElementById('formFile');
+        // Check if any file is selected
+        if (input.files.length > 0) {
+            const filePath = input.files[0].name;
+            console.log('Selected file path: ' + filePath);
+        } else {
+            alert('No file selected');
+        }
+    }
+</script>

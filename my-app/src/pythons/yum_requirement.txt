@@ -1,8 +1,0 @@
-pandas
-mysql-connector-python
-sqlalchemy
-openpyxl==3.1.0
-pywin32
-pymysql
-xlrd
-bs4

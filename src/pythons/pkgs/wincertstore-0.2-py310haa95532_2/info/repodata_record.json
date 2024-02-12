@@ -1,0 +1,23 @@
+{
+  "build": "py310haa95532_2",
+  "build_number": 2,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.10,<3.11.0a0"
+  ],
+  "features": "",
+  "fn": "wincertstore-0.2-py310haa95532_2.conda",
+  "legacy_bz2_md5": "d6edc9b21d93ba2c136e663661c884ac",
+  "legacy_bz2_size": 15691,
+  "license": "PSF 2",
+  "md5": "9bb31a9caf8cb78cfe526cad2575d6d6",
+  "name": "wincertstore",
+  "sha256": "c4f537348c58cbb3f5cfbc331fc0b5afc9db46002c08ff3d36446631fe720902",
+  "size": 15772,
+  "subdir": "win-64",
+  "timestamp": 1633019078734,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/wincertstore-0.2-py310haa95532_2.conda",
+  "version": "0.2"
+}
