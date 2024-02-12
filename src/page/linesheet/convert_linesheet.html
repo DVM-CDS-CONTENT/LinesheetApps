@@ -253,6 +253,13 @@ label.form-check-label{
                         <small class="form-check-label" for="flexSwitchCheckDefault">Allow product to exchange after sale</small>
                         <small class="form-check-label warning" for="flexSwitchCheckDefault"><ion-icon name="warning-outline"></ion-icon>Except MKP prduct</small>
                     </div>
+                    <div class="form-check form-switch m-2 mb-4">
+                        <input class="form-check-input" checked type="checkbox" role="switch" id="include_size_guide_desc">
+                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Can Exchange</label>
+                        <small class="form-check-label" for="flexSwitchCheckDefault">Include size guide image in description</small>
+
+                    </div>
+
                 </div>
                 <div class="col-6">
 
@@ -493,6 +500,7 @@ label.form-check-label{
         var allow_installment = document.getElementById("allow_installment").checked;
         var can_return = document.getElementById("can_return").checked;
         var can_exchange = document.getElementById("can_exchange").checked;
+        var include_size_guide_desc = document.getElementById("include_size_guide_desc").checked;
         // var bu = document.getElementById("bu").value
         var job_number = document.getElementById("job_number").value
         // var product_status = document.getElementById("product_status").value
@@ -529,6 +537,7 @@ label.form-check-label{
                                 allow_installment,
                                 can_return,
                                 can_exchange,
+                                include_size_guide_desc,
                                 job_number,
                                 // product_status,
                                 launch_date,

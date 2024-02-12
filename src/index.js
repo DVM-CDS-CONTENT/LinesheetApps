@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { spawn ,spawnSync,execSync ,child_process } = require('child_process');
+const express = require('express');
 
 // Set the PYTHONHOME and PATH environment variables
 
@@ -23,8 +24,11 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = () => {
 
+
+const createWindow = () => {
+  const nodeServer = express();
+  const nodeServerPort = 3000;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -46,6 +50,17 @@ const createWindow = () => {
     }
   });
 
+  nodeServer.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+
+  nodeServer.get('/new_linesheet', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/page/linesheet/new_linesheet.js'));
+  });
+
+  nodeServer.listen(nodeServerPort, () => {
+    console.log(`Node.js server is running at http://localhost:${nodeServerPort}`);
+  });
 
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));

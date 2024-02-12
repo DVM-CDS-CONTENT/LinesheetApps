@@ -63,11 +63,12 @@ new = sys.argv[10]
 allow_installment = sys.argv[11]
 can_return = sys.argv[12]
 can_exchange = sys.argv[13]
-job_number = sys.argv[14]
+include_size_guide_desc = sys.argv[14]
+job_number = sys.argv[15]
 # product_status = sys.argv[15]
-launch_date = sys.argv[15]
-sheet_name = sys.argv[16]
-product_template = sys.argv[17]
+launch_date = sys.argv[16]
+sheet_name = sys.argv[17]
+product_template = sys.argv[18]
 
 
 # get template
@@ -112,12 +113,7 @@ jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].v
 datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
 
 
-# from sqlalchemy import create_engine
-# cnx = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host='156.67.217.3', db="im_form", user='data_studio', pw='a417528639'))
 
-# query = 'SELECT * FROM im_form.attribute_setting where status = "Actived" and convertor_function <> "" and  convertor_function <> "-"'
-# query_configurable = pd.read_sql(query, cnx)
-# original_configurable = query_configurable
 
 url = convert_gsheets_url(attribute_setting_url)
 query_configurable = pd.read_csv(url,encoding='utf-8')
@@ -200,49 +196,31 @@ configurable = pd.concat([query_configurable, cloned_df], ignore_index=True)
 configurable_ao_fame = pd.concat([query_configurable_ao, cloned_df_ao], ignore_index=True)
 
 
-
-
-
-# query = 'SELECT linesheet_code,input_option,option_code,option_th,option_en FROM u749625779_cdscontent.pim_attr_convert_option_lu'
-# mapping_option_value = pd.read_sql(query, cnx)
-
 url = convert_gsheets_url(attribute_option_url)
 mapping_option_value = pd.read_csv(url)
 mapping_option_value = mapping_option_value[['linesheet_code','input_option','option_code','option_th','option_en']]
 
-
-
-# query = 'SELECT label_th, full_categories_code , family , size_value_template , product_name_template_th  ,product_name_template_en,description_block_template FROM im_form.categories_setting;'
-# categories_mapping = pd.read_sql(query, cnx)
 
 url = convert_gsheets_url(categories_mapping_url)
 categories_mapping = pd.read_csv(url)
 categories_mapping = categories_mapping[['label_th','full_categories_code','family','size_value_template','product_name_template_th','product_name_template_en','description_block_template']]
 
 
-# query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where one_hr  = "Yes";'
-# shipping_mapping_one_hr = pd.read_sql(query, cnx)
-
 url = convert_gsheets_url(shipping_mapping_url)
 shipping_mapping_one_hr = pd.read_csv(url)
 shipping_mapping_one_hr = shipping_mapping_one_hr[['brand_group','one_hr','tree_hr']]
 shipping_mapping_one_hr = shipping_mapping_one_hr[shipping_mapping_one_hr['one_hr']=="Yes"]
 
-# query = 'SELECT brand_group, one_hr, tree_hr FROM u749625779_cdscontent.shipping_mapping where tree_hr  = "Yes";'
-# shipping_mapping_tree_hr = pd.read_sql(query, cnx)
 
 url = convert_gsheets_url(shipping_mapping_url)
 shipping_mapping_tree_hr = pd.read_csv(url)
 shipping_mapping_tree_hr = shipping_mapping_tree_hr[['brand_group','one_hr','tree_hr']]
 shipping_mapping_tree_hr = shipping_mapping_tree_hr[shipping_mapping_tree_hr['tree_hr']=="Yes"]
 
-# query = 'SELECT attribute_code,input_option,option_code,option_th,option_en,color_group_pim_code FROM im_form.color_mapping'
-# color_mapping = pd.read_sql(query, cnx)
 
 url = convert_gsheets_url(color_mapping_url)
 color_mapping = pd.read_csv(url)
 color_mapping = color_mapping[['attribute_code','input_option','option_code','option_th','option_en','color_group_pim_code']]
-
 
 
 # create new excel template

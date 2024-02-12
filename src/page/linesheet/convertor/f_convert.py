@@ -404,27 +404,28 @@ def description(linesheet, linesheet_code, my_dict):
 
 
     # Add size guide
-    #--Split sku to folder path
-    sku_number=sku(linesheet,linesheet_code,my_dict)
-    sku_number=sku_number.lower()
-    sku_path = '/'.join([sku_number[i:i+2] for i in range(0, len(sku_number), 2)])
+    if my_dict['embed_size_guide']=='true':
+        #--Split sku to folder path
+        sku_number=sku(linesheet,linesheet_code,my_dict)
+        sku_number=sku_number.lower()
+        sku_path = '/'.join([sku_number[i:i+2] for i in range(0, len(sku_number), 2)])
 
-    #--convert product name and brand name to naming conversion
-    cleaned_brand = re.sub(r'[^a-zA-Z0-9]', '', linesheet['brand_name']).lower()
-    cleaned_name = re.sub(r'[^a-zA-Z0-9]', '', linesheet['product_name_en']).lower()
+        #--convert product name and brand name to naming conversion
+        cleaned_brand = re.sub(r'[^a-zA-Z0-9]', '', linesheet['brand_name']).lower()
+        cleaned_name = re.sub(r'[^a-zA-Z0-9]', '', linesheet['product_name_en']).lower()
 
-    #--concatenate with full path
-    Full_link = "https://www.central.co.th/content/dam/central/catalog/products/retail/"+cleaned_brand+"-"+cleaned_name+"-"+sku_path+"/"+sku_number+"-20.jpg"
+        #--concatenate with full path
+        Full_link = "https://www.central.co.th/content/dam/central/catalog/products/retail/"+cleaned_brand+"-"+cleaned_name+"-"+sku_path+"/"+sku_number+"-20.jpg"
 
-    #--insert with html image tac
+        #--insert with html image tac
 
-    Html_Tag ='<p><img src="'+Full_link+'" alt="" /></p>'
+        Html_Tag ='<p><img src="'+Full_link+'" alt="" /></p>'
 
-    # if linesheet['link_to_size_guide_images']!="":
+        # if linesheet['link_to_size_guide_images']!="":
 
-    #     description=description+"<br>"+Html_Tag
+        #     description=description+"<br>"+Html_Tag
 
-    description=description+"<br>"+Html_Tag
+        description=description+"<br>"+Html_Tag
 
     return description
 
