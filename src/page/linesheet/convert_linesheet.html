@@ -130,12 +130,12 @@ label.form-check-label{
 </style>
 
 
-<div id="nav_choose_file">
+<!-- <div id="nav_choose_file">
     <div class="nav_input">
         <div class="box_input p-3 shadow-sm border-bottom bg-white">
             <input type="file" id="linesheet_input" accept=".xlsx, .xlsm" onchange="DropFile()"/>
         </div>
-</div>
+</div> -->
 
 </div>
 <div class="row h-100">
@@ -153,9 +153,6 @@ label.form-check-label{
             <div style="font:24px;" class="header-product-grouping">Linesheet</div>
             <ul>
                 <li id='file_name' class="form-label">file_name</li>
-                <li id='brand' class="form-label">brand</li>
-                <li id='sku' class="form-label">sku</li>
-                <li id='template' class="form-label">template</li>
             </ul>
             <!-- header -->
             <div style="font:24px;" class="header-product-grouping">Product grouping</div>
@@ -402,8 +399,7 @@ label.form-check-label{
     var IN_LINK_DATA = convertExcelToJsonTransposed(linesheet_file_path,'IN_LINK_DATA');
 
     function show_variable_file(){
-        document.getElementById("brand").innerHTML =  get_linesheet_information('brand');
-        document.getElementById("sku").innerHTML =  get_linesheet_information('sku')+' SKUs';
+        document.getElementById("brand").innerHTML =  get_linesheet_information('brand') + get_linesheet_information('sku')+' SKUs';
         document.getElementById("template").innerHTML =  get_linesheet_information('template');
     }
 
@@ -460,8 +456,17 @@ label.form-check-label{
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         let jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 0 ,defval: ''});
 
+
+        var lastRowIndex = null;
+        for (var i = 0; i < jsonData.length; i++) {
+            if(jsonData[i].item=="No."){
+                lastRowIndex = i;
+                break;
+            }
+        }
+
         // Remove rows 2 to 11
-        jsonData.splice(0, 11);
+        jsonData.splice(0, lastRowIndex+1);
 
         jsonData = jsonData.filter(row => row['ibc'] !== '');
        // Find the columns to delete

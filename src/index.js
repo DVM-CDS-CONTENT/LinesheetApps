@@ -16,7 +16,7 @@ const express = require('express');
   process.env.PYTHONHOME = path.join(__dirname, 'pythons');
   process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
-// const { autoUpdater, AppUpdater } = require("electron-updater");
+
 process.env.GITHUB_TOKEN = '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';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -82,9 +82,6 @@ const createWindow = () => {
   // const mainWindow = BrowserWindow.getFocusedWindow();
   const webContents = mainWindow.webContents;
 
-
-  // const pythonScriptCode = "print('Hello, World!')";
-  // runPythonScript(pythonScriptCode, webContents);
 
   // Set up auto-updater
   const server = 'https://dist.anystack.sh/v1/electron';
@@ -159,9 +156,6 @@ const createWindow = () => {
 }
 
 
-
-
-
 app.on('ready', async  () => {
 
   // Run a "Hello, World!" Python script when the Electron application is ready
@@ -210,24 +204,7 @@ app.on('ready', async  () => {
 
 
 
-    // // Listen for the restart event
-    // ipcMain.on('restart-app', () => {
-    //   // app.relaunch();
-    //   // app.quit();
-    //   // app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
-
-    //     // Relaunch the app after a short delay
-    //   setTimeout(() => {
-    //     // Spawn a new process to run the Electron app again
-    //     spawn(process.execPath, [app.getPath('exe')], {
-    //       detached: true,
-    //       stdio: 'ignore',
-    //     }).unref();
-    //   }, 3000);
-    //   app.quit();
-    // });
-
-    // shell.openExternal('https://docs.cdse-commercecontent.com/spear');
+// shell.openExternal('https://docs.cdse-commercecontent.com/spear');
 
 //  const guide = new BrowserWindow({
 //   });
