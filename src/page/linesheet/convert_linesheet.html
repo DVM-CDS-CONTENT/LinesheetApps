@@ -153,12 +153,15 @@ label.form-check-label{
             <div style="font:24px;" class="header-product-grouping">Linesheet</div>
             <ul>
                 <li id='file_name' class="form-label">file_name</li>
+                <li id='brand' class="form-label">brand</li>
+                <li id='sku' class="form-label">sku</li>
+                <li id='template' class="form-label">template</li>
             </ul>
             <!-- header -->
             <div style="font:24px;" class="header-product-grouping">Product grouping</div>
             <small>
                 First number of running grouping
-            </small>
+            </small>ion
             <!-- grouping input -->
             <div class="mt-3 row ps-2" style="height: 60px;">
 
@@ -250,12 +253,7 @@ label.form-check-label{
                         <small class="form-check-label" for="flexSwitchCheckDefault">Allow product to exchange after sale</small>
                         <small class="form-check-label warning" for="flexSwitchCheckDefault"><ion-icon name="warning-outline"></ion-icon>Except MKP prduct</small>
                     </div>
-                    <div class="form-check form-switch m-2 mb-4">
-                        <input class="form-check-input" checked type="checkbox" role="switch" id="include_size_guide_desc">
-                        <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Can Exchange</label>
-                        <small class="form-check-label" for="flexSwitchCheckDefault">Include size guide image in description</small>
 
-                    </div>
 
                 </div>
                 <div class="col-6">
@@ -272,6 +270,15 @@ label.form-check-label{
                             </select>
                         </div>
                     </div> -->
+                    <div class="row ms-2 me-2 mt-3 form-check form-switch m-2 mb-4">
+                        <div class="col">
+                            <input class="form-check-input" checked type="checkbox" role="switch" id="embed_size_guide">
+                        </div>
+                        <div class="col">
+                            <label class="form-check-label header fw-bold" for="flexSwitchCheckDefault">Include size guide in DESC</label>
+                            <small class="form-check-label" for="flexSwitchCheckDefault">Include size guide image in description</small>
+                        </div>
+                    </div>
                     <div class="row ms-2 me-2 mt-3">
                         <div class="col">
                             <label class="form-check-label header w-100 fw-bold" for="flexSwitchCheckDefault" >Job number</label>
@@ -399,7 +406,8 @@ label.form-check-label{
     var IN_LINK_DATA = convertExcelToJsonTransposed(linesheet_file_path,'IN_LINK_DATA');
 
     function show_variable_file(){
-        document.getElementById("brand").innerHTML =  get_linesheet_information('brand') + get_linesheet_information('sku')+' SKUs';
+        document.getElementById("brand").innerHTML =  get_linesheet_information('brand');
+        document.getElementById("sku").innerHTML = get_linesheet_information('sku')+' SKUs';
         document.getElementById("template").innerHTML =  get_linesheet_information('template');
     }
 
@@ -505,7 +513,7 @@ label.form-check-label{
         var allow_installment = document.getElementById("allow_installment").checked;
         var can_return = document.getElementById("can_return").checked;
         var can_exchange = document.getElementById("can_exchange").checked;
-        var include_size_guide_desc = document.getElementById("include_size_guide_desc").checked;
+        var embed_size_guide = document.getElementById("embed_size_guide").checked;
         // var bu = document.getElementById("bu").value
         var job_number = document.getElementById("job_number").value
         // var product_status = document.getElementById("product_status").value
@@ -542,7 +550,7 @@ label.form-check-label{
                                 allow_installment,
                                 can_return,
                                 can_exchange,
-                                include_size_guide_desc,
+                                embed_size_guide,
                                 job_number,
                                 // product_status,
                                 launch_date,
@@ -551,7 +559,7 @@ label.form-check-label{
                             ]
 
         // start validation using VBA on files
-        new PythonShell(path.join(__dirname,`../src/page/linesheet/convertor/vba_caller.py`), { args: var_send_to_validate}  )
+        new PythonShell(path.join(__dirname,`../../src/page/linesheet/convertor/vba_caller.py`), { args: var_send_to_validate}  )
         .on('error', err => {console.error('An error occurred while running the Python script:', err);})
         .on('stderr', message => {
             console.error('Received error message:', message);
@@ -590,7 +598,7 @@ label.form-check-label{
                 document.getElementById('convert_logs').innerHTML = document.getElementById('convert_logs').innerHTML + message_style
 
                 // start convert
-                new PythonShell(path.join(__dirname,`../src/page/linesheet/convertor/main.py`), { args: var_send_to_convert}  )
+                new PythonShell(path.join(__dirname,`../../src/page/linesheet/convertor/main.py`), { args: var_send_to_convert}  )
                         .on('error', err => {console.error('An error occurred while running the Python script:', err);})
                         .on('stderr', message => {
                             console.error('Received error message:', message);

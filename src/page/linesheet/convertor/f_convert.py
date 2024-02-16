@@ -379,8 +379,8 @@ def description(linesheet, linesheet_code, my_dict):
     # Selected layout
     categories_mapping = my_dict['categories_mapping']
     layout_name = categories_mapping.set_index('label_th')['description_block_template'][linesheet['online_categories']]
-    layout_th = '\\src\\page\\linesheet\\convertor\\description_layout\\th\\' + layout_name + set_includes_path + '_th.html'
-    layout_en = '\\src\\page\\linesheet\\convertor\\description_layout\\en\\' + layout_name + set_includes_path + '_en.html'
+    layout_th = '\\resources\\src\\page\\linesheet\\convertor\\description_layout\\th\\' + layout_name + set_includes_path + '_th.html'
+    layout_en = '\\resources\\src\\page\\linesheet\\convertor\\description_layout\\en\\' + layout_name + set_includes_path + '_en.html'
 
     # Replace with template
     if th_identity_linesheet in linesheet_code:

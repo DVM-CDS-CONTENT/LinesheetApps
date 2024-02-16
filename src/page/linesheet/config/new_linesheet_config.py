@@ -31,7 +31,7 @@ def get_family():
     attribute = pd.read_csv(url)
 
     columns = attribute.columns.tolist()
-    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common','scopable','pim_code_hard_header']
+    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common','scopable','pim_code_hard_header','owner_field']
     columns_to_include = [value for value in columns if value not in columns_to_exclude]
     options = ''.join([f'<option value="{value}">{value}</option>' for value in columns_to_include])
     html = f'''
@@ -205,7 +205,7 @@ def get_family_input_two_grid(attribute, input_type,default_option_str,row):
     attribute_fam = pd.read_csv(url)
 
     columns = attribute_fam.columns.tolist()
-    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common','scopable','pim_code_hard_header']
+    columns_to_exclude = ['id', 'information_type', 'status', 'enhancement', 'specific_brand', 'linesheet_code', 'field_label', 'field_type', 'both_language', 'description', 'tool_tips', 'session', 'sub_session', 'merge_group', 'sale_channel', 'formula', 'pim_code', 'convertor_function', 'linesheet_code_unit', 'label_desc_en', 'label_desc_th', 'value_desc_format', 'sort_bullet_point', 'grouping_common','scopable','pim_code_hard_header','owner_field']
     columns_to_include = [value for value in columns if value not in columns_to_exclude]
 
 

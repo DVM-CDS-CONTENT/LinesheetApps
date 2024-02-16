@@ -378,7 +378,7 @@ Sub HighlightedCellsInfo()
                 highlightedCells = highlightedCells & "Error : Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
             Else
                 ' If the cell is in the same row, append the column information
-                highlightedCells =  highlightedCells & "Error :  Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
+                highlightedCells = highlightedCells & "Error :  Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
             End If
 
             ' Update the current row
@@ -398,9 +398,11 @@ Sub HighlightedCellsInfo()
             End If
         Next i
 
-        MsgBox "Mandatory checking" & vbCrLf & highlightedCells
+        MsgBox highlightedCells
     Else
-        MsgBox "Passed : No cells with the specified color found."
+        Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
+        InlinkDataSheet.Cells(i, 2).value = highlightedCells
+        MsgBox "Passed : No cells with the require is missing."
     End If
 End Sub
 
@@ -458,6 +460,7 @@ Sub HighlightWrongTypeValue()
                 For j = i To lastRow
                      If Not IsEmpty(ws.Cells(j + 6, IBCcolumn).value) Then
                       'check type
+
                           If Not ws.Cells(j + 6, ColCheck).value = "" Then
                             If ws.Cells(i, ColCheck).value = "Formula" Then
                                 If Not ws.Cells(j + 6, ColCheck).HasFormula Then
@@ -467,11 +470,19 @@ Sub HighlightWrongTypeValue()
                                 If Not IsNumeric(ws.Cells(j + 6, ColCheck).value) Then
                                     Warning_Message = Warning_Message & "Value at row  " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " not a " & ws.Cells(i, ColCheck).value & " type" & vbCrLf
                                 End If
+
                             ElseIf ws.Cells(i, ColCheck).value = "link" Then
-                                If Not CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).value) = 200 And Not CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).Hyperlinks(1).Address) = 200 Then
-                                    Warning_Message = Warning_Message & "the link at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is invalid " & vbCrLf
+
+                                If ws.Cells(j + 6, ColCheck).Hyperlinks.Count > 0 Then
+                                    If CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).value) <> 200 And CheckHyperlinkStatus(ws.Cells(j + 6, ColCheck).Hyperlinks(1).Address) <> 200 Then
+                                        Warning_Message = Warning_Message & "The link at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is invalid" & vbCrLf
+                                    End If
+                                Else
+                                    Warning_Message = Warning_Message & "The link at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is invalid" & vbCrLf
                                 End If
+
                             ElseIf ws.Cells(i, ColCheck).value = "Simple Select" Then
+
 
                                 If CheckDropdownList(ws.Cells(j + 6, ColCheck).value, ws.Cells(1, ColCheck).value) = False Then
                                     Warning_Message = Warning_Message & "the value at row " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " is not indropdown list " & vbCrLf
@@ -504,6 +515,8 @@ Sub HighlightWrongTypeValue()
 
         MsgBox "Type Checking: " & vbCrLf & Warning_Message
     Else
+        Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
+        InlinkDataSheet.Cells(i, 2).value = "Passed : All of value follow type of attribtue"
         MsgBox "Passed : All of value follow type of attribtue"
     End If
 End Sub
@@ -534,6 +547,7 @@ Function CheckDropdownList(value_in_cell As Variant, name_tag As String) As Bool
     On Error Resume Next
     Set namedRange = ws.Range(name_tag)
 
+
     On Error GoTo 0
 
     If Not namedRange Is Nothing Then
@@ -543,10 +557,20 @@ Function CheckDropdownList(value_in_cell As Variant, name_tag As String) As Bool
         ' Convert the validationList to a dynamic array
         'ReDim allowedValues(1 To UBound(validationList))
 
-
-
+        If VarType(validationList) = vbString Then
+             If value_in_cell = validationList Then
+                CheckDropdownList = True
+             Else
+                CheckDropdownList = False
+             End If
+        Else
+             CheckDropdownList = IsValueInArray(value_in_cell, validationList)
+        End If
         ' Check if the value is in the named range
-        CheckDropdownList = IsValueInArray(value_in_cell, validationList)
+
+
+
+
     Else
         ' If the named range doesn't exist, return False
         CheckDropdownList = False
@@ -554,10 +578,7 @@ Function CheckDropdownList(value_in_cell As Variant, name_tag As String) As Bool
 End Function
 Function IsValueInArray(value As Variant, arr As Variant) As Boolean
     Dim i As Long
-
-
     For i = 1 To UBound(arr)
-
         If arr(i, 1) = value Then
             IsValueInArray = True
             GoTo ext
@@ -587,6 +608,10 @@ Sub RunValidation()
     Call HighlightedCellsInfo
     Call HighlightWrongTypeValue
 End Sub
+
+
+
+
 
 
 

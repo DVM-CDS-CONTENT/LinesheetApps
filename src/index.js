@@ -10,11 +10,11 @@ const express = require('express');
 
 // Set the PYTHONHOME and PATH environment variables
 
-  // process.env.PYTHONHOME = path.join(__dirname, '../src/pythons');
-  // process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
-
-  process.env.PYTHONHOME = path.join(__dirname, 'pythons');
+  process.env.PYTHONHOME = path.join(__dirname, '../../src/pythons');
   process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
+
+  // process.env.PYTHONHOME = path.join(__dirname, 'pythons');
+  // process.env.PATH = `${process.env.PYTHONHOME};${process.env.PATH}`;
 
 
 process.env.GITHUB_TOKEN = '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';
@@ -27,8 +27,8 @@ if (require('electron-squirrel-startup')) {
 
 
 const createWindow = () => {
-  const nodeServer = express();
-  const nodeServerPort = 3000;
+  // const nodeServer = express();
+  // const nodeServerPort = 3000;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -50,17 +50,17 @@ const createWindow = () => {
     }
   });
 
-  nodeServer.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  });
+  // nodeServer.get('/', (req, res) => {
+  //   res.sendFile(path.join(__dirname, 'index.html'));
+  // });
 
-  nodeServer.get('/new_linesheet', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/page/linesheet/new_linesheet.js'));
-  });
+  // nodeServer.get('/new_linesheet', (req, res) => {
+  //   res.sendFile(path.join(__dirname, 'src/page/linesheet/new_linesheet.js'));
+  // });
 
-  nodeServer.listen(nodeServerPort, () => {
-    console.log(`Node.js server is running at http://localhost:${nodeServerPort}`);
-  });
+  // nodeServer.listen(nodeServerPort, () => {
+  //   console.log(`Node.js server is running at http://localhost:${nodeServerPort}`);
+  // });
 
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -193,7 +193,7 @@ app.on('ready', async  () => {
       if(filePath=='page/installer_py.html'){
         event.sender.send('page-loaded', data);
       }
-      if(filePath=='page/prompt_role.html'){
+      if(filePath=='page/welcome/partner_welcome.html'){
         event.sender.send('page-loaded', data);
       }
       if(filePath=='page/footers.html'){

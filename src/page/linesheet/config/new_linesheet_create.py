@@ -162,6 +162,8 @@ def add_dropdown(workbook, sheet_name, column, start_row, end_row, options):
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,1,0,COUNTA(COLOR_MAPPING!$C:$C)-1,1)", allow_blank=True)
     elif options =="color_shade":
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
+    # elif options =="shoe_size":
+    #     validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COMMON_SIZE_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
     else:
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+options, allow_blank=True)
     # Add the DataValidation object to the sheet
@@ -258,6 +260,11 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
     jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
     datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
+    common_size_mapping_url = index[index['sheet_name'] == 'common_size_mapping']['url'].values[0]
+
+    # - get common size mapping
+    common_size_mapping_query = convert_gsheets_url(common_size_mapping_url)
+    common_size_mapping = pd.read_csv(common_size_mapping_query)
 
     # - get header linesheet
 
@@ -305,7 +312,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     categories_setting_query = convert_gsheets_url(categories_mapping_url)
     categories_setting = pd.read_csv(categories_setting_query, dtype='str')
     categories_setting=categories_setting[categories_setting['family'].isin(selected_template_list)]
-    categories_setting=categories_setting[categories_setting['deepen_level']==1]
+    categories_setting=categories_setting[categories_setting['deepen_level']=="TRUE"]
     categories_setting=categories_setting[['label_th']]
     categories_setting = categories_setting.fillna("")
 
@@ -352,7 +359,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
 
     categories_family_setting_query = convert_gsheets_url(categories_mapping_url)
     categories_family_setting = pd.read_csv(categories_family_setting_query, dtype='str')
-    categories_family_setting = categories_family_setting[categories_family_setting['deepen_level']==1]
+    categories_family_setting = categories_family_setting[categories_family_setting['deepen_level']=="TRUE"]
     categories_family_setting = categories_family_setting[['label_th','family']]
     categories_family_setting = categories_family_setting.fillna("")
 
@@ -378,6 +385,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # - Rename the column headers
     categories_setting = categories_setting.rename(columns={'label_th': 'input_option'})
     attribute_options = pd.concat([attribute_options, categories_setting], axis=0)
+
+    attribute_options = pd.concat([attribute_options, datapump_store], axis=0)
+
+
+
+
 
     # - Close the connection
     # cnx.close()
@@ -451,6 +464,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_jda_size_mapping_sheet=workbook.create_sheet("JDA_SIZE_MAPPING")
     ws_color_mapping_sheet=workbook.create_sheet("COLOR_MAPPING")
     ws_datapump_store_sheet=workbook.create_sheet("DATAPUMP_STORE_MAPPING")
+    ws_common_size_mapping_sheet=workbook.create_sheet("COMMON_SIZE_MAPPING")
 
     # Hide the sheet
     ws_att_option.sheet_state = 'hidden'
@@ -461,6 +475,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_jda_size_mapping_sheet.sheet_state = 'hidden'
     ws_color_mapping_sheet.sheet_state = 'hidden'
     ws_datapump_store_sheet.sheet_state = 'hidden'
+    ws_common_size_mapping_sheet.sheet_state = 'hidden'
 
 # #### General information's
 # - Add version information
@@ -494,6 +509,10 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     for r in dataframe_to_rows(datapump_store, index=False, header=True):
         ws_datapump_store_sheet.append(r)
 
+# Add common_size mapping
+    from openpyxl.utils.dataframe import dataframe_to_rows
+    for r in dataframe_to_rows(common_size_mapping, index=False, header=True):
+        ws_common_size_mapping_sheet.append(r)
 
 # Add family template sheet
 
@@ -577,8 +596,9 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     worksheet_form.cell(row=5, column=2).value = 'Production type'
     worksheet_form.cell(row=5, column=3).value = '=IN_LINK_DATA!B8' #production_type
     ## add stock_source stock
-    worksheet_form.cell(row=6, column=2).value = 'stock_source'
-    worksheet_form.cell(row=6, column=3).value = '=IN_LINK_DATA!B4' #stock_source
+    worksheet_form.cell(row=6, column=2).value = 'Multi Stock source'
+    worksheet_form.cell(row=6, column=2).comment = openpyxl.comments.Comment(text="Multi Select สามารถเลือกได้มากว่า 1 store", author='script')
+    # worksheet_form.cell(row=6, column=3).value = '=IN_LINK_DATA!B4' #stock_source
 
     worksheet.cell(row=7, column=2).value = 'Template'
     worksheet.cell(row=7, column=3).value = '=IN_LINK_DATA!B5'
