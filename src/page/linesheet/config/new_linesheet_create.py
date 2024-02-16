@@ -263,6 +263,11 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
     datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
     common_size_mapping_url = index[index['sheet_name'] == 'common_size_mapping']['url'].values[0]
+    brand_store_mapping_url = index[index['sheet_name'] == 'brand_store_mapping']['url'].values[0]
+
+     # - get common size mapping
+    brand_store_mapping_query = convert_gsheets_url(brand_store_mapping_url)
+    brand_store_mapping = pd.read_csv(brand_store_mapping_query)
 
     # - get common size mapping
     common_size_mapping_query = convert_gsheets_url(common_size_mapping_url)
@@ -467,6 +472,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_color_mapping_sheet=workbook.create_sheet("COLOR_MAPPING")
     ws_datapump_store_sheet=workbook.create_sheet("DATAPUMP_STORE_MAPPING")
     ws_common_size_mapping_sheet=workbook.create_sheet("COMMON_SIZE_MAPPING")
+    ws_brand_store_mapping_sheet=workbook.create_sheet("BRAND_STORE_MAPPING")
 
     # Hide the sheet
     ws_att_option.sheet_state = 'hidden'
@@ -478,6 +484,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     ws_color_mapping_sheet.sheet_state = 'hidden'
     ws_datapump_store_sheet.sheet_state = 'hidden'
     ws_common_size_mapping_sheet.sheet_state = 'hidden'
+    ws_brand_store_mapping_sheet.sheet_state = 'hidden'
 
 # #### General information's
 # - Add version information
@@ -515,6 +522,12 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     from openpyxl.utils.dataframe import dataframe_to_rows
     for r in dataframe_to_rows(common_size_mapping, index=False, header=True):
         ws_common_size_mapping_sheet.append(r)
+
+# Add brand_store_mapping
+    from openpyxl.utils.dataframe import dataframe_to_rows
+    for r in dataframe_to_rows(brand_store_mapping, index=False, header=True):
+        ws_brand_store_mapping_sheet.append(r)
+
 
 # Add family template sheet
 

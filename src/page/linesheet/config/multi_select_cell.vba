@@ -323,6 +323,7 @@ Sub HighlightEmptyCellUnderRequire()
     End If
 
     ' Find the last row with data in the target column
+
     lastRow = ws.Cells(ws.Rows.Count, IBCcolumn).End(xlUp).Row
     lastColumn = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
 
@@ -603,10 +604,146 @@ Function ColumnToLetter(col As Integer) As String
 End Function
 
 
+
+
+Sub StoreStockValidateion()
+
+    Dim wb As Workbook
+    Dim ws_linesheet As Worksheet
+    Dim i As Integer
+    Dim BrandValidation As Boolean
+    Dim current_store_this_brand As String
+    Dim store_stock As String
+    Dim Brandcolumn As Integer
+    Dim IBCcolumn As Integer
+    Dim dataArray() As String
+    Dim uniqueArray() As String
+    Dim WarningMessage As String
+
+
+
+    Set wb = ActiveWorkbook
+    Set ws_linesheet = ActiveWorkbook.Worksheets("IM_FORM")
+    Set ws_brand_store_mapping = ActiveWorkbook.Worksheets("BRAND_STORE_MAPPING")
+
+    store_stock = ws_linesheet.Range("C6").value
+    If store_stock = "" Then
+        MsgBox "Not found store stock selected"
+        GoTo missing_store_stock
+    End If
+    store_stock_array = Split(store_stock, ",")
+
+
+
+    For i = LBound(store_stock_array) To UBound(store_stock_array)
+        store_stock_array(i) = Trim(store_stock_array(i))
+    Next i
+
+    Brandcolumn = ws_linesheet.Rows(1).Find("brand_name").Column
+    IBCcolumn = ws_linesheet.Rows(1).Find("ibc").Column
+
+    Dim lastRow As Long
+    lastRow_linesheet = ws_linesheet.Cells(ws_linesheet.Rows.Count, IBCcolumn).End(xlUp).Row
+    lastRow_mapping = ws_brand_store_mapping.Cells(ws_brand_store_mapping.Rows.Count, 1).End(xlUp).Row
+    lastColumn_mapping = ws_brand_store_mapping.Cells(1, ws_brand_store_mapping.Columns.Count).End(xlToLeft).Column
+
+    'find first data row
+    For i = 1 To lastRow_linesheet
+        If ws_linesheet.Cells(i, 1).value = "No." Then
+            StartDataRow = i
+              Exit For
+        End If
+    Next i
+
+    StartDataRow = StartDataRow + 1
+
+    'loop in data then check the stock
+
+    For i = StartDataRow To lastRow_linesheet
+        brand_name = ws_linesheet.Cells(i, Brandcolumn).value
+        BrandValidation = False
+
+            If brand_name = "" Then
+                WarningMessage = WarningMessage & "brand name (" & ColumnToLetter(CInt(Brandcolumn)) & ") at row " & i & " is empty " & vbCrLf
+                GoTo missing_brand 'skip this sku
+            End If
+
+        'get store avalibale for brand ablove
+
+         For j = 1 To lastRow_mapping
+            If UCase(ws_brand_store_mapping.Cells(j, 1).value) = UCase(brand_name) Then
+                BrandValidation = True
+                For k = 1 To lastColumn_mapping
+
+                    status_store_this_brand = ws_brand_store_mapping.Cells(j, k).value
+                    current_store_this_brand = ws_brand_store_mapping.Cells(1, k).value
+
+
+                    If status_store_this_brand = "Allow" Then
+                        If IsInArray(current_store_this_brand, store_stock_array) = False Then
+                            WarningMessage = WarningMessage & "Warning : " & current_store_this_brand & " is required for brand " & brand_name & vbCrLf
+
+                        End If
+                    Else
+                        If IsInArray(current_store_this_brand, store_stock_array) = True Then
+                            WarningMessage = WarningMessage & "Warning : " & current_store_this_brand & " is not avalible for brand " & brand_name & vbCrLf
+
+                        End If
+
+                    End If
+
+                Next k
+            End If
+            If BrandValidation = False And j = lastRow_mapping Then
+                WarningMessage = WarningMessage & "Passed : not found brand " & brand_name & " in validation mapping" & vbCrLf
+            End If
+         Next j
+
+missing_brand:
+
+    Next i
+
+    If Not WarningMessage = "" Then
+        dataArray = Split(WarningMessage, vbCrLf)
+        uniqueArray = RemoveDuplicatesFromArray(dataArray)
+        WarningMessage = Join(uniqueArray, vbCrLf)
+    Else
+        WarningMessage = "Passed : All of stock in each brand is valid"
+
+    End If
+
+    MsgBox WarningMessage
+
+missing_store_stock:
+End Sub
+
+Function RemoveDuplicatesFromArray(inputArray() As String) As String()
+    Dim uniqueArray() As String
+    Dim dict As Object
+    Set dict = CreateObject("Scripting.Dictionary")
+
+    Dim i As Integer
+    For i = LBound(inputArray) To UBound(inputArray)
+        If Not dict.Exists(inputArray(i)) Then
+            dict.Add inputArray(i), Nothing
+        End If
+    Next i
+
+    ReDim uniqueArray(0 To dict.Count - 1)
+
+    i = 0
+    For Each Key In dict.Keys
+        uniqueArray(i) = Key
+        i = i + 1
+    Next Key
+
+    RemoveDuplicatesFromArray = uniqueArray
+End Function
 Sub RunValidation()
     Call HighlightEmptyCellUnderRequire
     Call HighlightedCellsInfo
     Call HighlightWrongTypeValue
+    Call StoreStockValidateion
 End Sub
 
 
