@@ -162,8 +162,10 @@ def add_dropdown(workbook, sheet_name, column, start_row, end_row, options):
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,1,0,COUNTA(COLOR_MAPPING!$C:$C)-1,1)", allow_blank=True)
     elif options =="color_shade":
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COLOR_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
-    # elif options =="shoe_size":
-    #     validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COMMON_SIZE_MAPPING!$C$1,MATCH(@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COLOR_MAPPING!$C:$C,0)-1,1,COUNTIF(COLOR_MAPPING!$C:$C,@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
+    elif options =="shoe_size":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COMMON_SIZE_MAPPING!$A$1,MATCH(@INDIRECT(ADDRESS(1, COLUMN()))&@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COMMON_SIZE_MAPPING!$A:$A,0)-1,3,COUNTIF(COMMON_SIZE_MAPPING!$A:$A,@INDIRECT(ADDRESS(1, COLUMN()))&@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
+    elif options =="clothing_size":
+        validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+"=OFFSET(COMMON_SIZE_MAPPING!$A$1,MATCH(@INDIRECT(ADDRESS(1, COLUMN()))&@INDIRECT(ADDRESS(ROW(), COLUMN()-1)),COMMON_SIZE_MAPPING!$A:$A,0)-1,3,COUNTIF(COMMON_SIZE_MAPPING!$A:$A,@INDIRECT(ADDRESS(1, COLUMN()))&@INDIRECT(ADDRESS(ROW(), COLUMN()-1))),1)", allow_blank=True)
     else:
         validation = openpyxl.worksheet.datavalidation.DataValidation(type='list', formula1='='+options, allow_blank=True)
     # Add the DataValidation object to the sheet
