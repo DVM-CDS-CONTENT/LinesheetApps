@@ -201,8 +201,8 @@ configurable_ao_fame = pd.concat([query_configurable_ao, cloned_df_ao], ignore_i
 
 
 url = convert_gsheets_url(attribute_option_url)
-mapping_option_value = pd.read_csv(url)
-mapping_option_value = mapping_option_value[['linesheet_code','input_option','option_code','option_th','option_en']]
+mapping_option_value = pd.read_csv(url,encoding='utf-8')
+mapping_option_value = mapping_option_value[['linesheet_code','input_option','option_code','option_th','option_en','icon']]
 
 
 url = convert_gsheets_url(description_layout_url)

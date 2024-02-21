@@ -259,6 +259,7 @@ def description(linesheet, linesheet_code, my_dict):
     label = ""
 
     new_value_list = []
+    new_value_code_list = []
     linesheet_code_unit = my_dict['linesheet_code_unit']
     configurable_ao_family=my_dict['configurable']
 
@@ -266,14 +267,15 @@ def description(linesheet, linesheet_code, my_dict):
 
     configurable_ao_family_set = configurable_ao_family[family_template].values.tolist()
 
-    # Add set include
-    if 'set_include_en' in linesheet.index:
-        set_include=linesheet['set_include_en']
-    else:
-        set_include=''
-    # set_includes_html = convert_to_html_with_li(set_include)
-    set_includes_path = '-set_include' if set_include else ''
-    # set_includes_path = '_set_include' if set_include else ''
+    # # Add set include
+    # if 'set_include_en' in linesheet.index:
+    #     set_include=linesheet['set_include_en']
+    # else:
+    #     set_include=''
+    # # set_includes_html = convert_to_html_with_li(set_include)
+    # set_includes_path = '-set_include' if set_include else ''
+    # # set_includes_path = '_set_include' if set_include else ''
+    set_includes_path =''
 
     # Selected layout
     categories_mapping = my_dict['categories_mapping']
@@ -292,53 +294,73 @@ def description(linesheet, linesheet_code, my_dict):
     for i, code_with_local in enumerate(linesheet_code_with_local):
         value=''
         label=''
+
         if code_with_local in linesheet:
+            icon=False
         # if 1==1:
             # if configurable_ao_family_set[i]!='AO' and configurable_ao_family_set[i]!='AR' and configurable_ao_family_set[i]!='N':
             if  configurable_ao_family_set[i]!='N':
                 if (linesheet[code_with_local] != ''):
+
                     # Translate options in case of simple select
                     if convertor_function[i] == 'simple_select':
+
                         if th_identity_linesheet in linesheet_code:
-                            # label = label_desc_th[i]
-                            value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_th',linesheet[code_with_local])
+                            language_identity_linesheet=th_identity_linesheet
                         elif en_identity_linesheet in linesheet_code:
-                            # label = label_desc_en[i]
-                            value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_en',linesheet[code_with_local])
+                            language_identity_linesheet=en_identity_linesheet
+
+                            value = lookup_label_option(linesheet, code_with_local, my_dict, 'option'+str(language_identity_linesheet),linesheet[code_with_local])
+                            value_code = lookup_label_option(linesheet, code_with_local, my_dict, 'option_code', linesheet[code_with_local])
+                            icon = lookup_label_option(linesheet, code_with_local, my_dict, 'icon', linesheet[code_with_local])
+
+                            if str(icon) != "" and str(icon) != "nan":
+                                value = '<div><img style="width: 15px;" src="'+str(icon)+'" alt=" " /><span style="margin-left: 5px;">'+str(value)+'</span></div>'
+                                icon=True
+
                     # Translate options in case of multi-select
                     elif convertor_function[i] == 'multi_select_option':
                         value_list = linesheet[code_with_local].split(ms_delimiter)
+
+                        if th_identity_linesheet in linesheet_code:
+                            language_identity_linesheet=th_identity_linesheet
+                        elif en_identity_linesheet in linesheet_code:
+                            language_identity_linesheet=en_identity_linesheet
+
                         for value in value_list:
                             value = value.strip()
-                            if th_identity_linesheet in linesheet_code:
-                                new_value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_th', value)
-                                new_value_list.append(new_value)
-                            elif en_identity_linesheet in linesheet_code:
-                                new_value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_en', value)
-                                new_value_list.append(new_value)
 
-                        # if th_identity_linesheet in linesheet_code:
-                        #     label = label_desc_th[i]
-                        # elif en_identity_linesheet in linesheet_code:
-                        #     label = label_desc_en[i]
+                            new_value = lookup_label_option(linesheet, code_with_local, my_dict, 'option'+str(language_identity_linesheet), value)
+                            option_code = lookup_label_option(linesheet, code_with_local, my_dict, 'option_code', value)
+                            icon = lookup_label_option(linesheet, code_with_local, my_dict, 'icon', value)
+
+                            if str(icon) != "" and str(icon) != "nan":
+                                new_value = '<div style="margin-left: 10px;margin-bottom: 5px;"><img style="width: 15px;" src="'+str(icon)+'" alt=" " /><span style="margin: 5px;">'+str(new_value)+'</span></div>'
+                                icon=True
+
+                            new_value_code_list.append(option_code)
+                            new_value_list.append(new_value)
 
                         value = ms_delimiter.join(new_value_list)
-
+                        value_code = ms_delimiter.join(new_value_code_list)
 
                     # Boolean convertor
                     elif convertor_function[i] == 'boolean_convertor':
                         if th_identity_linesheet in linesheet_code:
                             if linesheet[code_with_local].lower() == 'yes':
-                                # label = label_desc_th[i]
+
                                 value = 'ใช่'
+                                value_code = 'yes'
                             elif th_identity_linesheet in linesheet_code:
                                 value = ''
+                                value_code = ''
                         if en_identity_linesheet in linesheet_code:
                             if linesheet[code_with_local].lower() == 'yes':
-                                # label = label_desc_en[i]
                                 value = 'Yes'
+                                value_code = 'yes'
                             elif th_identity_linesheet in linesheet_code:
                                 value = ''
+                                value_code = ''
 
                     #special color shade
                     elif convertor_function[i] == 'color_shade':
@@ -346,56 +368,68 @@ def description(linesheet, linesheet_code, my_dict):
                             if th_identity_linesheet in linesheet_code:
                                 # label = label_desc_th[i]
                                 value = lookup_label_option(linesheet,'color_shade', my_dict, 'option_th', linesheet['color_shade'])
+                                value_code = lookup_label_option(linesheet, 'color_shade', my_dict, 'option_code', linesheet['color_shade'])
                             elif en_identity_linesheet in linesheet_code:
                                 # label = label_desc_en[i]
                                 value = lookup_label_option(linesheet,'color_shade', my_dict, 'option_en', linesheet['color_shade'])
+                                value_code = lookup_label_option(linesheet, 'color_shade', my_dict, 'option_code', linesheet['color_shade'])
                         else:
                             if th_identity_linesheet in linesheet_code:
                                 # label = label_desc_th[i]
                                 value = linesheet['special_shade_th']
+                                value_code=linesheet['special_shade_th']
                             elif en_identity_linesheet in linesheet_code:
                                 # label = label_desc_en[i]
                                 value = linesheet['special_shade_en']
+                                value_code=linesheet['special_shade_th']
 
                     #water resistance
                     # elif convertor_function[i] == 'water_resistance':
 
                     # Translate options in case of unidentified
                     else:
-                        if th_identity_linesheet in linesheet_code:
-                            # label = label_desc_th[i]
-                            value = str(linesheet[code_with_local])
-                        elif en_identity_linesheet in linesheet_code:
-                            # label = label_desc_en[i]
-                            value = str(linesheet[code_with_local])
+                        value = str(linesheet[code_with_local])
+                        value_code = str(linesheet[code_with_local])
+
 
                     # Translate unit of value
                     try:
                         if check_text_or_int(linesheet[code_with_local])!='string':
-                            if linesheet_code_unit[i] and linesheet_code_unit[i] != '' and linesheet[linesheet_code_unit[i]] != '':
-                                if th_identity_linesheet in linesheet_code:
-                                    unit = lookup_label_option(linesheet, linesheet_code_unit[i], my_dict, 'option_th',
-                                                            linesheet[linesheet_code_unit[i]])
-                                elif en_identity_linesheet in linesheet_code:
-                                    unit = lookup_label_option(linesheet, linesheet_code_unit[i], my_dict, 'option_en',
-                                                            linesheet[linesheet_code_unit[i]])
-                                value = str(value) + ' ' + str(unit)
-                            else:
-                                unit = ''
-                                value = value
+                            if configurable_ao_family_set[i] != 'AR':
+                                if linesheet_code_unit[i] and linesheet_code_unit[i] != '' and linesheet[linesheet_code_unit[i]] != '':
+                                    if th_identity_linesheet in linesheet_code:
+                                        unit = lookup_label_option(linesheet, linesheet_code_unit[i], my_dict, 'option_th',
+                                                                linesheet[linesheet_code_unit[i]])
+                                    elif en_identity_linesheet in linesheet_code:
+                                        unit = lookup_label_option(linesheet, linesheet_code_unit[i], my_dict, 'option_en',
+                                                                linesheet[linesheet_code_unit[i]])
+                                    value = str(value) + ' ' + str(unit)
+                                else:
+                                    unit = ''
+                                    value = value
                     except :
-                        print('Warning: '+linesheet_code_unit[i]+' is not defined for ', flush=True)
+                        print('Warning: '+str(linesheet_code_unit[i])+' is not defined for '+str(code_with_local), flush=True)
 
 
                     try:
                         if str(value) !='':
-                            # bullet += '<li>' + str(label) + ' : ' + str(value) + '</li>\n'
-                            # Replace with template
-                            description = description.replace("#"+code_with_local, str(value))
 
+                            #replace value attribute specific vale
+                            if "," in str(value):
+                                array_result_code = str(value_code).split(",")
+                                array_result = str(value).split(",")
+
+                                for num_option in range(len(array_result_code)):
+                                    description = description.replace("{#"+str(code_with_local)+"##"+str(array_result_code[num_option])+"}", array_result[num_option])
+
+                            else:
+                                description = description.replace("{#"+str(code_with_local)+"##"+str(value_code)+"}", str(value))
+
+                            #replace value attribute
+                            description = description.replace("{#"+code_with_local+"}", str(value))
 
                     except :
-                        print('Error: label is not defined for ' + code_with_local, flush=True)
+                        print('Error: label is not defined for ' + str(code_with_local), flush=True)
 
 
 
@@ -403,7 +437,10 @@ def description(linesheet, linesheet_code, my_dict):
 
 
     # Remove header line for empty session
-    description = re.sub(r'<hr>\n<p><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr/>\n<p style="padding-left: 30px;><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr/>\n<p><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr />\n<p style="padding-left: 30px;><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr />\n<p><strong>.*\n.*#.*\n', '', description)
     description_lines = description.split('\n')
     filtered_lines = [line for line in description_lines if '#' not in line]
 
@@ -426,10 +463,10 @@ def description(linesheet, linesheet_code, my_dict):
             # Check if the keyword is not part of another <a> tag
             if f'<a' not in keyword and f'</a>' not in keyword:
                 # Use regular expression to replace only the first occurrence of the keyword
-                description = re.sub(rf'(?<!\S){re.escape(keyword)}', replace_value, description, count=1)
-                description = re.sub(rf'{re.escape(keyword)}(?!\S)', replace_value, description, count=1)
-
-
+                if th_identity_linesheet in linesheet_code:
+                     description = re.sub(rf'{re.escape(keyword)}', replace_value, description, count=1)
+                elif en_identity_linesheet in linesheet_code:
+                     description = re.sub(rf'(?<!\S){re.escape(keyword)}(?!\S)', replace_value, description, count=1)
 
 
     # Now, the 'description' variable has been updated with the replaced values
