@@ -250,7 +250,7 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
     # #UAT
     # index_source = "https://docs.google.com/spreadsheets/d/18bS_SQWfb0tcuP0LywyfIot1bE_Rt7dV9qoSfzGtBsw/edit#gid=1054033513"
     #PROD
-    index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit#gid=1370721427"
+    index_source = "https://docs.google.com/spreadsheets/d/11cAVRnwQbD2LeCjL3nWuHozYzLF27CcwgyJnk82ixWc/edit#gid=1370721427"
     url = convert_gsheets_url(index_source)
     index = pd.read_csv(url)
 
@@ -702,6 +702,8 @@ def generate_form(brand,template,sku,launch_date,stock_source,sale_channel,produ
             bg_color='A7A121'
         elif field_type=='Multiple Select':
             bg_color='CD7515'
+        elif field_type=='Automation':
+            bg_color='808080'
 
 
         add_background_color(workbook, 'IM_FORM', column, column, row_field_type, bg_color)

@@ -350,14 +350,17 @@ Sub HighlightEmptyCellUnderRequire()
 End Sub
 Sub HighlightedCellsInfo()
     Dim ws As Worksheet
+    Dim InlinkDataSheet As Worksheet
     Dim rng As Range
     Dim cell As Range
     Dim lastRow As Long
+    Dim IDSlastRow As Long
     Dim currentRow As Long
     Dim highlightedCells As String
 
     ' Set the worksheet and range to be checked
     Set ws = ThisWorkbook.Sheets("IM_FORM") ' Change "Sheet1" to your actual sheet name
+
     Set rng = ws.UsedRange ' You can modify the range as needed
 
     ' Initialize variables
@@ -391,7 +394,7 @@ Sub HighlightedCellsInfo()
     If highlightedCells <> "" Then
       ' Set the worksheet
         Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
-        IDSlastRow = ws.Cells(InlinkDataSheet.Rows.Count, 1).End(xlUp).Row
+        IDSlastRow = InlinkDataSheet.Cells(InlinkDataSheet.Rows.Count, 1).End(xlUp).Row
 
         For i = 1 To IDSlastRow
             If InlinkDataSheet.Cells(i, 1).value = "msg_validate_mandatory_checking" Then
@@ -402,7 +405,12 @@ Sub HighlightedCellsInfo()
         MsgBox highlightedCells
     Else
         Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
-        InlinkDataSheet.Cells(i, 2).value = highlightedCells
+        For i = 1 To IDSlastRow
+            If InlinkDataSheet.Cells(i, 1).value = "msg_validate_mandatory_checking" Then
+                InlinkDataSheet.Cells(i, 2).value = "Passed : No cells with the require is missing."
+            End If
+        Next i
+
         MsgBox "Passed : No cells with the require is missing."
     End If
 End Sub
@@ -745,6 +753,8 @@ Sub RunValidation()
     Call HighlightWrongTypeValue
     Call StoreStockValidateion
 End Sub
+
+
 
 
 

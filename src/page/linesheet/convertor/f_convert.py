@@ -231,10 +231,16 @@ def is_set(linesheet,linesheet_code,my_dict):
     boolean_yes= my_dict['boolean_yes']
     boolean_no= my_dict['boolean_no']
     error= my_dict['error']
-    if linesheet['set_include']!='':
+    if linesheet['set_include_en']!='':
         return boolean_yes
     else:
         return boolean_no
+
+# def dynamic_water_resistance(linesheet,linesheet_code,my_dict):
+#     linesheet['water_resistance']
+
+
+
 
 
 def description(linesheet, linesheet_code, my_dict):
@@ -260,21 +266,44 @@ def description(linesheet, linesheet_code, my_dict):
 
     configurable_ao_family_set = configurable_ao_family[family_template].values.tolist()
 
+    # Add set include
+    if 'set_include_en' in linesheet.index:
+        set_include=linesheet['set_include_en']
+    else:
+        set_include=''
+    # set_includes_html = convert_to_html_with_li(set_include)
+    set_includes_path = '-set_include' if set_include else ''
+    # set_includes_path = '_set_include' if set_include else ''
+
+    # Selected layout
+    categories_mapping = my_dict['categories_mapping']
+
+
+    # layout_name = categories_mapping.set_index('label_th')['description_block_template'][linesheet['online_categories']]
+    layout_en= categories_mapping.set_index('label_th')['des-en'+set_includes_path][linesheet['online_categories']]
+    layout_th= categories_mapping.set_index('label_th')['des-th'+set_includes_path][linesheet['online_categories']]
+
+    if th_identity_linesheet in linesheet_code:
+        description = layout_th
+    elif en_identity_linesheet in linesheet_code:
+        description = layout_en
+
     # Generate bullet point
     for i, code_with_local in enumerate(linesheet_code_with_local):
         value=''
         label=''
         if code_with_local in linesheet:
         # if 1==1:
-            if configurable_ao_family_set[i]!='AO' and configurable_ao_family_set[i]!='AR' and configurable_ao_family_set[i]!='N':
-                if (label_desc_en[i] != "-" and label_desc_en[i] != "" and linesheet[code_with_local] != '' and label_desc_en[i]):
+            # if configurable_ao_family_set[i]!='AO' and configurable_ao_family_set[i]!='AR' and configurable_ao_family_set[i]!='N':
+            if  configurable_ao_family_set[i]!='N':
+                if (linesheet[code_with_local] != ''):
                     # Translate options in case of simple select
                     if convertor_function[i] == 'simple_select':
                         if th_identity_linesheet in linesheet_code:
-                            label = label_desc_th[i]
+                            # label = label_desc_th[i]
                             value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_th',linesheet[code_with_local])
                         elif en_identity_linesheet in linesheet_code:
-                            label = label_desc_en[i]
+                            # label = label_desc_en[i]
                             value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_en',linesheet[code_with_local])
                     # Translate options in case of multi-select
                     elif convertor_function[i] == 'multi_select_option':
@@ -288,10 +317,10 @@ def description(linesheet, linesheet_code, my_dict):
                                 new_value = lookup_label_option(linesheet, code_with_local, my_dict, 'option_en', value)
                                 new_value_list.append(new_value)
 
-                        if th_identity_linesheet in linesheet_code:
-                            label = label_desc_th[i]
-                        elif en_identity_linesheet in linesheet_code:
-                            label = label_desc_en[i]
+                        # if th_identity_linesheet in linesheet_code:
+                        #     label = label_desc_th[i]
+                        # elif en_identity_linesheet in linesheet_code:
+                        #     label = label_desc_en[i]
 
                         value = ms_delimiter.join(new_value_list)
 
@@ -300,13 +329,13 @@ def description(linesheet, linesheet_code, my_dict):
                     elif convertor_function[i] == 'boolean_convertor':
                         if th_identity_linesheet in linesheet_code:
                             if linesheet[code_with_local].lower() == 'yes':
-                                label = label_desc_th[i]
+                                # label = label_desc_th[i]
                                 value = 'ใช่'
                             elif th_identity_linesheet in linesheet_code:
                                 value = ''
                         if en_identity_linesheet in linesheet_code:
                             if linesheet[code_with_local].lower() == 'yes':
-                                label = label_desc_en[i]
+                                # label = label_desc_en[i]
                                 value = 'Yes'
                             elif th_identity_linesheet in linesheet_code:
                                 value = ''
@@ -315,26 +344,29 @@ def description(linesheet, linesheet_code, my_dict):
                     elif convertor_function[i] == 'color_shade':
                         if linesheet['special_shade_en']=='':
                             if th_identity_linesheet in linesheet_code:
-                                label = label_desc_th[i]
+                                # label = label_desc_th[i]
                                 value = lookup_label_option(linesheet,'color_shade', my_dict, 'option_th', linesheet['color_shade'])
                             elif en_identity_linesheet in linesheet_code:
-                                label = label_desc_en[i]
+                                # label = label_desc_en[i]
                                 value = lookup_label_option(linesheet,'color_shade', my_dict, 'option_en', linesheet['color_shade'])
                         else:
                             if th_identity_linesheet in linesheet_code:
-                                label = label_desc_th[i]
+                                # label = label_desc_th[i]
                                 value = linesheet['special_shade_th']
                             elif en_identity_linesheet in linesheet_code:
-                                label = label_desc_en[i]
+                                # label = label_desc_en[i]
                                 value = linesheet['special_shade_en']
+
+                    #water resistance
+                    # elif convertor_function[i] == 'water_resistance':
 
                     # Translate options in case of unidentified
                     else:
                         if th_identity_linesheet in linesheet_code:
-                            label = label_desc_th[i]
+                            # label = label_desc_th[i]
                             value = str(linesheet[code_with_local])
                         elif en_identity_linesheet in linesheet_code:
-                            label = label_desc_en[i]
+                            # label = label_desc_en[i]
                             value = str(linesheet[code_with_local])
 
                     # Translate unit of value
@@ -356,51 +388,52 @@ def description(linesheet, linesheet_code, my_dict):
 
 
                     try:
-                        if str(label) !='' and str(value) !='':
-                            bullet += '<li>' + str(label) + ' : ' + str(value) + '</li>\n'
+                        if str(value) !='':
+                            # bullet += '<li>' + str(label) + ' : ' + str(value) + '</li>\n'
+                            # Replace with template
+                            description = description.replace("#"+code_with_local, str(value))
+
+
                     except :
                         print('Error: label is not defined for ' + code_with_local, flush=True)
+
+
 
                     new_value_list = []
 
 
+    # Remove header line for empty session
+    description = re.sub(r'<hr>\n<p><strong>.*\n.*#.*\n', '', description)
+    description_lines = description.split('\n')
+    filtered_lines = [line for line in description_lines if '#' not in line]
+
+    removed_lines = [line for line in description_lines if '#' in line]
+    # for removed_line in removed_lines:
+    #     print(f"Removed description line: {removed_line}")
+
+    description = '\n'.join(filtered_lines)
+
+    # get anchor_link
+    anchor_link= my_dict['anchor_link']
+    # Create a dictionary to store the mapping of keywords to redirect links
+    # Define your dictionary of replacements
+    replace_dict = {row['keyword']: f'<a href="{row["re-direct-link"]}">{row["keyword"]}</a>' for _, row in anchor_link.iterrows()}
+
+    # Use a single replace operation
+    for keyword, replace_value in replace_dict.items():
+        # Check if the keyword is not already part of an <a> tag
+        if f'<a href="{replace_value}">{keyword}</a>' not in description:
+            # Check if the keyword is not part of another <a> tag
+            if f'<a' not in keyword and f'</a>' not in keyword:
+                # Use regular expression to replace only the first occurrence of the keyword
+                description = re.sub(rf'(?<!\S){re.escape(keyword)}', replace_value, description, count=1)
+                description = re.sub(rf'{re.escape(keyword)}(?!\S)', replace_value, description, count=1)
 
 
-    # Add set include
-    if 'set_include' in linesheet.index:
-        set_include=linesheet['set_include']
-    else:
-        set_include=''
-    set_includes_html = convert_to_html_with_li(set_include)
-    set_includes_path = '_set_include' if set_include else ''
 
 
+    # Now, the 'description' variable has been updated with the replaced values
 
-    # Selected layout
-    categories_mapping = my_dict['categories_mapping']
-    layout_name = categories_mapping.set_index('label_th')['description_block_template'][linesheet['online_categories']]
-    layout_th = '\\resources\\src\\page\\linesheet\\convertor\\description_layout\\th\\' + layout_name + set_includes_path + '_th.html'
-    layout_en = '\\resources\\src\\page\\linesheet\\convertor\\description_layout\\en\\' + layout_name + set_includes_path + '_en.html'
-
-    # Replace with template
-    if th_identity_linesheet in linesheet_code:
-        description = get_html_value(layout_th, 'div', {'id': 'my-div'})
-        description = description.replace("#product_name", linesheet['product_name_th'])
-
-        description = description.replace("#bullet_point", bullet)
-        description = description.replace("#short_description", linesheet['short_description_th'])
-        description = description.replace("#product_information", markdown_to_html(linesheet['product_information_th']))
-        description = description.replace("#set_include", set_includes_html)
-        description = description.replace("#caution", caution_th)
-    elif en_identity_linesheet in linesheet_code:
-        description = get_html_value(layout_en, 'div', {'id': 'my-div'})
-        description = description.replace("#product_name", linesheet['product_name_en'])
-
-        description = description.replace("#bullet_point", bullet)
-        description = description.replace("#short_description", linesheet['short_description_en'])
-        description = description.replace("#product_information",  markdown_to_html(linesheet['product_information_en']))
-        description = description.replace("#set_include", set_includes_html)
-        description = description.replace("#caution", caution_en)
 
 
     # Add size guide
@@ -412,20 +445,18 @@ def description(linesheet, linesheet_code, my_dict):
 
         #--convert product name and brand name to naming conversion
         cleaned_brand = re.sub(r'[^a-zA-Z0-9]', '', linesheet['brand_name']).lower()
-        cleaned_name = re.sub(r'[^a-zA-Z0-9]', '', linesheet['product_name_en']).lower()
+        cleaned_name = re.sub(r'[^a-zA-Z0-9]', '', product_name(linesheet,'product_name_en',my_dict)).lower()
+        Full_link = "https://www.central.co.th/content/dam/central/catalog/products/retail/"+sku_path+"/"+cleaned_brand+"-"+cleaned_name+"-"+sku_number+"-20.jpg"
 
-        #--concatenate with full path
-        Full_link = "https://www.central.co.th/content/dam/central/catalog/products/retail/"+cleaned_brand+"-"+cleaned_name+"-"+sku_path+"/"+sku_number+"-20.jpg"
+        Html_Tag ='<strong>SIZE CHART</strong><p><img src="'+Full_link+'" alt="" /></p>'
 
-        #--insert with html image tac
+        description=description+"<hr/>"+Html_Tag
 
-        Html_Tag ='<p><img src="'+Full_link+'" alt="" /></p>'
-
-        # if linesheet['link_to_size_guide_images']!="":
-
-        #     description=description+"<br>"+Html_Tag
-
-        description=description+"<br>"+Html_Tag
+    # Add caution
+    if th_identity_linesheet in linesheet_code:
+        description = description.replace("#caution", caution_th)
+    elif en_identity_linesheet in linesheet_code:
+        description = description.replace("#caution", caution_en)
 
     return description
 
@@ -633,7 +664,8 @@ def allow_gift_wrapping(linesheet,linesheet_code,my_dict):
 
 def group_name(linesheet,linesheet_code,my_dict):
     original_linesheet = my_dict['original_linesheet']
-    return original_linesheet['product_name_en']
+    # return original_linesheet['product_name_en']
+    return product_name(linesheet,'product_name_en',my_dict)
 
 def product_status(linesheet,linesheet_code,my_dict):
     return 'Normally'

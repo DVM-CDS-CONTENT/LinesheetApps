@@ -99,7 +99,7 @@ def convert_gsheets_url(u):
         u += '&gid={}'.format(worksheet_id)
     return u
 
-index_source = "https://docs.google.com/spreadsheets/d/1HbR1_zIgzYyJ-et3QWn40oAVSq8wQipwvttsnlt_Bi0/edit?#gid=1370721427"
+index_source = "https://docs.google.com/spreadsheets/d/11cAVRnwQbD2LeCjL3nWuHozYzLF27CcwgyJnk82ixWc/edit#gid=1370721427"
 url = convert_gsheets_url(index_source)
 index = pd.read_csv(url)
 
@@ -111,8 +111,8 @@ color_mapping_url = index[index['sheet_name'] == 'color_mapping']['url'].values[
 dept_subdept_mappping_url = index[index['sheet_name'] == 'dept_subdept_mappping']['url'].values[0]
 jda_size_mapping_url = index[index['sheet_name'] == 'jda_size_mapping']['url'].values[0]
 datapump_store_mapping_url = index[index['sheet_name'] == 'datapump_store_mapping']['url'].values[0]
-
-
+description_layout_url = index[index['sheet_name'] == 'description_layout']['url'].values[0]
+anchor_link_url = index[index['sheet_name'] == 'anchor_link']['url'].values[0]
 
 
 url = convert_gsheets_url(attribute_setting_url)
@@ -122,6 +122,10 @@ query_configurable = query_configurable[query_configurable["convertor_function"]
 query_configurable = query_configurable[query_configurable["convertor_function"]!="-"]
 query_configurable = query_configurable[query_configurable["status"]=="Actived"]
 original_configurable = query_configurable
+
+
+
+
 
 
 
@@ -201,9 +205,19 @@ mapping_option_value = pd.read_csv(url)
 mapping_option_value = mapping_option_value[['linesheet_code','input_option','option_code','option_th','option_en']]
 
 
+url = convert_gsheets_url(description_layout_url)
+description_layout = pd.read_csv(url)
+
+
+url = convert_gsheets_url(anchor_link_url)
+anchor_link = pd.read_csv(url,encoding='utf-8')
+
+
 url = convert_gsheets_url(categories_mapping_url)
 categories_mapping = pd.read_csv(url)
 categories_mapping = categories_mapping[['label_th','full_categories_code','family','size_value_template','product_name_template_th','product_name_template_en','description_block_template']]
+
+categories_mapping = pd.merge(categories_mapping, description_layout, on='description_block_template', how='left')
 
 
 url = convert_gsheets_url(shipping_mapping_url)
@@ -430,16 +444,16 @@ ws_model = ws_model[ws_model['group_by-CDS']!='']
 
 
 # Before adding the 'visibility-CDS' column, create a new DataFrame with the column
-new_columns = pd.concat([ws_template, pd.Series(['Not_Visible_Individually'] * len(ws_template), name='visibility-CDS')], axis=1)
-new_columns.loc[new_columns['parent'] != '', 'visibility-CDS'] = 'Not_Visible_Individually'
-ws_template = new_columns
+# new_columns = pd.concat([ws_template, pd.Series(['Not_Visible_Individually'] * len(ws_template), name='visibility-CDS')], axis=1)
+# new_columns.loc[new_columns['parent'] != '', 'visibility-CDS'] = 'Not_Visible_Individually'
+# ws_template = new_columns
 
-new_columns = pd.concat([ws_template, pd.Series(['Catalog__Search'] * len(ws_template), name='visibility-CDS')], axis=1)
-new_columns.loc[new_columns['parent'] == '', 'visibility-CDS'] = 'Catalog__Search'
-ws_template = new_columns
+# new_columns = pd.concat([ws_template, pd.Series(['Catalog__Search'] * len(ws_template), name='visibility-CDS')], axis=1)
+# new_columns.loc[new_columns['parent'] == '', 'visibility-CDS'] = 'Catalog__Search'
+# ws_template = new_columns
 
-# ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
-# ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
+ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
+ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
 
 if not ws_model.empty:
     ws_model.loc[ws_model['brand_name-CDS']=='CHANEL','visibility-CDS']='Catalog__Search'
@@ -480,10 +494,18 @@ if ws_model.empty:
     ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
 else:
 
-    #replace product name with original from linesheet
-    ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'product_name_en')
-    ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'product_name_th')
-    ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'product_name_en')
+    if 'product_name_en' in original_linesheet.index:
+        #replace product name with original from linesheet
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'product_name_en')
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'product_name_th')
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'product_name_en')
+    else:
+            #replace product name with original from linesheet
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'auto_product_name_en')
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'auto_product_name_th')
+        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'auto_product_name_en')
+
+
 
     ws_model = rename_parent_column_and_move_positioning(ws_model)
     ws_template = move_positioning_template(ws_template)
