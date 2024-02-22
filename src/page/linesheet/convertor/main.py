@@ -444,16 +444,13 @@ ws_model = ws_model[ws_model['group_by-CDS']!='']
 
 
 # Before adding the 'visibility-CDS' column, create a new DataFrame with the column
-# new_columns = pd.concat([ws_template, pd.Series(['Not_Visible_Individually'] * len(ws_template), name='visibility-CDS')], axis=1)
-# new_columns.loc[new_columns['parent'] != '', 'visibility-CDS'] = 'Not_Visible_Individually'
-# ws_template = new_columns
+new_columns = pd.concat([ws_template, pd.Series(['Not_Visible_Individually'] * len(ws_template), name='visibility-CDS')], axis=1)
+new_columns.loc[new_columns['parent'] != '', 'visibility-CDS'] = 'Not_Visible_Individually'
+new_columns.loc[new_columns['parent'] == '', 'visibility-CDS'] = 'Catalog__Search'
+ws_template = new_columns
 
-# new_columns = pd.concat([ws_template, pd.Series(['Catalog__Search'] * len(ws_template), name='visibility-CDS')], axis=1)
-# new_columns.loc[new_columns['parent'] == '', 'visibility-CDS'] = 'Catalog__Search'
-# ws_template = new_columns
-
-ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
-ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
+# ws_template.loc[ws_template['parent']!='','visibility-CDS']='Not_Visible_Individually'
+# ws_template.loc[ws_template['parent']=='','visibility-CDS']='Catalog__Search'
 
 if not ws_model.empty:
     ws_model.loc[ws_model['brand_name-CDS']=='CHANEL','visibility-CDS']='Catalog__Search'
@@ -493,17 +490,16 @@ if ws_model.empty:
     # tac('Info : No grouping')
     ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
 else:
-
     if 'product_name_en' in original_linesheet.index:
         #replace product name with original from linesheet
         ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'product_name_en')
         ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'product_name_th')
         ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'product_name_en')
-    else:
-            #replace product name with original from linesheet
-        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'auto_product_name_en')
-        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'auto_product_name_th')
-        ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'auto_product_name_en')
+    # else:
+    #         #replace product name with
+    #     ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-en_US-CDS', 'parent', 'parent' , 'auto_product_name_en')
+    #     ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'name-th_TH-CDS', 'parent', 'parent' , 'auto_product_name_th')
+    #     ws_model = replace_column_values_with_lookup(ws_model, original_linesheet, 'group_name-CDS', 'parent', 'parent' , 'auto_product_name_en')
 
 
 
@@ -512,6 +508,10 @@ else:
 
     ws_model = ws_model.rename(columns={'catalogue_number_for_group': 'catalog_no'})
     ws_template = ws_template.rename(columns={'catalogue_number_for_group': 'catalog_no'})
+
+    #drop duplicate column
+    ws_model = ws_model.T.drop_duplicates().T
+    ws_template = ws_template.T.drop_duplicates().T
 
 
     ws_template = ws_template.drop('family_variant', axis=1)

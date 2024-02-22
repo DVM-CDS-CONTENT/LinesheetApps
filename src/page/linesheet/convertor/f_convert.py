@@ -437,10 +437,13 @@ def description(linesheet, linesheet_code, my_dict):
 
 
     # Remove header line for empty session
-    description = re.sub(r'<hr/>\n<p style="padding-left: 30px;><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr/>\n<p style="padding-left: 30px;"><strong>.*\n.*#.*\n', '', description)
     description = re.sub(r'<hr/>\n<p><strong>.*\n.*#.*\n', '', description)
-    description = re.sub(r'<hr />\n<p style="padding-left: 30px;><strong>.*\n.*#.*\n', '', description)
+    description = re.sub(r'<hr />\n<p style="padding-left: 30px;"><strong>.*\n.*#.*\n', '', description)
     description = re.sub(r'<hr />\n<p><strong>.*\n.*#.*\n', '', description)
+
+
+
     description_lines = description.split('\n')
     filtered_lines = [line for line in description_lines if '#' not in line]
 
@@ -454,18 +457,23 @@ def description(linesheet, linesheet_code, my_dict):
     anchor_link= my_dict['anchor_link']
     # Create a dictionary to store the mapping of keywords to redirect links
     # Define your dictionary of replacements
-    replace_dict = {row['keyword']: f'<a href="{row["re-direct-link"]}">{row["keyword"]}</a>' for _, row in anchor_link.iterrows()}
+    replace_dict = {row['keyword']: {
+    'replace_value': f'<a href="{row["re-direct-link"]}">{row["keyword"]}</a>',
+    'language': row['language']
+    } for _, row in anchor_link.iterrows()}
 
     # Use a single replace operation
-    for keyword, replace_value in replace_dict.items():
+    for keyword, values in replace_dict.items():
+        replace_value = values['replace_value']
+        language = values['language']
         # Check if the keyword is not already part of an <a> tag
         if f'<a href="{replace_value}">{keyword}</a>' not in description:
             # Check if the keyword is not part of another <a> tag
             if f'<a' not in keyword and f'</a>' not in keyword:
                 # Use regular expression to replace only the first occurrence of the keyword
-                if th_identity_linesheet in linesheet_code:
-                     description = re.sub(rf'{re.escape(keyword)}', replace_value, description, count=1)
-                elif en_identity_linesheet in linesheet_code:
+                if language=='th':
+                     description = re.sub(rf'\b{re.escape(keyword)}\b', replace_value, description, count=1)
+                else:
                      description = re.sub(rf'(?<!\S){re.escape(keyword)}(?!\S)', replace_value, description, count=1)
 
 

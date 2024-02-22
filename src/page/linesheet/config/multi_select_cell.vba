@@ -379,10 +379,10 @@ Sub HighlightedCellsInfo()
                     highlightedCells = highlightedCells & vbCrLf
                 End If
                 ' Record the row and column information
-                highlightedCells = highlightedCells & "Error : Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
+                highlightedCells = highlightedCells & "Error : Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " (" & ws.Cells(1, cell.Column).value & ") is missing require value" & vbCrLf
             Else
                 ' If the cell is in the same row, append the column information
-                highlightedCells = highlightedCells & "Error :  Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " is missing require value" & vbCrLf
+                highlightedCells = highlightedCells & "Error :  Row: " & cell.Row & ", Columns: " & ColumnToLetter(cell.Column) & " (" & ws.Cells(1, cell.Column).value & ") is missing require value" & vbCrLf
             End If
 
             ' Update the current row
@@ -414,16 +414,27 @@ Sub HighlightedCellsInfo()
         MsgBox "Passed : No cells with the require is missing."
     End If
 End Sub
-
-
-
-
 Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink)
     If Target.Range.Address = "$F$4" Then
         Call HighlightEmptyCellUnderRequire
         Call HighlightedCellsInfo
     End If
 End Sub
+Function IsThaiLanguage(cellValue As String) As Boolean
+    Dim thaiCharacters As String
+    thaiCharacters = "¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÇÈÉÊËÌÍÎ"
+
+    Dim char As String
+    For i = 1 To Len(cellValue)
+        char = Mid(cellValue, i, 1)
+        If InStr(thaiCharacters, char) > 0 Then
+            IsThaiLanguage = True
+            Exit Function
+        End If
+    Next i
+
+    IsThaiLanguage = False
+End Function
 
 Sub HighlightWrongTypeValue()
 
@@ -463,6 +474,7 @@ Sub HighlightWrongTypeValue()
             InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Number only", vbTextCompare) > 0 Or _
             InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Simple Select", vbTextCompare) > 0 Or _
             InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Multiple Select", vbTextCompare) > 0 Or _
+            (InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "Free Text", vbTextCompare) > 0 And InStr(1, CStr(ws.Cells(1, ColCheck).value), "_en", vbTextCompare) > 0) Or _
             InStr(1, UCase(ws.Cells(i, ColCheck).Formula), "link", vbTextCompare) > 0 _
             Then
                 ' Check if the cell under the "IBC" column is empty
@@ -479,6 +491,12 @@ Sub HighlightWrongTypeValue()
                                 If Not IsNumeric(ws.Cells(j + 6, ColCheck).value) Then
                                     Warning_Message = Warning_Message & "Value at row  " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " " & ws.Cells(1, ColCheck).value & " not a " & ws.Cells(i, ColCheck).value & " type" & vbCrLf
                                 End If
+
+                            ElseIf ws.Cells(i, ColCheck).value = "Free Text" And InStr(1, CStr(ws.Cells(1, ColCheck).value), "_en", vbTextCompare) > 0 Then
+                              If IsThaiLanguage(ws.Cells(j + 6, ColCheck).value) = True Then
+                                    Warning_Message = Warning_Message & "Value at row  " & j + 6 & " Column " & ColumnToLetter(CInt(ColCheck)) & " (" & ws.Cells(1, ColCheck).value & ") contain Thai characters " & vbCrLf
+                                End If
+
 
                             ElseIf ws.Cells(i, ColCheck).value = "link" Then
 
@@ -525,7 +543,13 @@ Sub HighlightWrongTypeValue()
         MsgBox "Type Checking: " & vbCrLf & Warning_Message
     Else
         Set InlinkDataSheet = ThisWorkbook.Sheets("IN_LINK_DATA")
-        InlinkDataSheet.Cells(i, 2).value = "Passed : All of value follow type of attribtue"
+
+         For i = 1 To lastRow
+            If InlinkDataSheet.Cells(i, 1).value = "msg_validate_type_checking" Then
+                InlinkDataSheet.Cells(i, 2).value = "Passed : All of value follow type of attribtue"
+            End If
+        Next i
+
         MsgBox "Passed : All of value follow type of attribtue"
     End If
 End Sub
@@ -753,6 +777,8 @@ Sub RunValidation()
     Call HighlightWrongTypeValue
     Call StoreStockValidateion
 End Sub
+
+
 
 
 
